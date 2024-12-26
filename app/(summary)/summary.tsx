@@ -11,6 +11,7 @@ import * as Clipboard from 'expo-clipboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
+import * as Speech from "expo-speech"
 
 const Summary = () => {
   const [loading, setLoading] = useState(true);
@@ -86,6 +87,20 @@ const Summary = () => {
     Clipboard.setStringAsync(summary);
   };
 
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: summary,
+      });
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
+
+  const handleSpeak = () => {
+    Speech.speak(summary)
+  };
+  
   const handleSave = async (name: string) => {
     setModuleVisible(false);
     try {
@@ -121,16 +136,6 @@ const Summary = () => {
     router.navigate('/(tabs)');
   };
 
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: summary,
-      });
-    } catch (error: any) {
-      Alert.alert(error.message);
-    }
-  };
-
   return (
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
@@ -147,7 +152,8 @@ const Summary = () => {
       ) : (
         <Animated.View style={[{ opacity: fadeAnim }, styles.myCon]}>
           <View style={styles.headerCon}>
-            <View style = {{flexDirection:"row",width:"20%", justifyContent:"space-around"}}>
+            <View style = {{flexDirection:"row",width:"25%", justifyContent:"space-around"}}>
+              <Icon size={25} color={colors.primary} name="volume-2" type='feather' onPress={handleSpeak} />
               <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
               <Icon size={25} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
             </View>

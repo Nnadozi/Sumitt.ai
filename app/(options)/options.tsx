@@ -1,4 +1,4 @@
-import { StyleSheet, ToastAndroid, View } from 'react-native';
+import { StyleSheet, ToastAndroid, View, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -10,8 +10,8 @@ import {
   lengthDescriptions, 
   detailDescriptions, 
   toneDescriptions, 
-  formatDescriptions ,
-  languageDescriptions
+  formatDescriptions,
+  languageDescriptions 
 } from '../../constants/optionDescriptions';
 
 const options = () => {
@@ -20,7 +20,7 @@ const options = () => {
   const [selectedIndexTone, setSelectedIndexTone] = useState(0);
   const [selectedIndexFormat, setSelectedIndexFormat] = useState(0);
   const [selectedIndexLanguage, setSelectedIndexLanguage] = useState(0);
-  const [optionsApplied, setOptionsApplied] = useState(false); 
+  const [optionsApplied, setOptionsApplied] = useState(false);
 
   const saveOptions = () => {
     const options = {
@@ -28,11 +28,11 @@ const options = () => {
       detail: detailDescriptions[selectedIndexDetail],
       tone: toneDescriptions[selectedIndexTone],
       format: formatDescriptions[selectedIndexFormat],
-      language: languageDescriptions[selectedIndexLanguage]
+      language: languageDescriptions[selectedIndexLanguage],
     };
     router.setParams({ options: JSON.stringify(options) });
-    setOptionsApplied(true); 
-    ToastAndroid.show('Options applied successfully',ToastAndroid.SHORT)
+    setOptionsApplied(true);
+    ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
   };
 
   const { colors } = useTheme();
@@ -48,10 +48,11 @@ const options = () => {
         selectedButtonStyle={{ backgroundColor: colors.primary }}
         innerBorderStyle={{ color: colors.border }}
         containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: "0%",
-          backgroundColor: colors.card, borderColor: colors.border }}
+          marginVertical: '3%', width: '100%', marginLeft: '0%',
+          backgroundColor: colors.card, borderColor: colors.border,
+        }}
       />
-      <MyText opacity={0.5} fontSize='small'>{lengthDescriptions[selectedIndexLength]}</MyText>
+      <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
       <Divider width={10} />
 
       <MyText bold>Detail</MyText>
@@ -62,10 +63,11 @@ const options = () => {
         selectedButtonStyle={{ backgroundColor: colors.primary }}
         innerBorderStyle={{ color: colors.border }}
         containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: "0%",
-          backgroundColor: colors.card, borderColor: colors.border }}
+          marginVertical: '3%', width: '100%', marginLeft: '0%',
+          backgroundColor: colors.card, borderColor: colors.border,
+        }}
       />
-      <MyText opacity={0.5} fontSize='small'>{detailDescriptions[selectedIndexDetail]}</MyText>
+      <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
       <Divider width={10} />
 
       <MyText bold>Tone</MyText>
@@ -76,10 +78,11 @@ const options = () => {
         selectedButtonStyle={{ backgroundColor: colors.primary }}
         innerBorderStyle={{ color: colors.border }}
         containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: "0%",
-          backgroundColor: colors.card, borderColor: colors.border }}
+          marginVertical: '3%', width: '100%', marginLeft: '0%',
+          backgroundColor: colors.card, borderColor: colors.border,
+        }}
       />
-      <MyText opacity={0.5} fontSize='small'>{toneDescriptions[selectedIndexTone]}</MyText>
+      <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
       <Divider width={10} />
 
       <MyText bold>Format</MyText>
@@ -90,29 +93,32 @@ const options = () => {
         selectedButtonStyle={{ backgroundColor: colors.primary }}
         innerBorderStyle={{ color: colors.border }}
         containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: "0%",
-          backgroundColor: colors.card, borderColor: colors.border }}
+          marginVertical: '3%', width: '100%', marginLeft: '0%',
+          backgroundColor: colors.card, borderColor: colors.border,
+        }}
       />
-      <MyText opacity={0.5} fontSize='small'>{formatDescriptions[selectedIndexFormat]}</MyText>
+      <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
       <Divider width={10} />
 
       <MyText bold>Language</MyText>
-      <ButtonGroup
-        buttons={['English', 'Spanish', 'French', 'Arabic']}
-        selectedIndex={selectedIndexLanguage}
-        onPress={(value) => setSelectedIndexLanguage(value)}
-        selectedButtonStyle={{ backgroundColor: colors.primary }}
-        innerBorderStyle={{ color: colors.border }}
-        containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: "0%",
-          backgroundColor: colors.card, borderColor: colors.border }}
-      />
-      <MyText opacity={0.5} fontSize='small'>{languageDescriptions[selectedIndexLanguage]}</MyText>
+        <ButtonGroup
+          buttons={['English', 'Spanish', 'French', 'Arabic']}
+          selectedIndex={selectedIndexLanguage}
+          onPress={(value) => setSelectedIndexLanguage(value)}
+          selectedButtonStyle={{ backgroundColor: colors.primary }}
+          innerBorderStyle={{ color: colors.border }}
+          containerStyle={{
+            marginVertical: '3%', width:"100%", marginLeft: '0%',
+            backgroundColor: colors.card, borderColor: colors.border,
+          }}
+        />
+ 
+      <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
       <Divider width={30} />
 
       <View style={styles.buttonRow}>
         <MyButton width="30%" title="Apply" onPress={saveOptions} />
-        <MyButton width="30%" title="Done" onPress={router.back} disabled={!optionsApplied}/>
+        <MyButton width="30%" title="Done" onPress={router.back} disabled={!optionsApplied} />
       </View>
     </Page>
   );
