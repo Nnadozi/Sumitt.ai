@@ -5,7 +5,6 @@ import { useTheme } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
 import * as Clipboard from 'expo-clipboard';
 import { router } from 'expo-router';
-import * as Speech from "expo-speech"
 
 interface SavedSummaryProps {
   id: string;
@@ -46,10 +45,6 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
     }
   };
 
-  const handleSpeak = () => {
-      Speech.speak(summary)
-  };
-
   return (
     <View style={[styles.con, { borderColor: colors.border, backgroundColor: colors.card }]}>
       <MyText numberOfLines={1} fontSize='large' bold>{title}</MyText>
@@ -62,7 +57,6 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
           <Icon size={22} color={colors.primary} name="delete" onPress={handleDelete} />
           <Icon size={22} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
           <Icon size={22} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
-          <Icon size={22} color={colors.primary} name="volume-2" type='feather' onPress={handleSpeak} />
           <Icon size={22} color={colors.primary} name="expand" type='ionicon' onPress={handleExpand} />
       </View>
     </View>

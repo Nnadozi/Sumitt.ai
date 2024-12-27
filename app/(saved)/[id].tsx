@@ -6,7 +6,6 @@ import { router, useLocalSearchParams } from 'expo-router'
 import { Divider } from '@rneui/base'
 import { Icon } from '@rneui/base'
 import * as Clipboard from 'expo-clipboard';
-import * as Speech from "expo-speech"
 import { useTheme } from '@react-navigation/native'
 
 const SavedSummaryScreen = () => {
@@ -27,11 +26,6 @@ const SavedSummaryScreen = () => {
       }
   };
 
-  const handleSpeak = () => {
-    Speech.speak(summary.toString())
-  };
-  
-
   return (
     <Page style={{justifyContent:"flex-start", padding:'5%'}}>
       <Divider width={5}/>
@@ -41,7 +35,6 @@ const SavedSummaryScreen = () => {
       <View style = {styles.iconRow}>
         <Icon size={30} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
         <Icon size={30} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
-        <Icon size={30} color={colors.primary} name="volume-2" type='feather' onPress={handleSpeak} />
       </View>
     </Page>
   )
