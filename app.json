@@ -22,7 +22,7 @@
         "image": "./assets/images/splash.png",
         "resizeMode": "contain",
         "backgroundColor": "#6ad478",
-        "imageWidth": 1100
+        "imageWidth": 1000
       }
     },
     "web": {
@@ -37,7 +37,7 @@
         {
           "image": "./assets/images/splash.png",
           "backgroundColor": "#6ad478",
-          "imageWidth": 1100
+          "imageWidth": 1000
         }
       ],
       [
