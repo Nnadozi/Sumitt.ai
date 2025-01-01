@@ -147,11 +147,11 @@ const Summary = () => {
       ) : (
         <Animated.View style={[{ opacity: fadeAnim }, styles.myCon]}>
           <View style={styles.headerCon}>
+            <MyText bold fontSize="large">Summary</MyText>
             <View style = {{flexDirection:"row",width:"25%", justifyContent:"space-around"}}>
               <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
               <Icon size={25} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
             </View>
-            <MyText bold fontSize="large">Summary</MyText>
           </View>
           <ScrollView contentContainerStyle={{ paddingBottom: '20%' }}>
             <MyText markdown>{summary}</MyText>
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   headerCon: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     width: '100%',
     marginTop: '10%',
     marginBottom: '4%',
