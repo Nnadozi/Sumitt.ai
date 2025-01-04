@@ -1,4 +1,12 @@
-import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Animated,
+  ScrollView,
+  Share,
+  StyleSheet,
+  View,
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
@@ -11,17 +19,34 @@ import * as Clipboard from 'expo-clipboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
+import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
+
+const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8705039555355167/4122975239", {
+  requestNonPersonalizedAdsOnly: true,
+});
 
 const Summary = () => {
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [moduleVisible, setModuleVisible] = useState(false);
+  const [summaryCount, setSummaryCount] = useState(0); 
+  const fadeAnim = useState(new Animated.Value(0))[0];
 
   const { userInput, options } = useLocalSearchParams();
   const { colors } = useTheme();
 
-  const fadeAnim = useState(new Animated.Value(0))[0];
+  useEffect(() => {
+    interstitialAd.load();
+    const unsubscribe = interstitialAd.addAdEventListener(AdEventType.CLOSED, () => {
+      interstitialAd.load();
+    });
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    if (userInput) generateSummary();
+  }, [userInput]);
 
   const generateSummary = async () => {
     try {
@@ -32,41 +57,31 @@ const Summary = () => {
         return;
       }
 
-      fadeAnim.setValue(0);
       setLoading(true);
       setError(null);
-  
+      fadeAnim.setValue(0);
+
       const res = await fetch('https://sumitt.onrender.com/api/summarize', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userInput, 
-          options,  
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userInput, options }),
       });
-  
-      if (!res.ok) {
-        throw new Error('Failed to fetch summary from server');
-      }
-  
+
+      if (!res.ok) throw new Error('Failed to fetch summary from server');
+
       const data = await res.json();
       const summaryContent = data.choices?.[0]?.message?.content;
-  
-      if (!summaryContent) {
-        throw new Error('No summary content returned from server');
-      }
-  
+
+      if (!summaryContent) throw new Error('No summary content returned from server');
+
       setSummary(summaryContent);
       setLoading(false);
-  
+
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 1000,
         useNativeDriver: true,
       }).start();
-
     } catch (error) {
       console.error('Error generating summary:', error);
       setError('Something went wrong.');
@@ -74,23 +89,36 @@ const Summary = () => {
       setLoading(false);
     }
   };
-  
 
-  useEffect(() => {
-    if (userInput) {
-      generateSummary();
+  const showInterstitialAd = () => {
+    if (interstitialAd.loaded) {
+      interstitialAd.show();
+    } else {
+      console.log('Ad is not loaded yet.');
     }
-  }, [userInput]);
-
-  const handleCopy = () => {
-    Clipboard.setStringAsync(summary);
   };
+
+  const handleGoBack = () => {
+    setSummaryCount((prevCount) => {
+      const newCount = prevCount + 1;
+      if (newCount === 2) {
+        showInterstitialAd(); 
+        return 0; 
+      }
+      return newCount;
+    });
+
+    setSummary('');
+    setLoading(true);
+    setError(null);
+    router.navigate('/(tabs)');
+  };
+
+  const handleCopy = () => Clipboard.setStringAsync(summary);
 
   const handleShare = async () => {
     try {
-      const result = await Share.share({
-        message: summary,
-      });
+      await Share.share({ message: summary });
     } catch (error: any) {
       Alert.alert(error.message);
     }
@@ -106,29 +134,13 @@ const Summary = () => {
         month: '2-digit',
         day: '2-digit',
       });
-      const newSummary = {
-        summary,
-        timestamp: currentDate,
-      };
-
+      const newSummary = { summary, timestamp: currentDate };
       await AsyncStorage.setItem(name, JSON.stringify(newSummary));
-
       console.log(`Summary saved successfully with key: ${name}`);
+      handleGoBack();
     } catch (error) {
       console.error('Error saving summary:', error);
     }
-
-    setSummary('');
-    setLoading(true);
-    setError(null);
-    router.navigate('/(tabs)');
-  };
-
-  const handleGoBack = () => {
-    setSummary('');
-    setLoading(true);
-    setError(null);
-    router.navigate('/(tabs)');
   };
 
   return (
@@ -145,15 +157,15 @@ const Summary = () => {
           <MyButton width="50%" title="Go Back" onPress={handleGoBack} />
         </>
       ) : (
-        <Animated.View style={[{ opacity: fadeAnim }, styles.myCon]}>
-          <View style={styles.headerCon}>
+        <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
+          <View style={styles.headerContainer}>
             <MyText bold fontSize="large">Summary</MyText>
-            <View style = {{flexDirection:"row",width:"25%", justifyContent:"space-around"}}>
+            <View style={styles.iconRow}>
               <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
-              <Icon size={25} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
+              <Icon name="share" type="ionicon" size={25} color={colors.primary} onPress={handleShare} />
             </View>
           </View>
-          <ScrollView contentContainerStyle={{ paddingBottom: '20%' }}>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
             <MyText markdown>{summary}</MyText>
           </ScrollView>
           <View style={styles.buttonRow}>
@@ -162,7 +174,7 @@ const Summary = () => {
           </View>
           <NameModule
             visible={moduleVisible}
-            onPress={(name) => handleSave(name)}
+            onPress={handleSave}
             onCancel={() => setModuleVisible(false)}
           />
         </Animated.View>
@@ -174,17 +186,25 @@ const Summary = () => {
 export default Summary;
 
 const styles = StyleSheet.create({
-  myCon: {
+  container: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headerCon: {
+  headerContainer: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: '100%',
     marginTop: '10%',
     marginBottom: '4%',
+  },
+  iconRow: {
+    flexDirection: 'row',
+    width: '25%',
+    justifyContent: 'space-around',
+  },
+  scrollViewContent: {
+    paddingBottom: '20%',
   },
   buttonRow: {
     justifyContent: 'center',

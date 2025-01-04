@@ -45,7 +45,16 @@
         {
           "android": {
             "enableProguardInReleaseBuilds": true
+          },
+          "ios": {
+            "useFrameworks": "static"
           }
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-8705039555355167~1258865176"
         }
       ],
       "expo-secure-store"

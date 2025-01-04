@@ -4,8 +4,24 @@ import { StatusBar } from "expo-status-bar";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
 import { ThemeProvider } from "@react-navigation/native";
 import { MyDarkTheme } from "@/constants/Colors";
+import { useEffect } from "react";
+import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 
 export default function RootLayout() {
+
+  useEffect(() =>{
+    async function prepareAds(){
+      mobileAds().setRequestConfiguration({
+        maxAdContentRating:MaxAdContentRating.T,
+        tagForUnderAgeOfConsent: true
+      }).then(() => {
+        console.log("Ad setup done!")
+      })
+      mobileAds().initialize()
+    }
+    prepareAds()
+  },[])
+
   return (
     <SettingsProvider>
       <SafeAreaProvider>
