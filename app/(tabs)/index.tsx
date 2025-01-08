@@ -78,8 +78,8 @@ const Index = () => {
     <Page style={{ justifyContent: "flex-start" }}>
       {summaries.length > 0 && (
         <MyInput
-          style={{ marginTop: "5%", marginBottom: "3%", width: "90%" }}
-          placeholder="Search..."
+          style={{ marginTop: "7.5%", marginBottom: "3%", width: "90%" }}
+          placeholder="🔍 Search..."
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
           textAlignVertical="center"
@@ -96,7 +96,7 @@ const Index = () => {
           </MyText>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={{ marginTop: "5%", paddingBottom: "15%" }}>
+        <ScrollView contentContainerStyle={{ marginTop: "3%", paddingBottom: "15%" }}>
           {filteredSummaries.map((summary) => (
             <SavedSummary
               title={summary.id}

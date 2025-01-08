@@ -48,8 +48,8 @@ const NameModule = ({ visible, onPress, onCancel }: NameModuleProps) => {
             maxLength={25}
           />
           <View style={styles.buttonRow}>
-            <MyButton disabled = {!name} width="40%" title="Save" onPress={handleSave} />
-            <MyButton width="40%" title="Cancel" onPress={onCancel} />
+            <MyButton disabled = {!name} width="30%" title="Save" onPress={handleSave} />
+            <MyButton width="30%" title="Cancel" onPress={onCancel} />
           </View>
         </View>
       </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
+    backgroundColor: 'rgba(0, 0, 0, 0.20)',
   },
   con: {
     backgroundColor: 'white',
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-    gap: '5%',
+    gap: '03%',
     marginTop: '5%',
   },
 });

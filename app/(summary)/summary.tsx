@@ -147,7 +147,7 @@ const Summary = () => {
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
         <>
-          <MyText bold fontSize="large">Summarizing with AI...</MyText>
+          <MyText bold fontSize="large">Summarizing with AI</MyText>
           <ActivityIndicator size="large" color={colors.primary} style={{ marginVertical: '3%' }} />
         </>
       ) : error ? (
@@ -159,7 +159,7 @@ const Summary = () => {
       ) : (
         <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
           <View style={styles.headerContainer}>
-            <MyText bold fontSize="large">Summary</MyText>
+            <MyText bold fontSize="XL">Summary</MyText>
             <View style={styles.iconRow}>
               <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
               <Icon name="share" type="ionicon" size={25} color={colors.primary} onPress={handleShare} />
@@ -196,11 +196,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     marginTop: '10%',
-    marginBottom: '4%',
+    marginBottom: '3%',
   },
   iconRow: {
     flexDirection: 'row',
-    width: '25%',
+    width: '20%',
     justifyContent: 'space-around',
   },
   scrollViewContent: {
@@ -210,7 +210,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginVertical: '3%',
-    gap: '4%',
+    marginTop: '3%',
+    marginBottom: '5%',
+    gap: '3%',
   },
 });

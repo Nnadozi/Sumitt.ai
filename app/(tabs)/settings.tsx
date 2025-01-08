@@ -26,7 +26,7 @@ const Settings = () => {
         <Picker.Item label="Dark" value="dark" />
         <Picker.Item label="Device Settings" value="system" />
       </Picker>
-      <Divider width={5} />
+      <Divider width={3} />
       <View style={styles.row}>
         <MyText bold fontSize="large">Privacy Policy</MyText>
         <Icon

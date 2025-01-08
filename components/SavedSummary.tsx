@@ -49,7 +49,7 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
     <View style={[styles.con, { borderColor: colors.border, backgroundColor: colors.card }]}>
       <MyText numberOfLines={1} fontSize='large' bold>{title}</MyText>
       <View style = {styles.topRow}>
-        <Icon color={colors.primary}  name='calendar' type='feather' size={15} />
+        <Icon color={colors.primary}  name='calendar' type='feather' size={14} />
         <MyText bold fontSize='small' opacity={0.5} style={{marginVertical:"2%" }}>{timeStamp}</MyText>
       </View>
       <MyText numberOfLines={3}>{summary}</MyText>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   bottomRow: {
     flexDirection: 'row',
-    marginTop:"4%",
+    marginTop:"3%",
     marginBottom:"-5%",
     gap:"2%"
   },

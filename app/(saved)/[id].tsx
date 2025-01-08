@@ -44,12 +44,12 @@ export default SavedSummaryScreen
 
 const styles = StyleSheet.create({
   scrollContainer:{
-    marginBottom: "1%",
+    marginBottom: "2%",
   },
   iconRow: {
     alignSelf:"flex-end",
     flexDirection: 'row',
-    gap:"3%",
+    gap:"2%",
     margin:"2%"
   },
 })
