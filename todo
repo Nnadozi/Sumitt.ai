@@ -3,6 +3,7 @@ Frontend
 - Summary actions (flashcards, quizzes, etc)
 - Globally saved options
 - Feedback section in settings
+- Expo review API
 - Hide AdMob Ids
 
 Backend
@@ -10,14 +11,7 @@ Backend
 - Implement web scraping
 
 Promotion
-- QR Codes
-- Expo review API
-- Podcast
-- Online events
-- Get featured in articles
 - Social Media
-- Product Hunt
-
 
 Other
 - AdMob Verification
