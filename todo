@@ -1,19 +1,20 @@
+<=========================THIS WEEK=========================>
 Frontend
-- More options (ex: custom keywords)
-- Summary actions (flashcards, quizzes, etc)
-- Globally saved options
-- Feedback section in settings
-- Expo review API
-- Hide AdMob Ids
-
+    - Expo review API
+    - Hide AdMob Ids
 Backend
-- Improve generation
-- Implement web scraping
-
-Promotion
-- Social Media
-
+    - Improve generation
+Promtion
+    - Social Media
 Other
-- AdMob Verification
-- Make iOS build?
-
+    - Start iOS Build
+    
+<=========================LATER=========================>
+Frontend
+    - More options (ex: custom keywords)
+    - Summary actions (flashcards, quizzes, etc)
+    - Globally saved options
+Backend
+    - Implement web scraping
+Other
+    - AdMob Verification
