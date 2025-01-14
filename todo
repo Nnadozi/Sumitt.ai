@@ -4,6 +4,7 @@ Frontend
     - Hide AdMob Ids
     - URL warning
     - Fix expo connection thing
+    - update packages (crashing ?)
 Backend
     - Improve generation
 Promtion
