@@ -2,7 +2,6 @@ export const lengthDescriptions = [
   'Short: A quick, high-level summary of essential points.',
   'Medium: A balanced summary covering key details without excess.',
   'Long: A detailed summary with thorough coverage of important points.',
-  'Deep: An extensive, scrollable summary with comprehensive detail.'
 ];
 
 export const detailDescriptions = [

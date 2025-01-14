@@ -42,7 +42,7 @@ const options = () => {
 
       <MyText bold>Length</MyText>
       <ButtonGroup
-        buttons={['Short', 'Medium', 'Long', 'Deep']}
+        buttons={['Short', 'Medium', 'Long']}
         selectedIndex={selectedIndexLength}
         onPress={(value) => setSelectedIndexLength(value)}
         selectedButtonStyle={{ backgroundColor: colors.primary }}

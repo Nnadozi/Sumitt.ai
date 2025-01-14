@@ -5,6 +5,7 @@ import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
 import { router, useGlobalSearchParams } from 'expo-router';
 import MyInput from '@/components/MyInput';
+import MyText from '@/components/MyText';
 
 const Upload = () => {
   
@@ -77,6 +78,9 @@ const Upload = () => {
         selectedOption === "URL" ? (
           <>
             <MyInput height='10%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" multiline />
+            <MyText opacity = {0.5} fontSize='small' style={{marginVertical:'2%'}}>
+            Note: Please enter a valid URL containing readable text.
+            </MyText>
             <View style = {styles.buttonRow}>
                 <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='30%' />
                 <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='30%' />
