@@ -98,16 +98,15 @@ const Summary = () => {
     }
   };
 
-  const handleGoBack = () => {
+  const handleGoBack = async () => {
     setSummaryCount((prevCount) => {
       const newCount = prevCount + 1;
-      if (newCount === 2) {
+      if (newCount === 3) {
         showInterstitialAd(); 
         return 0; 
       }
       return newCount;
     });
-
     setSummary('');
     setLoading(true);
     setError(null);

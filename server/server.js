@@ -36,7 +36,7 @@ app.post('/api/summarize', async (req, res) => {
               4. DO NOT ask for clarification or additional details. Ensure the summary is always generated.
               5. DO NOT apologize.
               6. NEVER DISPLAY THE OPTIONS OBJECT
-              7. DO NOT use bold, italics, or ANY other type of markdown style.
+              7. Avoid using bold, italics, or ANY other type of markdown style.
               8. IF USING BULLET POINTS, DO NOT use dashes ( - ). ALWAYS use bullets instead ( • )
               Input Text:
               {userInput}`, },

@@ -114,7 +114,7 @@ const options = () => {
         />
  
       <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
-      <Divider width={30} />
+      <Divider width={20} />
 
       <View style={styles.buttonRow}>
         <MyButton width="30%" title="Apply" onPress={saveOptions} />

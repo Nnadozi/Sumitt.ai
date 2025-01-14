@@ -1,29 +1,29 @@
 export const lengthDescriptions = [
-  'Short: A quick, high-level summary of essential points.',
-  'Medium: A balanced summary covering key details without excess.',
-  'Long: A detailed summary with thorough coverage of important points.',
+  'Short: A compact summary with minimal words, providing only the essentials.',
+  'Medium: A moderately sized summary that balances brevity and coverage.',
+  'Long: A more extensive summary with a higher word count, capturing a wider scope.'
 ];
 
 export const detailDescriptions = [
-  'Low: Covers only the main points.',
-  'Medium: A balanced level of detail.',
-  'High: Thorough and in-depth with all relevant details.'
+  'Low: Focuses on broad strokes and high-level concepts with minimal detail.',
+  'Medium: Offers a balanced level of detail, covering key points without going too deep.',
+  'High: Delivers an in-depth and thorough explanation, including all relevant details.'
 ];
 
 export const toneDescriptions = [
-  'Casual: Informal and conversational tone.',
-  'Formal: Professional and neutral tone.',
+  'Casual: Informal and conversational.',
+  'Formal: Professional and neutral, suitable for official or academic purposes.'
 ];
 
 export const formatDescriptions = [
-  'Paragraphs: Flowing, continuous text.',
-  'Bullet Points: A list-based format using bullet points (•)',
-  'Mix: A blend of paragraphs and bullet points (•)'
+  'Paragraphs: Written as continuous flowing text for a narrative style.',
+  'Bullet Points: Structured as a clear list format using bullet points (•).',
+  'Mix: A combination of paragraphs and bullet points (•) for versatility.'
 ];
 
 export const languageDescriptions = [
-  'English: The default international language.',
-  'Spanish: Widely used in Spain, Latin America, and the U.S.',
-  'French: Spoken in France, Canada, and parts of Africa.',
-  'Arabic: Common across the Middle East and North Africa.',
+  'English: A global language commonly used for international communication.',
+  'Spanish: Widely spoken across Spain, Latin America, and parts of the U.S.',
+  'French: Frequently used in France, Canada, and several African regions.',
+  'Arabic: A major language across the Middle East and North Africa.'
 ];
