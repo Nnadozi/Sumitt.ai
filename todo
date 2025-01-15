@@ -11,6 +11,7 @@ Frontend
     - More options (ex: custom keywords)
     - Summary actions (flashcards, quizzes, etc)
     - Globally saved options
+    - Review API
 Backend
     - Implement web scraping
 Other
