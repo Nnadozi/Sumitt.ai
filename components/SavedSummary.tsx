@@ -70,10 +70,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: '2%',
     alignSelf: 'center',
-    width: '95%',
+    width: '96%',
     padding: '4%',
     paddingBottom: '10%',
-    borderRadius:10
   },
   topRow:{
     flexDirection:"row",
