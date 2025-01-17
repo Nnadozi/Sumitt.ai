@@ -12,7 +12,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSUserTrackingUsageDescription": "We use your data to provide a better and more personalized ad experience."
-      }
+      },
+      "bundleIdentifier": "com.nnadozi.Sumitt"
     },
     "android": {
       "adaptiveIcon": {
