@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "We use your data to provide a better and more personalized ad experience."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +27,7 @@
         "backgroundColor": "#6ad478",
         "imageWidth": 1000
       },
-      "playStoreUrl":"https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt"
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt"
     },
     "web": {
       "bundler": "metro",
@@ -55,10 +58,13 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "ca-app-pub-8705039555355167~1258865176"
+          "androidAppId": "ca-app-pub-8705039555355167~1258865176",
+          "iosAppId": "ca-app-pub-8705039555355167~9773596701",
+          "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-tracking-transparency"
     ],
     "experiments": {
       "typedRoutes": true

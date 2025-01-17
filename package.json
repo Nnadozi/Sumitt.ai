@@ -64,7 +64,8 @@
     "react-native-speech": "^0.1.2",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
-    "expo-store-review": "~8.0.1"
+    "expo-store-review": "~8.0.1",
+    "expo-tracking-transparency": "~5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

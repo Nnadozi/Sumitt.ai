@@ -1,12 +1,4 @@
-import {
-  ActivityIndicator,
-  Alert,
-  Animated,
-  ScrollView,
-  Share,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
@@ -21,7 +13,8 @@ import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8705039555355167/4122975239", {
+const id = Platform.OS === "android" ? "ca-app-pub-8705039555355167/4122975239": "ca-app-pub-8705039555355167/2618207901";
+const interstitialAd = InterstitialAd.createForAdRequest(id, {
   requestNonPersonalizedAdsOnly: true,
 });
 
