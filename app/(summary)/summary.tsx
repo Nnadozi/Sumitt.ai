@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform} from 'react-native';
+import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
@@ -31,11 +31,23 @@ const Summary = () => {
 
   useEffect(() => {
     interstitialAd.load();
-    const unsubscribe = interstitialAd.addAdEventListener(AdEventType.CLOSED, () => {
-      interstitialAd.load();
+    const unsubscribeOpened = interstitialAd.addAdEventListener(AdEventType.OPENED, () => {
+      if (Platform.OS === 'ios') {
+        StatusBar.setHidden(true); 
+      }
     });
-    return unsubscribe;
+    const unsubscribeClosed = interstitialAd.addAdEventListener(AdEventType.CLOSED, () => {
+      if (Platform.OS === 'ios') {
+        StatusBar.setHidden(false);
+      }
+      interstitialAd.load(); 
+    });
+    return () => {
+      unsubscribeOpened();
+      unsubscribeClosed();
+    };
   }, []);
+  
 
   useEffect(() => {
     if (userInput) generateSummary();

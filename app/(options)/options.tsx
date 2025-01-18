@@ -39,7 +39,6 @@ const options = () => {
 
   return (
     <Page style={{ alignItems: 'flex-start', justifyContent: 'flex-start', padding: '5%' }}>
-
       <MyText bold>Length</MyText>
       <ButtonGroup
         buttons={['Short', 'Medium', 'Long']}
@@ -54,7 +53,6 @@ const options = () => {
       />
       <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
       <Divider width={10} />
-
       <MyText bold>Detail</MyText>
       <ButtonGroup
         buttons={['Low', 'Medium', 'High']}
@@ -69,7 +67,6 @@ const options = () => {
       />
       <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
       <Divider width={10} />
-
       <MyText bold>Tone</MyText>
       <ButtonGroup
         buttons={['Casual', 'Formal']}
@@ -84,7 +81,6 @@ const options = () => {
       />
       <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
       <Divider width={10} />
-
       <MyText bold>Format</MyText>
       <ButtonGroup
         buttons={['Paragraphs', 'Bullet Points', 'Mix']}
@@ -99,7 +95,6 @@ const options = () => {
       />
       <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
       <Divider width={10} />
-
       <MyText bold>Language</MyText>
         <ButtonGroup
           buttons={['English', 'Spanish', 'French', 'Arabic']}
@@ -112,10 +107,8 @@ const options = () => {
             backgroundColor: colors.card, borderColor: colors.border,
           }}
         />
- 
       <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
       <Divider width={20} />
-
       <View style={styles.buttonRow}>
         <MyButton width="30%" title="Apply" onPress={saveOptions} />
         <MyButton width="30%" title="Done" onPress={router.back} disabled={!optionsApplied} />

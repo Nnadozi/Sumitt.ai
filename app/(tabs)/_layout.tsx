@@ -19,7 +19,7 @@ export default function MainNavigator() {
 
   return (
     <Tabs screenOptions={{ tabBarShowLabel: false, tabBarStyle: { paddingTop: "1%" }, 
-    headerShadowVisible:!useTheme().dark,headerTitleAlign:"left" }}>
+    headerShadowVisible:!useTheme().dark,headerTitleAlign:"center" }}>
       <Tabs.Screen name="index" options={screenOptions("history", "History")} />
       <Tabs.Screen
         name="upload"
