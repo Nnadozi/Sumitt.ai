@@ -13,7 +13,7 @@ import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-const id = Platform.OS === "android" ? "ca-app-pub-8705039555355167/4122975239": "ca-app-pub-8705039555355167/2618207901";
+const id = Platform.OS == "android" ? "ca-app-pub-8705039555355167/4122975239": "ca-app-pub-8705039555355167/2618207901";
 const interstitialAd = InterstitialAd.createForAdRequest(id, {
   requestNonPersonalizedAdsOnly: true,
 });
@@ -103,21 +103,6 @@ const Summary = () => {
     }
   };
 
-  const handleGoBack = async () => {
-    setSummaryCount((prevCount) => {
-      const newCount = prevCount + 1;
-      if (newCount === 3) {
-        showInterstitialAd(); 
-        return 0; 
-      }
-      return newCount;
-    });
-    setSummary('');
-    setLoading(true);
-    setError(null);
-    router.navigate('/(tabs)');
-  };
-
   const handleCopy = () => Clipboard.setStringAsync(summary);
 
   const handleShare = async () => {
@@ -145,6 +130,21 @@ const Summary = () => {
     } catch (error) {
       console.error('Error saving summary:', error);
     }
+  };
+
+  const handleGoBack = async () => {
+    setSummaryCount((prevCount) => {
+      const newCount = prevCount + 1;
+      if (newCount === 2) {
+        showInterstitialAd(); 
+        return 0; 
+      }
+      return newCount;
+    });
+    router.navigate('/(tabs)');
+    setSummary('');
+    setLoading(false);
+    setError(null);
   };
 
   return (

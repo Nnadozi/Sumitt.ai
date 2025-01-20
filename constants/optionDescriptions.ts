@@ -16,9 +16,9 @@ export const toneDescriptions = [
 ];
 
 export const formatDescriptions = [
-  'Paragraphs: Written as continuous flowing text for a narrative style.',
-  'Bullet Points: Structured as a clear list format using bullet points (•).',
-  'Mix: A combination of paragraphs and bullet points (•) for versatility.'
+  'Paragraphs: Written as continuous flowing blocks of text.',
+  'Bullet Points: Structured as a clear list format using bullet points.',
+  'Mix: A combination of paragraphs and bullet points for versatility.'
 ];
 
 export const languageDescriptions = [

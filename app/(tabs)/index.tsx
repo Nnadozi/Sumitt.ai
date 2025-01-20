@@ -90,14 +90,13 @@ const Index = () => {
     <Page style={{ justifyContent: "flex-start" }}>
       {summaries.length > 0 && (
         <MyInput
-          style={{ marginTop: "7.5%", marginBottom: "3%", width: "90%" }}
+          style={{ marginTop: "0%", width: "100%" ,borderRadius:0, borderBottomWidth:1,borderTopWidth:0}}
           placeholder="🔍 Search..."
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
           textAlignVertical="center"
         />
       )}
-
       {filteredSummaries.length === 0 ? (
         <View style={{ position: "absolute", top: "45%" }}>
           <MyText textAlign="center" style={{ opacity: 0.5 }}>

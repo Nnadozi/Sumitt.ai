@@ -77,7 +77,7 @@ const Upload = () => {
       {selectedOption ? (
         selectedOption === "URL" ? (
           <>
-            <MyInput height='10%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" multiline />
+            <MyInput height='7.5%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" textAlignVertical='top' />
             <MyText opacity = {0.5} fontSize='small' style={{marginVertical:'2%'}}>
             Note: Please enter a valid URL containing readable text.
             </MyText>

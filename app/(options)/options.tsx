@@ -1,4 +1,4 @@
-import { StyleSheet, ToastAndroid, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
 import React, { useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -39,76 +39,77 @@ const options = () => {
 
   return (
     <Page style={{ alignItems: 'flex-start', justifyContent: 'flex-start', padding: '5%' }}>
-      <MyText bold>Length</MyText>
-      <ButtonGroup
-        buttons={['Short', 'Medium', 'Long']}
-        selectedIndex={selectedIndexLength}
-        onPress={(value) => setSelectedIndexLength(value)}
-        selectedButtonStyle={{ backgroundColor: colors.primary }}
-        innerBorderStyle={{ color: colors.border }}
-        containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: '0%',
-          backgroundColor: colors.card, borderColor: colors.border,
-        }}
-      />
-      <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
-      <Divider width={10} />
-      <MyText bold>Detail</MyText>
-      <ButtonGroup
-        buttons={['Low', 'Medium', 'High']}
-        selectedIndex={selectedIndexDetail}
-        onPress={(value) => setSelectedIndexDetail(value)}
-        selectedButtonStyle={{ backgroundColor: colors.primary }}
-        innerBorderStyle={{ color: colors.border }}
-        containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: '0%',
-          backgroundColor: colors.card, borderColor: colors.border,
-        }}
-      />
-      <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
-      <Divider width={10} />
-      <MyText bold>Tone</MyText>
-      <ButtonGroup
-        buttons={['Casual', 'Formal']}
-        selectedIndex={selectedIndexTone}
-        onPress={(value) => setSelectedIndexTone(value)}
-        selectedButtonStyle={{ backgroundColor: colors.primary }}
-        innerBorderStyle={{ color: colors.border }}
-        containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: '0%',
-          backgroundColor: colors.card, borderColor: colors.border,
-        }}
-      />
-      <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
-      <Divider width={10} />
-      <MyText bold>Format</MyText>
-      <ButtonGroup
-        buttons={['Paragraphs', 'Bullet Points', 'Mix']}
-        selectedIndex={selectedIndexFormat}
-        onPress={(value) => setSelectedIndexFormat(value)}
-        selectedButtonStyle={{ backgroundColor: colors.primary }}
-        innerBorderStyle={{ color: colors.border }}
-        containerStyle={{
-          marginVertical: '3%', width: '100%', marginLeft: '0%',
-          backgroundColor: colors.card, borderColor: colors.border,
-        }}
-      />
-      <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
-      <Divider width={10} />
-      <MyText bold>Language</MyText>
+      <ScrollView>
+        <MyText bold>Length</MyText>
         <ButtonGroup
-          buttons={['English', 'Spanish', 'French', 'Arabic']}
-          selectedIndex={selectedIndexLanguage}
-          onPress={(value) => setSelectedIndexLanguage(value)}
+          buttons={['Short', 'Medium', 'Long']}
+          selectedIndex={selectedIndexLength}
+          onPress={(value) => setSelectedIndexLength(value)}
           selectedButtonStyle={{ backgroundColor: colors.primary }}
           innerBorderStyle={{ color: colors.border }}
           containerStyle={{
-            marginVertical: '3%', width:"100%", marginLeft: '0%',
+            marginVertical: '3%', width: '100%', marginLeft: '0%',
             backgroundColor: colors.card, borderColor: colors.border,
           }}
         />
-      <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
-      <Divider width={20} />
+        <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
+        <Divider width={10} color="rgba(0,0,0,0)" />
+        <MyText bold>Detail</MyText>
+        <ButtonGroup
+          buttons={['Low', 'Medium', 'High']}
+          selectedIndex={selectedIndexDetail}
+          onPress={(value) => setSelectedIndexDetail(value)}
+          selectedButtonStyle={{ backgroundColor: colors.primary }}
+          innerBorderStyle={{ color: colors.border }}
+          containerStyle={{
+            marginVertical: '3%', width: '100%', marginLeft: '0%',
+            backgroundColor: colors.card, borderColor: colors.border,
+          }}
+        />
+        <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
+        <Divider width={10} color="rgba(0,0,0,0)" />
+        <MyText bold>Tone</MyText>
+        <ButtonGroup
+          buttons={['Casual', 'Formal']}
+          selectedIndex={selectedIndexTone}
+          onPress={(value) => setSelectedIndexTone(value)}
+          selectedButtonStyle={{ backgroundColor: colors.primary }}
+          innerBorderStyle={{ color: colors.border }}
+          containerStyle={{
+            marginVertical: '3%', width: '100%', marginLeft: '0%',
+            backgroundColor: colors.card, borderColor: colors.border,
+          }}
+        />
+        <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
+        <Divider width={10} color="rgba(0,0,0,0)" />
+        <MyText bold>Format</MyText>
+        <ButtonGroup
+          buttons={['Paragraphs', 'Bullet Points', 'Mix']}
+          selectedIndex={selectedIndexFormat}
+          onPress={(value) => setSelectedIndexFormat(value)}
+          selectedButtonStyle={{ backgroundColor: colors.primary }}
+          innerBorderStyle={{ color: colors.border }}
+          containerStyle={{
+            marginVertical: '3%', width: '100%', marginLeft: '0%',
+            backgroundColor: colors.card, borderColor: colors.border,
+          }}
+        />
+        <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
+        <Divider width={10} color="rgba(0,0,0,0)" />
+        <MyText bold>Language</MyText>
+          <ButtonGroup
+            buttons={['English', 'Spanish', 'French', 'Arabic']}
+            selectedIndex={selectedIndexLanguage}
+            onPress={(value) => setSelectedIndexLanguage(value)}
+            selectedButtonStyle={{ backgroundColor: colors.primary }}
+            innerBorderStyle={{ color: colors.border }}
+            containerStyle={{
+              marginVertical: '3%', width:"100%", marginLeft: '0%',
+              backgroundColor: colors.card, borderColor: colors.border,
+            }}
+          />
+        <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
+      </ScrollView>
       <View style={styles.buttonRow}>
         <MyButton width="30%" title="Apply" onPress={saveOptions} />
         <MyButton width="30%" title="Done" onPress={router.back} disabled={!optionsApplied} />

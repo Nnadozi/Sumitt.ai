@@ -7,6 +7,7 @@ import { Divider } from '@rneui/base'
 import { Icon } from '@rneui/base'
 import * as Clipboard from 'expo-clipboard';
 import { useTheme } from '@react-navigation/native'
+import MyButton from '@/components/MyButton'
 
 const SavedSummaryScreen = () => {
   const {summary} = useLocalSearchParams()
@@ -28,13 +29,15 @@ const SavedSummaryScreen = () => {
 
   return (
     <Page style={{justifyContent:"flex-start", padding:'5%'}}>
-      <Divider width={5}/>
       <ScrollView style = {styles.scrollContainer}>
         <MyText markdown>{summary}</MyText>
       </ScrollView>
-      <View style = {styles.iconRow}>
-        <Icon size={30} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
-        <Icon size={30} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
+      <View style = {styles.bottomRow}>
+        <MyButton  title='Back' onPress={router.back}/>
+        <View style = {{ flexDirection: 'row'}}>
+          <Icon size={30} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
+          <Icon size={30} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
+        </View>
       </View>
     </Page>
   )
@@ -46,12 +49,13 @@ const styles = StyleSheet.create({
   scrollContainer:{
     marginBottom: "2%",
   },
-  iconRow: {
-    alignSelf:"flex-end",
+  bottomRow:{
+    width:"100%",
     flexDirection: 'row',
-    gap:"2%",
-    margin:"2%"
-  },
+    justifyContent:"space-between",
+    alignItems:"center",
+    marginBottom:'1%',
+  }
 })
 
 
