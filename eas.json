@@ -7,10 +7,7 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "environment": "development" ,
-      "ios": {
-        "enterpriseProvisioning": "universal"
-      }
+      "environment": "development" 
     },
     "preview": {
       "distribution": "internal",

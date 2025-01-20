@@ -13,8 +13,7 @@ import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-const id = Platform.OS == "android" ? "ca-app-pub-8705039555355167/4122975239": "ca-app-pub-8705039555355167/2618207901";
-const interstitialAd = InterstitialAd.createForAdRequest(id, {
+const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8705039555355167/4122975239", {
   requestNonPersonalizedAdsOnly: true,
 });
 

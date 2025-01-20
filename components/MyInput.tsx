@@ -48,9 +48,6 @@ const MyInput = (props: MyInputProps) => {
       keyboardType={props.keyboardType}
       textAlignVertical={props.textAlignVertical || "top"}
       maxLength={props.maxLength}
-      returnKeyType="done"
-      submitBehavior= {Platform.OS == "ios" ? "blurAndSubmit" : "newline"}
-
     />
   );
 };

@@ -5,13 +5,8 @@ export default function SavedNavigator() {
   const { id } = useLocalSearchParams();
 
   return (
-    <Stack screenOptions={{gestureEnabled:false}}>
-      <Stack.Screen name="[id]" options={{
-          title: id, 
-          headerTitleAlign:"center",
-          headerBackVisible:false,
-        }}
-      />
+    <Stack screenOptions={{gestureEnabled:false, headerBackVisible:true}}>
+      <Stack.Screen name="[id]" options={{title: id, headerTitleAlign:"center"}}/>
     </Stack>
   );
 }

@@ -33,8 +33,7 @@ const SavedSummaryScreen = () => {
         <MyText markdown>{summary}</MyText>
       </ScrollView>
       <View style = {styles.bottomRow}>
-        <MyButton  title='Back' onPress={router.back}/>
-        <View style = {{ flexDirection: 'row'}}>
+        <View style = {{ flexDirection: 'row', gap:'2%'}}>
           <Icon size={30} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
           <Icon size={30} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
         </View>
@@ -51,10 +50,8 @@ const styles = StyleSheet.create({
   },
   bottomRow:{
     width:"100%",
-    flexDirection: 'row',
-    justifyContent:"space-between",
-    alignItems:"center",
-    marginBottom:'1%',
+    alignItems:"flex-end",
+    marginVertical:"1%",
   }
 })
 
