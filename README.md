@@ -1,15 +1,5 @@
-## Installation and Setup Instructions
+# Sumitt
 
-Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
+Summit is your ultimate tool for quick, accurate text summaries. Designed for students, professionals, and avid readers, Sumitt simplifies information overload by condensing lengthy content into concise, easy-to-understand summaries. Powered by GPT-4, it ensures precision and saves you time.
 
-Installation:
-
-`npm install`  
-
-To Run Test Suite:  
-
-`npx expo start` 
-
-To Visit App: Scan QR from console
-
-**YOU NEED EXPO GO INSTALLED ON YOUR PHONE TO ACCESS**
+Download for Android: https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt
