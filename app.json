@@ -10,9 +10,6 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "infoPlist": {
-        "NSUserTrackingUsageDescription": "We use your data to provide a better and more personalized ad experience."
-      },
       "bundleIdentifier": "com.nnadozi.Sumitt"
     },
     "android": {
@@ -54,13 +51,6 @@
           "ios": {
             "useFrameworks": "static"
           }
-        }
-      ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-8705039555355167~1258865176",
-          "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
         }
       ],
       "expo-secure-store",
