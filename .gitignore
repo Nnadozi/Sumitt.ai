@@ -39,5 +39,5 @@ app-example
 
 #openai 
 .env
-eas.json
+
 
