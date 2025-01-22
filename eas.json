@@ -17,11 +17,7 @@
       "environment": "preview"
     },
     "production": {
-      "autoIncrement": true,
-      "environment": "production",
-      "env": {
-        "EXPO_PUBLIC_API_KEY": "xxxx"
-      }
+      "autoIncrement": true
     }
   },
   "submit": {
