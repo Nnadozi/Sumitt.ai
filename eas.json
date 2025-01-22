@@ -18,7 +18,10 @@
     },
     "production": {
       "autoIncrement": true,
-      "environment": "production"
+      "environment": "production",
+      "env": {
+        "EXPO_PUBLIC_API_KEY": "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"
+      }
     }
   },
   "submit": {
