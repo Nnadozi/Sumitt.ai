@@ -2,7 +2,7 @@
   "expo": {
     "name": "Sumitt",
     "slug": "Sumitt-1",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -10,9 +10,6 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "infoPlist": {
-        "NSUserTrackingUsageDescription": "We use your data to provide a better and more personalized ad experience."
-      },
       "bundleIdentifier": "com.nnadozi.Sumitt"
     },
     "android": {
@@ -59,8 +56,12 @@
       [
         "react-native-google-mobile-ads",
         {
+<<<<<<< HEAD
           "androidAppId": "ca-app-pub-8501095031703685~6672577950",
           "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+=======
+          "androidAppId": "ca-app-pub-8705039555355167~1258865176"
+>>>>>>> 789abdf4af75b58d1f245fb20517dabe5feeb19e
         }
       ],
       "expo-secure-store",
