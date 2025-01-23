@@ -13,7 +13,7 @@ import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8705039555355167/4122975239", {
+const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8501095031703685/3736822220", {
   requestNonPersonalizedAdsOnly: true,
 });
 
@@ -22,6 +22,7 @@ const Summary = () => {
   const [summary, setSummary] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [moduleVisible, setModuleVisible] = useState(false);
+  const [summaryCount, setSummaryCount] = useState(0); 
   const fadeAnim = useState(new Animated.Value(0))[0];
 
   const { userInput, options } = useLocalSearchParams();
@@ -63,31 +64,11 @@ const Summary = () => {
       setLoading(true);
       setError(null);
       fadeAnim.setValue(0);
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+
+      const res = await fetch('https://sumitt.onrender.com/api/summarize', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: [
-            { 
-              role: 'system',
-              content: `You are a professional summarizer. Your goal is to create a concise, meaningful, and complete summary of the provided text, no matter how short or random the input may be. Follow these guidelines:
-                1. ALWAYS SUMMARIZE BASED ON THE PROVIDED OPTIONS when available: ${options}.
-                2. ALWAYS generate a summary, even if the input text is just a word or lacks substantial details.
-                3. EVEN IF the input is too short or unclear, generate a thoughtful, complete response by providing context, interpretations, or relevant details to create a coherent summary.
-                4. DO NOT ask for clarification or additional details. Ensure the summary is always generated.
-                5. DO NOT apologize.
-                6. NEVER DISPLAY THE OPTIONS OBJECT
-                7. Avoid using bold, italics, or ANY other type of markdown style.
-                8. IF USING BULLET POINTS, DO NOT use dashes ( - ). ALWAYS use bullets instead ( • )
-                Input Text:
-                {userInput}`, },
-            { role: 'user', content: userInput },
-          ],
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userInput, options }),
       });
 
       if (!res.ok) throw new Error('Failed to fetch summary from server');
@@ -110,6 +91,14 @@ const Summary = () => {
       setError('Something went wrong.');
       setSummary('');
       setLoading(false);
+    }
+  };
+
+  const showInterstitialAd = () => {
+    if (interstitialAd.loaded) {
+      interstitialAd.show();
+    } else {
+      console.log('Ad is not loaded yet.');
     }
   };
 
@@ -143,6 +132,14 @@ const Summary = () => {
   };
 
   const handleGoBack = async () => {
+    setSummaryCount((prevCount) => {
+      const newCount = prevCount + 1;
+      if (newCount === 2) {
+        showInterstitialAd(); 
+        return 0; 
+      }
+      return newCount;
+    });
     router.navigate('/(tabs)');
     setSummary('');
     setLoading(false);
