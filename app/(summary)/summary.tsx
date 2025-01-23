@@ -13,7 +13,7 @@ import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 
-const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8705039555355167/4122975239", {
+const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8501095031703685/3736822220", {
   requestNonPersonalizedAdsOnly: true,
 });
 
@@ -30,21 +30,6 @@ const Summary = () => {
 
   useEffect(() => {
     interstitialAd.load();
-    const unsubscribeOpened = interstitialAd.addAdEventListener(AdEventType.OPENED, () => {
-      if (Platform.OS === 'ios') {
-        StatusBar.setHidden(true); 
-      }
-    });
-    const unsubscribeClosed = interstitialAd.addAdEventListener(AdEventType.CLOSED, () => {
-      if (Platform.OS === 'ios') {
-        StatusBar.setHidden(false);
-      }
-      interstitialAd.load(); 
-    });
-    return () => {
-      unsubscribeOpened();
-      unsubscribeClosed();
-    };
   }, []);
   
 
