@@ -73,11 +73,11 @@ const Upload = () => {
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: "flex-start", margin: "5%" }}>
       <InputType name='Manual Input' subtitle='Input text manually' selected={selectedOption === 'Manual Input'} onPress={() => handleSelectOption('Manual Input')} />
-      <InputType name='URL' subtitle='Input article URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
+      <InputType name='URL' subtitle='Paste Website URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
       {selectedOption ? (
         selectedOption === "URL" ? (
           <>
-            <MyInput height='7.5%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" textAlignVertical='top' />
+            <MyInput height='7.5%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Paste URL" textAlignVertical='top' />
             <MyText opacity = {0.5} fontSize='small' style={{marginVertical:'2%'}}>
             Note: Please enter a valid URL containing readable text.
             </MyText>

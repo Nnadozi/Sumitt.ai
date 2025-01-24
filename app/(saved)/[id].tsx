@@ -1,4 +1,4 @@
-import { Alert, ScrollView, Share, StyleSheet, View, } from 'react-native'
+import { Alert, Button, Platform, ScrollView, Share, StyleSheet, View, } from 'react-native'
 import React from 'react'
 import Page from '@/components/Page'
 import MyText from '@/components/MyText'
@@ -8,6 +8,7 @@ import { Icon } from '@rneui/base'
 import * as Clipboard from 'expo-clipboard';
 import { useTheme } from '@react-navigation/native'
 import MyButton from '@/components/MyButton'
+import Snackbar from 'react-native-snackbar'
 
 const SavedSummaryScreen = () => {
   const {summary} = useLocalSearchParams()
@@ -15,6 +16,12 @@ const SavedSummaryScreen = () => {
 
   const handleCopy = () => {
       Clipboard.setStringAsync(summary.toString());
+      if(Platform.OS === "ios"){
+        Snackbar.show({
+          text: 'Copied to clipboard',
+          duration: Snackbar.LENGTH_SHORT,
+        });
+      }
   };
   
   const handleShare = async () => {
@@ -37,6 +44,9 @@ const SavedSummaryScreen = () => {
           <Icon size={30} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
           <Icon size={30} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
         </View>
+        {Platform.OS === "ios" && (
+            <Button title='Back' onPress={router.back} color={colors.primary} />
+          )}
       </View>
     </Page>
   )
@@ -52,6 +62,8 @@ const styles = StyleSheet.create({
     width:"100%",
     alignItems:"flex-end",
     marginVertical:"1%",
+    flexDirection:"row-reverse",
+    justifyContent:"space-between"
   }
 })
 

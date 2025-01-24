@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import { Platform, ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
 import React, { useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -13,6 +13,7 @@ import {
   formatDescriptions,
   languageDescriptions 
 } from '../../constants/optionDescriptions';
+import Snackbar from 'react-native-snackbar';
 
 const options = () => {
   const [selectedIndexLength, setSelectedIndexLength] = useState(0);
@@ -33,6 +34,12 @@ const options = () => {
     router.setParams({ options: JSON.stringify(options) });
     setOptionsApplied(true);
     ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
+    if(Platform.OS === "ios"){
+      Snackbar.show({
+        text: 'Options applied!',
+        duration: Snackbar.LENGTH_SHORT
+      });
+    }
   };
 
   const { colors } = useTheme();
