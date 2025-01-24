@@ -1,9 +1,9 @@
 Frontend
     - Hide AdMob Ids
-    - More options (ex: custom keywords)
+    - More options (ex: custom keywords), maybe icons?
     - Summary actions (flashcards, quizzes, etc)
     - Globally saved options
-    - Review API
+    - Review API (or rate app section in settings)
     - Android 7.0 warning
 Backend
     - Implement web scraping
