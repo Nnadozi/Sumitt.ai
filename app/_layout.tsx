@@ -28,7 +28,6 @@ export default function RootLayout() {
         });
       mobileAds().initialize();
     }
-
     prepareAds();
   }, []);
 
