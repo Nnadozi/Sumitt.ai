@@ -4,7 +4,7 @@ Frontend
     - Summary actions (flashcards, quizzes, etc)
     - Globally saved options
     - Change review link for iOS
-    - Add language support?
+    - Add language support? + more summarization languages
 Backend
     - Implement web scraping
 Other
