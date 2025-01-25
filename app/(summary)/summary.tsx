@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf:"center",
     marginTop: '3%',
-    marginBottom: '7.5%',
-    gap: '5%',
+    marginBottom: '5%',
+    gap: '3%',
   },
 });

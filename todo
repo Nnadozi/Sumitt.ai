@@ -3,12 +3,10 @@ Frontend
     - More options (ex: custom keywords), maybe icons?
     - Summary actions (flashcards, quizzes, etc)
     - Globally saved options
-    - Review API (or rate app section in settings)
+    - Change review link for iOS
+    - Add language support?
 Backend
     - Implement web scraping
-Promtion
-    - Social Media
 Other
     - AdMob Verification
-    - Store banner
     - Upload to iOS Store

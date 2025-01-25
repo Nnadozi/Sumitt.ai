@@ -83,7 +83,7 @@ const options = () => {
           selectedButtonStyle={{ backgroundColor: colors.primary }}
           innerBorderStyle={{ color: colors.border }}
           containerStyle={{
-            marginVertical: '3%', width: '100%', marginLeft: '0%',
+            marginVertical: '3%', width: '100%', marginLeft: '0%', 
             backgroundColor: colors.card, borderColor: colors.border,
           }}
         />

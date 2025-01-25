@@ -5,19 +5,17 @@ import Page from "@/components/Page";
 import MyText from "@/components/MyText";
 import SavedSummary from "@/components/SavedSummary";
 import MyInput from "@/components/MyInput";
-import * as StoreReview from "expo-store-review";
 
 const Index = () => {
   const [summaries, setSummaries] = useState<Array<{ id: string; summary: string; timestamp: string }>>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSummaries, setFilteredSummaries] = useState(summaries);
-  const [reviewRequested, setReviewRequested] = useState(false);
 
   useEffect(() => {
     const loadSummaries = async () => {
       try {
         const allKeys = await AsyncStorage.getAllKeys();
-        const filteredKeys = allKeys.filter((key) => key !== "theme" && key !== "reviewRequested");
+        const filteredKeys = allKeys.filter((key) => key !== "theme");
         const summariesData = await Promise.all(
           filteredKeys.map(async (key) => {
             try {
@@ -38,24 +36,13 @@ const Index = () => {
         setSummaries(validSummaries);
         setFilteredSummaries(validSummaries);
 
-        const reviewFlag = await AsyncStorage.getItem("reviewRequested");
-        setReviewRequested(reviewFlag === "true");
-
-        if (validSummaries.length >= 3 && !reviewRequested) {
-          const hasAction = await StoreReview.hasAction();
-          if (hasAction) {
-            await StoreReview.requestReview();
-            await AsyncStorage.setItem("reviewRequested", "true");
-            setReviewRequested(true);
-          }
-        }
       } catch (error) {
         console.error("Error loading summaries:", error);
       }
     };
 
     loadSummaries();
-  }, [reviewRequested]);
+  }, []);
 
   useEffect(() => {
     setFilteredSummaries(

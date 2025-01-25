@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { Linking, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import Page from "@/components/Page";
 import MyText from "@/components/MyText";
 import { Divider, Icon, ButtonGroup } from "@rneui/base";
@@ -22,9 +22,15 @@ const Settings = () => {
     setTheme(selectedTheme);
   };
 
+  const typeStore = Platform.OS === "android" ? "Google Play Store" : "App Store"
+  const storeLink = Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt" : "https://testflight.apple.com/join/HwwVfrES"
+
   return (
     <Page style={styles.page}>
-      <MyText bold fontSize="large">Theme</MyText>
+      <View style = {styles.iconRow}>
+        <MyText bold fontSize="large">App Theme</MyText>
+        <Icon style={{marginHorizontal:"2%"}} name="sunny" size={20} color={resolvedTheme.colors.text}/>
+      </View>
       <MyText fontSize="small" opacity={0.5}>Customize your appearance</MyText>
       <ButtonGroup
         buttons={["Light", "Dark", "System"]}
@@ -40,28 +46,34 @@ const Settings = () => {
           borderColor: colors.border,
         }}
       />
-      <View style={styles.row}>
-        <MyText bold fontSize="large">Privacy Policy</MyText>
-        <Icon
-          name="external-link"
-          type="feather"
-          size={20}
-          color={resolvedTheme.colors.text}
-          onPress={() =>
-            Linking.openURL(
-              "https://www.termsfeed.com/live/cd0fe929-9586-4ec3-a520-92eb05b678be"
-            )
-          }
-        />
-      </View>
-      <MyText fontSize="small" opacity={0.5}>
-        Review Sumitt's privacy policy
-      </MyText>
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
+        Linking.openURL("https://www.termsfeed.com/live/cd0fe929-9586-4ec3-a520-92eb05b678be")}>
+        <View>
+          <View style = {styles.iconRow}>
+            <MyText bold fontSize="large">Privacy Policy</MyText>
+            <Icon style={{marginHorizontal:"3%"}} name="privacy-tip" size={19} color={resolvedTheme.colors.text}/>
+          </View>
+          <MyText fontSize="small" opacity={0.5}>Review Sumitt's privacy policy</MyText>
+        </View>
+        <Icon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
+      </TouchableOpacity>
       <Divider width={15} />
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
+        Linking.openURL(storeLink)}>
+        <View>
+          <View style = {styles.iconRow}>
+            <MyText bold fontSize="large">Rate Sumitt</MyText>
+            <Icon style={{marginHorizontal:"3%"}} name="star" size={23} color={resolvedTheme.colors.text}/>
+          </View>
+          <MyText fontSize="small" opacity={0.5}>Review on the {typeStore}</MyText>
+        </View>
+        <Icon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
+      </TouchableOpacity>
+      <Divider width={15} />
+      <View style = {styles.versionRow}>
       <MyText bold fontSize="large">Version</MyText>
-      <MyText opacity={0.5} fontSize="small">
-        {Version}
-      </MyText>
+      <MyText opacity={0.5}>{Version}</MyText>
+      </View>
     </Page>
   );
 };
@@ -78,5 +90,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: "2%",
     alignItems: "center",
+    justifyContent:"space-between",
+    width:"100%",
   },
+  iconRow:{
+    justifyContent:"flex-start",
+    alignItems:"center",
+    flexDirection: "row",
+  },
+  versionRow:{
+    flexDirection:"row", 
+    width:"100%",
+    alignItems:"center",
+    justifyContent:"space-between"
+  }
 });

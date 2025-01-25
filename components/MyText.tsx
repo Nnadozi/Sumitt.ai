@@ -17,7 +17,7 @@ interface TextProps {
 
 const fontSizes = {
   small: 12,
-  medium: 16,
+  medium: 15,
   large: 20,
   XL: 24,
 };

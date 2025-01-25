@@ -27,7 +27,7 @@ const MyButton = (props: ButtonProps) => {
          backgroundColor:colors.primary,
          opacity: props.disabled ? 0.25 : 1
           }]}>
-      <MyText numberOfLines={1} color='white' bold >{props.title}</MyText>
+      <MyText numberOfLines={1} color='white' bold fontSize='small' >{props.title}</MyText>
     </TouchableOpacity>
   );
 }
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignItems:"center",
     paddingVertical:"3%",
-    borderRadius:20
+    borderRadius:5
   }
 });
