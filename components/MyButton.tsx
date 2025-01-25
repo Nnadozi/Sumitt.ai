@@ -1,7 +1,8 @@
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useTheme } from '@react-navigation/native'
 import MyText from './MyText';
+import { Button } from '@rneui/base';
 
 interface ButtonProps {
   title: string;
@@ -10,25 +11,25 @@ interface ButtonProps {
   marginVertical?: string;
   marginTop?: string;
   disabled?: boolean;
+  iconName?: string;
 }
 
 const MyButton = (props: ButtonProps) => {
   const { colors } = useTheme();
 
   return (
-    <TouchableOpacity 
-      activeOpacity={0.75}
+    <Button 
+      activeOpacity={0.5}
       onPress={props.disabled ? () => {} : props.onPress}
-      disabled={props.disabled}
-      style={[ styles.con,{ 
-        width: props.width,
-         marginVertical: props.marginVertical, 
-         marginTop: props.marginTop, 
-         backgroundColor:colors.primary,
-         opacity: props.disabled ? 0.25 : 1
-          }]}>
-      <MyText numberOfLines={1} color='white' bold fontSize='small' >{props.title}</MyText>
-    </TouchableOpacity>
+      disabled = {props.disabled}
+      containerStyle = {{
+        width:props.width, marginVertical:props.marginVertical,
+        marginTop: props.marginTop
+      }}
+      buttonStyle = {{backgroundColor:colors.primary, borderRadius:0}}
+    >
+      <MyText style={{paddingVertical:"1.5%"}} numberOfLines={1} color={colors.background} bold fontSize='small' >{props.title}</MyText>
+    </Button>
   );
 }
 
@@ -42,3 +43,4 @@ const styles = StyleSheet.create({
     borderRadius:5
   }
 });
+

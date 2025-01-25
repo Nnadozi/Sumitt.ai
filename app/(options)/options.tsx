@@ -4,7 +4,7 @@ import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
 import { router } from 'expo-router';
 import MyText from '@/components/MyText';
-import { ButtonGroup, Divider } from '@rneui/base';
+import { ButtonGroup, Divider, Icon } from '@rneui/base';
 import { useTheme } from '@react-navigation/native';
 import { 
   lengthDescriptions, 
@@ -45,9 +45,12 @@ const options = () => {
   const { colors } = useTheme();
 
   return (
-    <Page style={{ alignItems: 'flex-start', justifyContent: 'flex-start', padding: '5%' }}>
+    <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
       <ScrollView>
-        <MyText bold>Length</MyText>
+        <View style = {styles.iconRow}>
+          <Icon name='ruler' type='entypo' color={colors.text} size={15} />
+          <MyText bold>Length</MyText>
+        </View>
         <ButtonGroup
           buttons={['Short', 'Medium', 'Long']}
           selectedIndex={selectedIndexLength}
@@ -61,7 +64,10 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <MyText bold>Detail</MyText>
+        <View style = {styles.iconRow}>
+          <Icon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
+          <MyText bold>Detail</MyText>
+        </View>
         <ButtonGroup
           buttons={['Low', 'Medium', 'High']}
           selectedIndex={selectedIndexDetail}
@@ -75,7 +81,10 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <MyText bold>Tone</MyText>
+        <View style = {styles.iconRow}>
+          <Icon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
+          <MyText bold>Tone</MyText>
+        </View>
         <ButtonGroup
           buttons={['Casual', 'Formal']}
           selectedIndex={selectedIndexTone}
@@ -89,7 +98,10 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <MyText bold>Format</MyText>
+        <View style = {styles.iconRow}>
+          <Icon name='book' type='entypo' color={colors.text} size={18} />
+          <MyText bold>Format</MyText>
+        </View>
         <ButtonGroup
           buttons={['Paragraphs', 'Bullet Points', 'Mix']}
           selectedIndex={selectedIndexFormat}
@@ -103,18 +115,23 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <MyText bold>Language</MyText>
+        <View style = {styles.iconRow}>
+          <Icon name='globe' type='entypo' color={colors.text} size={17} />
+          <MyText bold>Language {Platform.OS === "ios" ? "(Scroll)" : ""} </MyText>
+        </View>
+        <ScrollView persistentScrollbar horizontal contentContainerStyle={{width:"300%"}} >
           <ButtonGroup
-            buttons={['English', 'Spanish', 'French', 'Arabic']}
+            buttons={['English', 'Spanish', 'French', 'Arabic', 'German', 'Chinese', 'Hindi', 'Japaneese','Russian','Portuguese']}
             selectedIndex={selectedIndexLanguage}
             onPress={(value) => setSelectedIndexLanguage(value)}
             selectedButtonStyle={{ backgroundColor: colors.primary }}
             innerBorderStyle={{ color: colors.border }}
             containerStyle={{
-              marginVertical: '3%', width:"100%", marginLeft: '0%',
+              marginVertical: '1%', width:"100%", marginLeft: '0%',
               backgroundColor: colors.card, borderColor: colors.border,
             }}
           />
+        </ScrollView>
         <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
       </ScrollView>
       <View style={styles.buttonRow}>
@@ -133,5 +150,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: '4%',
+    marginBottom:"2%",
+    marginTop:"5%"
   },
+  iconRow:{
+    flexDirection:"row",
+    width:"100%",
+    alignItems: 'center',
+    gap:"2%"
+  }
 });

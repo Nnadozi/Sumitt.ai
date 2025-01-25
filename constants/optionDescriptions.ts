@@ -25,5 +25,12 @@ export const languageDescriptions = [
   'English: A global language commonly used for international communication.',
   'Spanish: Widely spoken across Spain, Latin America, and parts of the U.S.',
   'French: Frequently used in France, Canada, and several African regions.',
-  'Arabic: A major language across the Middle East and North Africa.'
+  'Arabic: A major language across the Middle East and North Africa.',
+  'German: Widely spoken in Germany, Austria, and parts of Switzerland.',
+  'Chinese: Primarily spoken in China and among Chinese communities worldwide.',
+  'Hindi: A major language spoken widely in India and among Indian communities abroad.',
+  'Japanese: Predominantly spoken in Japan and recognized globally for its cultural significance.',
+  'Russian: A widely spoken language in Russia, Eastern Europe, and Central Asia.',
+  'Portuguese: Commonly used in Portugal, Brazil, and several African countries.'
 ];
+
