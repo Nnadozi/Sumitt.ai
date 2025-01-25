@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar} from 'react-native';
+import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
@@ -12,8 +12,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
+import Snackbar from 'react-native-snackbar';
 
-const interstitialAd = InterstitialAd.createForAdRequest("ca-app-pub-8501095031703685/3736822220", {
+const id = Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986"
+const interstitialAd = InterstitialAd.createForAdRequest(id, {
   requestNonPersonalizedAdsOnly: true,
 });
 
@@ -102,8 +104,15 @@ const Summary = () => {
     }
   };
 
-  const handleCopy = () => Clipboard.setStringAsync(summary);
-
+  const handleCopy = () => {
+    Clipboard.setStringAsync(summary);
+    if(Platform.OS === "ios"){
+      Snackbar.show({
+        text: 'Copied to clipboard',
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    }
+  }
   const handleShare = async () => {
     try {
       await Share.share({ message: summary });
@@ -160,6 +169,8 @@ const Summary = () => {
           <MyButton width="50%" title="Go Back" onPress={handleGoBack} />
         </>
       ) : (
+        <>
+        <SafeAreaView style = {{backgroundColor:colors.background}} />
         <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
           <View style={styles.headerContainer}>
             <MyText bold fontSize="XL">Summary</MyText>
@@ -181,6 +192,7 @@ const Summary = () => {
             onCancel={() => setModuleVisible(false)}
           />
         </Animated.View>
+        </>
       )}
     </Page>
   );
@@ -198,7 +210,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: '100%',
-    marginTop: '10%',
+    marginTop: '7.5%',
     marginBottom: '3%',
   },
   iconRow: {
@@ -214,7 +226,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: '3%',
-    marginBottom: '5%',
+    marginBottom: '7.5%',
     gap: '3%',
   },
 });

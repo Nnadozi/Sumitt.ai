@@ -1,10 +1,11 @@
-import { StyleSheet, View, Modal, TouchableOpacity, ScrollView, Share, Alert } from 'react-native';
+import { StyleSheet, View, Modal, TouchableOpacity, ScrollView, Share, Alert, Platform } from 'react-native';
 import React, { useState } from 'react';
 import MyText from './MyText';
 import { useTheme } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
 import * as Clipboard from 'expo-clipboard';
 import { router } from 'expo-router';
+import Snackbar from 'react-native-snackbar';
 
 interface SavedSummaryProps {
   id: string;
@@ -23,6 +24,12 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
 
   const handleCopy = () => {
     Clipboard.setStringAsync(summary);
+    if(Platform.OS === "ios"){
+      Snackbar.show({
+        text: 'Copied to clipboard',
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    }
   };
 
   const handleExpand = () => {
@@ -54,10 +61,10 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
       </View>
       <MyText numberOfLines={3}>{summary}</MyText>
       <View style={styles.bottomRow}>
-          <Icon size={22} color={colors.primary} name="delete" onPress={handleDelete} />
-          <Icon size={22} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
-          <Icon size={22} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
-          <Icon size={22} color={colors.primary} name="expand" type='ionicon' onPress={handleExpand} />
+          <Icon size={24} color={colors.primary} name="delete" onPress={handleDelete} />
+          <Icon size={23} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
+          <Icon size={23} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
+          <Icon size={23} color={colors.primary} name="expand" type='ionicon' onPress={handleExpand} />
       </View>
     </View>
   );
