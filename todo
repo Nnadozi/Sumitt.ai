@@ -4,7 +4,7 @@ Frontend
     - Summary actions (flashcards, quizzes, etc)
     - Globally saved options
     - Review API (or rate app section in settings)
-    - Android 7.0 warning
+    - Buttons Issue
 Backend
     - Implement web scraping
 Promtion
@@ -12,4 +12,4 @@ Promtion
 Other
     - AdMob Verification
     - Store banner
-    - Attempt an iOS build
+    - Upload to iOS Store
