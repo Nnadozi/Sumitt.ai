@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-    gap: '03%',
+    gap: '3%',
     marginTop: '5%',
   },
 });

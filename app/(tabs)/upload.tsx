@@ -81,22 +81,22 @@ const Upload = () => {
             <MyText opacity = {0.5} fontSize='small' style={{marginVertical:'2%'}}>
             Note: Please enter a valid URL containing readable text.
             </MyText>
-            <View style = {styles.buttonRow}>
-                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='30%' />
-                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='30%' />
-                <MyButton title='Cancel' onPress={handleCancel} width='30%' />
+            <View style = {[styles.buttonRow]}>
+                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='32%' />
+                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='32%' />
+                <MyButton title='Cancel' onPress={handleCancel} width='32%' />
             </View>
           </>
         ) : (
           <>
             <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text" multiline maxLength={10000} />
             <View style = {styles.buttonRow}>
-                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='50%' />
-                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='50%' />
+                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='45%' />
+                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='45%' />
             </View>
             <View style = {styles.buttonRow}>
-              <MyButton title='Clear' onPress={() => setInputText('')} width='50%' />
-              <MyButton title='Cancel' onPress={handleCancel} width='50%' />
+              <MyButton title='Clear' onPress={() => setInputText('')} width='45%' />
+              <MyButton title='Cancel' onPress={handleCancel} width='45%' />
             </View>
           </>
         )
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     gap: '2%',
   },
   buttonRow:{
+    alignSelf:"center",
     justifyContent: "center",
     alignItems: "center",
     flexDirection:"row",

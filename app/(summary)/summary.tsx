@@ -183,8 +183,8 @@ const Summary = () => {
             <MyText markdown>{summary}</MyText>
           </ScrollView>
           <View style={styles.buttonRow}>
-            <MyButton width="30%" title="Save" onPress={() => setModuleVisible(true)} />
-            <MyButton width="30%" title="Ok" onPress={handleGoBack} />
+            <MyButton width="35%" title="Save" onPress={() => setModuleVisible(true)} />
+            <MyButton width="35%" title="Ok" onPress={handleGoBack} />
           </View>
           <NameModule
             visible={moduleVisible}
@@ -225,8 +225,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    alignSelf:"center",
     marginTop: '3%',
     marginBottom: '7.5%',
-    gap: '3%',
+    gap: '5%',
   },
 });

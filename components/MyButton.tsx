@@ -1,6 +1,7 @@
-import { Button, StyleSheet, View } from 'react-native'
+import { Button, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useTheme } from '@react-navigation/native'
+import MyText from './MyText';
 
 interface ButtonProps {
   title: string;
@@ -15,17 +16,29 @@ const MyButton = (props: ButtonProps) => {
   const { colors } = useTheme();
 
   return (
-    <View style={{ width: props.width, marginVertical: props.marginVertical, marginTop: props.marginTop }}>
-      <Button
-        color={props.disabled ? colors.gray : colors.primary}
-        title={props.title}
-        onPress={props.disabled ? () => {} : props.onPress}
-        disabled={props.disabled}
-      />
-    </View>
+    <TouchableOpacity 
+      activeOpacity={0.75}
+      onPress={props.disabled ? () => {} : props.onPress}
+      disabled={props.disabled}
+      style={[ styles.con,{ 
+        width: props.width,
+         marginVertical: props.marginVertical, 
+         marginTop: props.marginTop, 
+         backgroundColor:colors.primary,
+         opacity: props.disabled ? 0.25 : 1
+          }]}>
+      <MyText numberOfLines={1} color='white' bold >{props.title}</MyText>
+    </TouchableOpacity>
   );
 }
 
 export default MyButton
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  con:{
+    justifyContent:"center",
+    alignItems:"center",
+    paddingVertical:"3%",
+    borderRadius:20
+  }
+});
