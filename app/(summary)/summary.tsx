@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: '3%',
-    marginBottom: '5%',
+    marginBottom: '7.5%',
     gap: '3%',
   },
 });
