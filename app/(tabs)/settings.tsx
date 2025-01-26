@@ -39,7 +39,7 @@ const Settings = () => {
         selectedButtonStyle={{ backgroundColor: colors.primary }}
         innerBorderStyle={{ color: colors.border }}
         containerStyle={{
-          marginVertical: "5%",
+          marginVertical: "4%",
           width: "100%",
           marginLeft: "0%",
           backgroundColor: colors.card,

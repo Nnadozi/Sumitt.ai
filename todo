@@ -6,8 +6,11 @@ Frontend
     - Change review link for iOS
     - Add language support? 
     - URL validation indicator
+    - Video summarization
+    - Theme dropdown
 Backend
     - Implement web scraping
 Other
     - AdMob Verification
     - Upload to iOS Store
+    - New store art?
