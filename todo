@@ -8,6 +8,7 @@ Frontend
     - URL validation indicator
     - Video summarization
     - Theme dropdown
+    - Percentage based icon sizes
 Backend
     - Implement web scraping
 Other
