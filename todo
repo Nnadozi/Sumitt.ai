@@ -9,6 +9,7 @@ Frontend
     - Video summarization
     - Theme dropdown
     - Percentage based icon sizes
+    - Percentage based text
 Backend
     - Implement web scraping
 Other
