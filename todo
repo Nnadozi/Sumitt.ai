@@ -10,6 +10,8 @@ Frontend
     - Theme dropdown
     - Percentage based icon sizes
     - Percentage based text
+    - Summary bottom margin + options bottom margin
+    - Stupid iOS post summary bug
 Backend
     - Implement web scraping
 Other
