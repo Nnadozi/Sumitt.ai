@@ -6,15 +6,10 @@ Frontend
     - Globally saved options
     - Change review link for iOS
     - Add language support? 
-    - URL validation indicator
     - Video summarization
     - Theme dropdown
-    - Percentage based icon sizes
-    - Percentage based text
-    - Summary bottom margin + options bottom margin
-    - Stupid iOS post summary bug
 Backend
-    - Implement web scraping
+    - Implement proper web scraping
 Other
     - AdMob Verification
     - Upload to iOS Store

@@ -9,6 +9,7 @@ import * as Clipboard from 'expo-clipboard';
 import { useTheme } from '@react-navigation/native'
 import MyButton from '@/components/MyButton'
 import Snackbar from 'react-native-snackbar'
+import ResponsiveIcon from '@/components/ResponsiveIcon'
 
 const SavedSummaryScreen = () => {
   const {summary} = useLocalSearchParams()
@@ -40,9 +41,9 @@ const SavedSummaryScreen = () => {
         <MyText markdown>{summary}</MyText>
       </ScrollView>
       <View style = {styles.bottomRow}>
-        <View style = {{ flexDirection: 'row', gap:'2%'}}>
-          <Icon size={30} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
-          <Icon size={30} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
+        <View style = {{ flexDirection: 'row'}}>
+          <ResponsiveIcon primary size={30} name="copy" type="ionicon" onPress={handleCopy} />
+          <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />
         </View>
         {Platform.OS === "ios" && (
             <Button title='Back' onPress={router.back} color={colors.primary} />

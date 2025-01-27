@@ -6,17 +6,19 @@ import MyButton from '@/components/MyButton';
 import { router, useGlobalSearchParams } from 'expo-router';
 import MyInput from '@/components/MyInput';
 import MyText from '@/components/MyText';
+import { useTheme } from '@react-navigation/native';
 
 const Upload = () => {
-  
-  const [selectedOption, setSelectedOption] = useState<string | null>(null); 
-  const [inputText, setInputText] = useState("")
-  const [selectedOptions, setSelectedOptions] = useState<string | string[] | null>(null); 
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [inputText, setInputText] = useState('');
+  const [selectedOptions, setSelectedOptions] = useState<string | string[] | null>(null);
+  const [urlError, setUrlError] = useState<string | null>(null);
+  const [urlSuccess, setUrlSuccess] = useState<string | null>(null);
+  const [isCheckingUrl, setIsCheckingUrl] = useState(false);
 
-  const { options } = useGlobalSearchParams()
+  const { options } = useGlobalSearchParams();
   useEffect(() => {
     if (options) {
-      console.log(options)
       setSelectedOptions(options);
     }
   }, [options]);
@@ -24,111 +26,178 @@ const Upload = () => {
   const handleSelectOption = (option: string) => {
     if (selectedOption !== option) {
       setSelectedOption(option);
+      setInputText("")
+      setUrlError(null);
+      setUrlSuccess(null); 
+    }
+  };
+
+  const validateUrlAndContent = async (url: string) => {
+    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/;
+    if (!urlPattern.test(url)) {
+      setUrlError('Invalid URL format.');
+      setUrlSuccess(null);
+      return;
+    }
+
+    try {
+      setIsCheckingUrl(true);
+      setUrlError(null);
+      setUrlSuccess(null);
+
+      const response = await fetch(url, { method: 'HEAD' });
+      const contentType = response.headers.get('Content-Type');
+
+      if (!contentType || !contentType.includes('text/html')) {
+        setUrlError('The URL does not lead to a valid article or text-based page.');
+        setUrlSuccess(null);
+        return;
+      }
+
+      const htmlResponse = await fetch(url);
+      const html = await htmlResponse.text();
+
+      if (!/<p[^>]*>.*?<\/p>/.test(html)) {
+        setUrlError('The page does not contain sufficient text content.');
+        setUrlSuccess(null);
+        return;
+      }
+
+      setUrlError(null);
+      setUrlSuccess('The URL is valid and leads to a readable article.');
+    } catch (error) {
+      console.error('Error validating URL: ', error);
+      setUrlError('Unable to fetch content from the URL.');
+      setUrlSuccess(null);
+    } finally {
+      setIsCheckingUrl(false);
+    }
+  };
+
+  const handleUrlInputChange = async (text: string) => {
+    setInputText(text);
+    setUrlError(null);
+    setUrlSuccess(null); 
+    if (text.trim() !== '') {
+      await validateUrlAndContent(text.trim());
     }
   };
 
   const handleCancel = () => {
-    setSelectedOption(null);  
-    setInputText('');        
-    router.back();          
+    setSelectedOption(null);
+    setInputText('');
+    setUrlError(null);
+    setUrlSuccess(null);
+    router.back();
   };
 
   const generateSummary = async () => {
-    if (selectedOption === "URL") {
-      try {
-        const url = inputText;
-
-        const response = await fetch(url);
-        const html = await response.text();
-
-        const contentMatches = html.match(/<p[^>]*>(.*?)<\/p>|<h[1-6][^>]*>(.*?)<\/h[1-6]>|<li[^>]*>(.*?)<\/li>/g);
-
-        if (contentMatches) {
-          const pageContent = contentMatches
-            .map((match) => {
-              const cleanedText = match.replace(/<[^>]+>/g, '').trim();
-              return cleanedText;
-            })
-            .filter(Boolean) 
-            .join(' '); 
-
-          router.navigate({
-            pathname: "/(summary)/summary",
-            params: { userInput: pageContent, options: selectedOptions }
-          });
-        } else {
-          console.error('No relevant content found in the page');
-        }
-      } catch (error) {
-        console.error('Error scraping content: ', error);
-      }
-    } else {
-      router.navigate({
-        pathname: "/(summary)/summary",
-        params: { userInput: inputText, options: selectedOptions }
-      });
+    if (selectedOption === 'URL' && urlError) {
+      return;
     }
+    router.navigate({
+      pathname: '/(summary)/summary',
+      params: { userInput: inputText, options: selectedOptions },
+    });
   };
 
+  const {colors} = useTheme()
+
   return (
-    <Page style={{ justifyContent: 'flex-start', alignItems: "flex-start", margin: "5%" }}>
-      <InputType name='Manual Input' subtitle='Input text manually' selected={selectedOption === 'Manual Input'} onPress={() => handleSelectOption('Manual Input')} />
-      <InputType name='URL' subtitle='Paste Website URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
+    <Page style={{ justifyContent: 'flex-start', alignItems: 'flex-start', margin: '5%' }}>
+      <InputType
+        name="Manual Input"
+        subtitle="Input text manually"
+        selected={selectedOption === 'Manual Input'}
+        onPress={() => handleSelectOption('Manual Input')}
+      />
+      <InputType
+        name="URL"
+        subtitle="Paste Website / Article URL"
+        selected={selectedOption === 'URL'}
+        onPress={() => handleSelectOption('URL')}
+      />
       {selectedOption ? (
-        selectedOption === "URL" ? (
+        selectedOption === 'URL' ? (
           <>
-            <MyInput height='7.5%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Paste URL" textAlignVertical='top' />
-            <MyText opacity = {0.5} fontSize='small' style={{marginVertical:'2%'}}>
-            Note: Please enter a valid URL containing readable text.
+            <MyInput
+              height="7.5%"
+              value={inputText}
+              onChangeText={handleUrlInputChange}
+              placeholder="Paste URL"
+              textAlignVertical="top"
+            />
+            <MyText
+              fontSize="small"
+              style={{
+                marginVertical: '2%',
+                color: urlError ? 'red' : urlSuccess ? colors.primary : colors.text,
+              }}
+            >
+              {urlError
+                ? urlError
+                : urlSuccess
+                ? urlSuccess
+                : isCheckingUrl
+                ? 'Checking URL...'
+                : 'Please enter a valid URL containing readable text.'}
             </MyText>
-            <View style = {[styles.buttonRow]}>
-                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='32%' />
-                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='32%' />
-                <MyButton title='Cancel' onPress={handleCancel} width='32%' />
+            <View style={[styles.buttonRow]}>
+              <MyButton
+                disabled={!inputText || !!urlError || isCheckingUrl}
+                title="Summarize"
+                onPress={generateSummary}
+                width="32%"
+              />
+              <MyButton title="Options" onPress={() => router.navigate('/(options)/options')} width="32%" />
+              <MyButton title="Cancel" onPress={handleCancel} width="32%" />
             </View>
           </>
         ) : (
           <>
-            <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text" multiline maxLength={10000} />
-            <View style = {styles.buttonRow}>
-                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='45%' />
-                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='45%' />
+            <MyInput
+              height="50%"
+              value={inputText}
+              onChangeText={(text) => setInputText(text)}
+              placeholder="Enter text"
+              multiline
+              maxLength={10000}
+            />
+            <View style={styles.buttonRow}>
+              <MyButton
+                disabled={!inputText}
+                title="Summarize"
+                onPress={generateSummary}
+                width="45%"
+              />
+              <MyButton
+                title="Options"
+                onPress={() => router.navigate('/(options)/options')}
+                width="45%"
+              />
             </View>
-            <View style = {styles.buttonRow}>
-              <MyButton title='Clear' onPress={() => setInputText('')} width='45%' />
-              <MyButton title='Cancel' onPress={handleCancel} width='45%' />
+            <View style={styles.buttonRow}>
+              <MyButton title="Clear" onPress={() => setInputText('')} width="45%" />
+              <MyButton title="Cancel" onPress={handleCancel} width="45%" />
             </View>
           </>
         )
       ) : (
-        <MyButton title='Cancel' onPress={handleCancel} width="100%" marginVertical="3%" />
+        <MyButton title="Cancel" onPress={handleCancel} width="100%" marginVertical="3%" />
       )}
-  </Page>
+    </Page>
   );
 };
 
 export default Upload;
 
 const styles = StyleSheet.create({
-  textInput: {
-    borderWidth: 1,
-    borderRadius:10,
-    width: '100%',
-    padding: '3%',
-  },
-  button: {
-    width: '90%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+  buttonRow: {
+    alignSelf: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: '3%',
     gap: '2%',
   },
-  buttonRow:{
-    alignSelf:"center",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection:"row",
-    marginTop:"3%",
-    gap:"2%"
-  }
 });

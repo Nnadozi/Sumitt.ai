@@ -3,6 +3,7 @@ import React from 'react';
 import { useTheme } from '@react-navigation/native';
 import MyText from './MyText';
 import { Icon } from '@rneui/base';
+import ResponsiveIcon from './ResponsiveIcon';
 
 interface InputTypeProps {
     name?: string;
@@ -32,7 +33,7 @@ const InputType = (props: InputTypeProps) => {
           borderColor: props.selected ? colors.primary : colors.border }]} 
       onPress={props.onPress} 
     >
-        <Icon color={props.selected ? colors.card : colors.primary} size={30} name={iconName()} />
+        <ResponsiveIcon color={props.selected ? colors.card : colors.primary} size={30} name={iconName()} />
         <View style={styles.textCon}>
             <MyText style={{ color: props.selected ? colors.card : colors.text }} bold>{props.name}</MyText>
             <MyText style={{ color: props.selected ? colors.card : colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>

@@ -1,5 +1,5 @@
-import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
 import { useLocalSearchParams } from 'expo-router';
@@ -13,19 +13,22 @@ import NameModule from '@/components/NameModule';
 import * as NetInfo from '@react-native-community/netinfo';
 import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile-ads';
 import Snackbar from 'react-native-snackbar';
+import ResponsiveIcon from '@/components/ResponsiveIcon';
 
-const id = Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986"
+const id = Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986";
 const interstitialAd = InterstitialAd.createForAdRequest(id, {
   requestNonPersonalizedAdsOnly: true,
 });
 
 const Summary = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [moduleVisible, setModuleVisible] = useState(false);
-  const [summaryCount, setSummaryCount] = useState(0); 
+  const [summaryCount, setSummaryCount] = useState(0);
   const fadeAnim = useState(new Animated.Value(0))[0];
+  const [isProcessing, setIsProcessing] = useState(false);
+  const currentRequestId = useRef(0);
 
   const { userInput, options } = useLocalSearchParams();
   const { colors } = useTheme();
@@ -34,32 +37,36 @@ const Summary = () => {
     interstitialAd.load();
     const unsubscribeOpened = interstitialAd.addAdEventListener(AdEventType.OPENED, () => {
       if (Platform.OS === 'ios') {
-        StatusBar.setHidden(true); 
+        StatusBar.setHidden(true);
       }
     });
     const unsubscribeClosed = interstitialAd.addAdEventListener(AdEventType.CLOSED, () => {
       if (Platform.OS === 'ios') {
         StatusBar.setHidden(false);
       }
-      interstitialAd.load(); 
+      interstitialAd.load();
     });
     return () => {
       unsubscribeOpened();
       unsubscribeClosed();
     };
   }, []);
-  
 
   useEffect(() => {
     if (userInput) generateSummary();
   }, [userInput]);
 
   const generateSummary = async () => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+    const requestId = ++currentRequestId.current;
+
     try {
       const netInfo = await NetInfo.fetch();
       if (!netInfo.isConnected) {
         setError('No internet connection');
         setLoading(false);
+        setIsProcessing(false);
         return;
       }
 
@@ -80,19 +87,25 @@ const Summary = () => {
 
       if (!summaryContent) throw new Error('No summary content returned from server');
 
-      setSummary(summaryContent);
-      setLoading(false);
-
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
+      if (requestId === currentRequestId.current) {
+        setSummary(summaryContent);
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }).start();
+      }
     } catch (error) {
-      console.error('Error generating summary:', error);
-      setError('Something went wrong.');
-      setSummary('');
-      setLoading(false);
+      if (requestId === currentRequestId.current) {
+        console.error('Error generating summary:', error);
+        setError('Something went wrong.');
+        setSummary('');
+      }
+    } finally {
+      if (requestId === currentRequestId.current) {
+        setLoading(false);
+        setIsProcessing(false);
+      }
     }
   };
 
@@ -106,13 +119,14 @@ const Summary = () => {
 
   const handleCopy = () => {
     Clipboard.setStringAsync(summary);
-    if(Platform.OS === "ios"){
+    if (Platform.OS === 'ios') {
       Snackbar.show({
         text: 'Copied to clipboard',
         duration: Snackbar.LENGTH_SHORT,
       });
     }
-  }
+  };
+
   const handleShare = async () => {
     try {
       await Share.share({ message: summary });
@@ -144,15 +158,15 @@ const Summary = () => {
     setSummaryCount((prevCount) => {
       const newCount = prevCount + 1;
       if (newCount === 2) {
-        showInterstitialAd(); 
-        return 0; 
+        showInterstitialAd();
+        return 0;
       }
       return newCount;
     });
-    router.navigate('/(tabs)');
     setSummary('');
     setLoading(false);
     setError(null);
+    router.navigate('/(tabs)');
   };
 
   return (
@@ -170,35 +184,33 @@ const Summary = () => {
         </>
       ) : (
         <>
-        <SafeAreaView style = {{backgroundColor:colors.background}} />
-        <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
-          <View style={styles.headerContainer}>
-            <MyText bold fontSize="XL">Summary</MyText>
-            <View style={styles.iconRow}>
-              <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
-              <Icon name="share" type="ionicon" size={25} color={colors.primary} onPress={handleShare} />
+          <SafeAreaView style={{ backgroundColor: colors.background }} />
+          <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
+            <View style={styles.headerContainer}>
+              <MyText bold fontSize="XL">Summary</MyText>
+              <View style={styles.iconRow}>
+                <ResponsiveIcon name="copy" type="ionicon" size={25} primary={true} onPress={handleCopy} />
+                <ResponsiveIcon name="share" type="ionicon" size={25} primary={true} onPress={handleShare} />
+              </View>
             </View>
-          </View>
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <MyText markdown>{summary}</MyText>
-          </ScrollView>
-          <View style={styles.buttonRow}>
-            <MyButton width="35%" title="Save" onPress={() => setModuleVisible(true)} />
-            <MyButton width="35%" title="Ok" onPress={handleGoBack} />
-          </View>
-          <NameModule
-            visible={moduleVisible}
-            onPress={handleSave}
-            onCancel={() => setModuleVisible(false)}
-          />
-        </Animated.View>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+              <MyText markdown>{summary}</MyText>
+            </ScrollView>
+            <View style={styles.buttonRow}>
+              <MyButton width="35%" title="Save" onPress={() => setModuleVisible(true)} />
+              <MyButton width="35%" title="Ok" onPress={handleGoBack} />
+            </View>
+            <NameModule
+              visible={moduleVisible}
+              onPress={handleSave}
+              onCancel={() => setModuleVisible(false)}
+            />
+          </Animated.View>
         </>
       )}
     </Page>
   );
 };
-
-export default Summary;
 
 const styles = StyleSheet.create({
   container: {
@@ -215,7 +227,7 @@ const styles = StyleSheet.create({
   },
   iconRow: {
     flexDirection: 'row',
-    width: '20%',
+    width: '17.5%',
     justifyContent: 'space-around',
   },
   scrollViewContent: {
@@ -225,9 +237,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    alignSelf:"center",
+    alignSelf: 'center',
     marginTop: '3%',
-    marginBottom: '5%',
+    marginBottom: '8%',
     gap: '3%',
   },
 });
+
+export default Summary;

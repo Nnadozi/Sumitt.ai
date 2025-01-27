@@ -28,7 +28,7 @@ const MyButton = (props: ButtonProps) => {
       }}
       buttonStyle = {{backgroundColor:colors.primary, borderRadius:0}}
     >
-      <MyText style={{paddingVertical:"1.5%"}} numberOfLines={1} color={colors.background} bold fontSize='small' >{props.title}</MyText>
+      <MyText style={{paddingVertical:"1%",fontSize:13.5}} numberOfLines={1} color={colors.background} bold >{props.title}</MyText>
     </Button>
   );
 }

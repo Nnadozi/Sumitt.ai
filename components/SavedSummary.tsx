@@ -6,6 +6,7 @@ import { Icon } from '@rneui/base';
 import * as Clipboard from 'expo-clipboard';
 import { router } from 'expo-router';
 import Snackbar from 'react-native-snackbar';
+import ResponsiveIcon from './ResponsiveIcon';
 
 interface SavedSummaryProps {
   id: string;
@@ -61,10 +62,10 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
       </View>
       <MyText numberOfLines={3}>{summary}</MyText>
       <View style={styles.bottomRow}>
-          <Icon size={24} color={colors.primary} name="delete" onPress={handleDelete} />
-          <Icon size={23} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
-          <Icon size={23} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
-          <Icon size={23} color={colors.primary} name="expand" type='ionicon' onPress={handleExpand} />
+          <ResponsiveIcon primary size={24} name='delete' onPress={handleDelete} />
+          <ResponsiveIcon primary size={23} name="copy" type="ionicon" onPress={handleCopy} />
+          <ResponsiveIcon primary size={23} name="share" type='ionicon' onPress={handleShare} />
+          <ResponsiveIcon primary size={23} name="expand" type='ionicon' onPress={handleExpand} />
       </View>
     </View>
   );
@@ -90,6 +91,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop:"3%",
     marginBottom:"-5%",
-    gap:"2%"
+    gap:"1%"
   },
 });

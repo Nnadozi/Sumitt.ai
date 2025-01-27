@@ -7,6 +7,7 @@ import Version from "@/constants/Version";
 import { useNavigation } from "expo-router";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@react-navigation/native";
+import ResponsiveIcon from "@/components/ResponsiveIcon";
 
 const Settings = () => {
   const { theme, setTheme, resolvedTheme } = useSettings();
@@ -29,7 +30,7 @@ const Settings = () => {
     <Page style={styles.page}>
       <View style = {styles.iconRow}>
         <MyText bold fontSize="large">App Theme</MyText>
-        <Icon style={{marginHorizontal:"2%"}} name="sunny" size={20} color={resolvedTheme.colors.text}/>
+        <ResponsiveIcon style={{marginHorizontal:"2%"}} name="sunny" size={20} color={resolvedTheme.colors.text}/>
       </View>
       <MyText fontSize="small" opacity={0.5}>Customize your appearance</MyText>
       <ButtonGroup
@@ -51,11 +52,11 @@ const Settings = () => {
         <View>
           <View style = {styles.iconRow}>
             <MyText bold fontSize="large">Privacy Policy</MyText>
-            <Icon style={{marginHorizontal:"3%"}} name="privacy-tip" size={19} color={resolvedTheme.colors.text}/>
+            <ResponsiveIcon style={{marginHorizontal:"3%"}} name="privacy-tip" size={19} color={resolvedTheme.colors.text}/>
           </View>
           <MyText fontSize="small" opacity={0.5}>Review Sumitt's privacy policy</MyText>
         </View>
-        <Icon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
+        <ResponsiveIcon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
       </TouchableOpacity>
       <Divider width={15} />
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
@@ -63,16 +64,16 @@ const Settings = () => {
         <View>
           <View style = {styles.iconRow}>
             <MyText bold fontSize="large">Rate Sumitt</MyText>
-            <Icon style={{marginHorizontal:"3%"}} name="star" size={23} color={resolvedTheme.colors.text}/>
+            <ResponsiveIcon style={{marginHorizontal:"3%"}} name="star" size={23} color={resolvedTheme.colors.text}/>
           </View>
           <MyText fontSize="small" opacity={0.5}>Review on the {typeStore}</MyText>
         </View>
-        <Icon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
+        <ResponsiveIcon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
       </TouchableOpacity>
       <Divider width={15} />
       <View style = {styles.versionRow}>
-      <MyText bold fontSize="large">Version</MyText>
-      <MyText opacity={0.5}>{Version}</MyText>
+        <MyText bold fontSize="large">Version</MyText>
+        <MyText opacity={0.5}>{Version}</MyText>
       </View>
     </Page>
   );

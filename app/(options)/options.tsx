@@ -14,6 +14,7 @@ import {
   languageDescriptions 
 } from '../../constants/optionDescriptions';
 import Snackbar from 'react-native-snackbar';
+import ResponsiveIcon from '@/components/ResponsiveIcon';
 
 const options = () => {
   const [selectedIndexLength, setSelectedIndexLength] = useState(0);
@@ -48,7 +49,7 @@ const options = () => {
     <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
       <ScrollView>
         <View style = {styles.iconRow}>
-          <Icon name='ruler' type='entypo' color={colors.text} size={15} />
+          <ResponsiveIcon name='ruler' type='entypo' color={colors.text} size={15} />
           <MyText bold>Length</MyText>
         </View>
         <ButtonGroup
@@ -65,7 +66,7 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
         <View style = {styles.iconRow}>
-          <Icon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
+          <ResponsiveIcon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
           <MyText bold>Detail</MyText>
         </View>
         <ButtonGroup
@@ -82,7 +83,7 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
         <View style = {styles.iconRow}>
-          <Icon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
+          <ResponsiveIcon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
           <MyText bold>Tone</MyText>
         </View>
         <ButtonGroup
@@ -99,7 +100,7 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
         <View style = {styles.iconRow}>
-          <Icon name='book' type='entypo' color={colors.text} size={18} />
+          <ResponsiveIcon name='book' type='entypo' color={colors.text} size={18} />
           <MyText bold>Format</MyText>
         </View>
         <ButtonGroup
@@ -116,7 +117,7 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
         <View style = {styles.iconRow}>
-          <Icon name='globe' type='entypo' color={colors.text} size={17} />
+          <ResponsiveIcon name='globe' type='entypo' color={colors.text} size={17} />
           <MyText bold>Language {Platform.OS === "ios" ? "(Scroll)" : ""} </MyText>
         </View>
         <ScrollView persistentScrollbar horizontal contentContainerStyle={{width:"300%"}} >
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: '4%',
-    marginBottom:"2%",
+    marginBottom:"3%",
     marginTop:"5%"
   },
   iconRow:{
