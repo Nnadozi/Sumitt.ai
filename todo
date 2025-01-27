@@ -1,17 +1,20 @@
 Frontend
     - Hide AdMob IDs
-    - Make iOS ads work
     - More options (ex: custom keywords), maybe icons?
     - Summary actions (flashcards, quizzes, etc)
     - Globally saved options
-    - Change the review link for iOS
     - Add language support? 
     - Video summarization
     - Theme dropdown
-    - Fix post summary bug
 Backend
     - Implement proper web scraping
 Other
     - AdMob Verification
     - Upload to the iOS Store
     - New store art?
+
+
+After iOS Launch
+    - Fix post summary bug
+    - Change the review link for iOS
+    - Make iOS ads work
