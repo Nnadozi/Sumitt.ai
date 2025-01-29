@@ -8,6 +8,7 @@ Frontend
     - Theme dropdown
     - Fix post summary bug
     - Updates API
+    - Fix iOS keywords
 Backend
     - Implement proper web scraping
 Other
