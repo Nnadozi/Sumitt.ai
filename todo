@@ -7,6 +7,7 @@ Frontend
     - Video summarization
     - Theme dropdown
     - Fix post summary bug
+    - Updates API
 Backend
     - Implement proper web scraping
 Other
