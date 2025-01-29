@@ -16,9 +16,7 @@ import Snackbar from 'react-native-snackbar';
 import ResponsiveIcon from '@/components/ResponsiveIcon';
 
 const id = Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986";
-const interstitialAd = InterstitialAd.createForAdRequest(id, {
-  requestNonPersonalizedAdsOnly: true,
-});
+const interstitialAd = InterstitialAd.createForAdRequest(id);
 
 const Summary = () => {
   const [loading, setLoading] = useState(false);

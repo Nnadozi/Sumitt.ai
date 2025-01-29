@@ -6,13 +6,10 @@ Frontend
     - Add language support? 
     - Video summarization
     - Theme dropdown
+    - Fix post summary bug
 Backend
     - Implement proper web scraping
 Other
     - AdMob Verification
     - New store art
 
-After iOS Launch
-    - Fix post summary bug
-    - Change the review link for iOS
-    - Make iOS ads work

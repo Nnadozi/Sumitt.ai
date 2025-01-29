@@ -24,7 +24,7 @@ const Settings = () => {
   };
 
   const typeStore = Platform.OS === "android" ? "Google Play Store" : "App Store"
-  const storeLink = Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt" : "https://testflight.apple.com/join/HwwVfrES"
+  const storeLink = Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt" : "https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741008785"
 
   return (
     <Page style={styles.page}>
