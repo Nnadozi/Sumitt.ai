@@ -1,18 +1,24 @@
 Frontend
-    - Hide AdMob IDs
-    - More options (ex: custom keywords), maybe icons?
-    - Summary actions (flashcards, quizzes, etc)
-    - Globally saved options
-    - Add language support? 
-    - Video summarization
-    - Theme dropdown
-    - Fix post summary bug
-    - Updates API
-    - Fix iOS keywords
+    New Features
+        - More options, like custom keywords
+        - Summary actions (flashcards, quizzes, etc)
+        - Add language support
+        - Video summarization
+        - New loading GIF
+        - Add Updates API
+    Bug Fixes / Changes
+        - Globally saved options
+        - Fix post summary bug
+        - Fix iOS keywords
+        - Hide AdMob information
+        - Make theme a dropdown
+        - Package updates
 Backend
-    - Implement proper web scraping
-    - OpenAI SDK
-    - New model?
+    New Features
+        - Implement proper web scraping
+    Bug Fixes / Changes
+        - Try using the OpenAI SDK
+        - Start using a better moddel
 Other
     - AdMob Verification
     - Make sure test ads work
