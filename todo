@@ -11,7 +11,11 @@ Frontend
     - Fix iOS keywords
 Backend
     - Implement proper web scraping
+    - OpenAI SDK
+    - New model?
 Other
     - AdMob Verification
+    - Make sure test ads work
     - New store art
 
+NEXT VERSION: 1.2.0
