@@ -19,7 +19,6 @@ export const formatDescriptions = [
   'Paragraphs: A flowing, continuous narrative with detailed text.',
   'Bullet Points: Clear, concise list format highlighting main points.',
   'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
-  'Numbered List: A structured list format, ideal for ordered steps or sequences.',
 ];
 
 export const languageDescriptions = [

@@ -129,7 +129,7 @@ const options = () => {
           <MyText bold>Format</MyText>
         </View>
         <ButtonGroup
-          buttons={['Paragraphs', 'Bullet Points', 'Mix', 'Numbered List']}
+          buttons={['Paragraphs', 'Bullet Points', 'Mix']}
           selectedIndex={selectedIndexFormat}
           onPress={(value) => setSelectedIndexFormat(value)}
           selectedButtonStyle={{ backgroundColor: colors.primary }}
