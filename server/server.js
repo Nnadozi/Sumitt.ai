@@ -35,7 +35,7 @@ app.post('/api/summarize', async (req, res) => {
               3. Avoid asking for clarification. Instead, provide thoughtful context, interpretations, or additional details when necessary.
               4. Do not apologize or acknowledge unclear input.
               5. Never display or reference the options object in the response.
-              6. The only markdown styles allowed are bold and italics. Use when necessary.
+              6. Avoid using bold, italics, or ANY other type of markdown style.
               7. IF USING BULLET POINTS, DO NOT use dashes ( - ). ALWAYS use bullets instead ( • )`,
           },
           { role: 'user', content: userInput },
