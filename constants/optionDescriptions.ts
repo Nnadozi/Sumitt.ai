@@ -17,7 +17,7 @@ export const toneDescriptions = [
 
 export const formatDescriptions = [
   'Paragraphs: A flowing, continuous narrative with detailed text.',
-  'Bullet Points: A straightforward list that emphasizes key points."',
+  'Bullet Points: A straightforward list that emphasizes key points.',
   'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
 ];
 
