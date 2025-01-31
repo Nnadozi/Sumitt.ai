@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, StyleSheet, ScrollView, Alert } from "react-native";
+import { View, StyleSheet, ScrollView, Alert, ActivityIndicator, Image } from "react-native";
 import Page from "@/components/Page";
 import MyText from "@/components/MyText";
 import SavedSummary from "@/components/SavedSummary";
 import MyInput from "@/components/MyInput";
+import React from "react";
 
 const Index = () => {
   const [summaries, setSummaries] = useState<Array<{ id: string; summary: string; timestamp: string }>>([]);
@@ -14,8 +15,8 @@ const Index = () => {
   useEffect(() => {
     const loadSummaries = async () => {
       try {
-        const allKeys = await AsyncStorage.getAllKeys();
-        const filteredKeys = allKeys.filter((key) => key !== "theme");
+        const allKeys = await AsyncStorage.getAllKeys()
+        const filteredKeys = allKeys.filter((key) => key !== "theme" && key !== "summaryOptions");
         const summariesData = await Promise.all(
           filteredKeys.map(async (key) => {
             try {

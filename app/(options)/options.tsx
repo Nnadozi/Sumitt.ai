@@ -1,5 +1,5 @@
 import { Platform, ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
 import { router } from 'expo-router';
@@ -15,6 +15,7 @@ import {
 } from '../../constants/optionDescriptions';
 import Snackbar from 'react-native-snackbar';
 import ResponsiveIcon from '@/components/ResponsiveIcon';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const options = () => {
   const [selectedIndexLength, setSelectedIndexLength] = useState(0);
@@ -24,7 +25,27 @@ const options = () => {
   const [selectedIndexLanguage, setSelectedIndexLanguage] = useState(0);
   const [optionsApplied, setOptionsApplied] = useState(false);
 
-  const saveOptions = () => {
+  useEffect(() => {
+    const loadOptions = async () => {
+      try {
+        const savedOptions = await AsyncStorage.getItem('summaryOptions');
+        if (savedOptions) {
+          const parsedOptions = JSON.parse(savedOptions);
+          setSelectedIndexLength(lengthDescriptions.indexOf(parsedOptions.length));
+          setSelectedIndexDetail(detailDescriptions.indexOf(parsedOptions.detail));
+          setSelectedIndexTone(toneDescriptions.indexOf(parsedOptions.tone));
+          setSelectedIndexFormat(formatDescriptions.indexOf(parsedOptions.format));
+          setSelectedIndexLanguage(languageDescriptions.indexOf(parsedOptions.language));
+        }
+      } catch (error) {
+        console.error('Error loading options:', error);
+      }
+    };
+    
+    loadOptions();
+  }, []);
+  
+  const saveOptions = async () => {
     const options = {
       length: lengthDescriptions[selectedIndexLength],
       detail: detailDescriptions[selectedIndexDetail],
@@ -32,14 +53,18 @@ const options = () => {
       format: formatDescriptions[selectedIndexFormat],
       language: languageDescriptions[selectedIndexLanguage],
     };
-    router.setParams({ options: JSON.stringify(options) });
-    setOptionsApplied(true);
-    ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
-    if(Platform.OS === "ios"){
-      Snackbar.show({
-        text: 'Options applied!',
-        duration: Snackbar.LENGTH_SHORT
-      });
+    try {
+      await AsyncStorage.setItem('summaryOptions', JSON.stringify(options));
+      setOptionsApplied(true);
+      ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
+      if (Platform.OS === 'ios') {
+        Snackbar.show({
+          text: 'Options applied!',
+          duration: Snackbar.LENGTH_SHORT,
+        });
+      }
+    } catch (error) {
+      console.error('Error saving options:', error);
     }
   };
 
@@ -104,7 +129,7 @@ const options = () => {
           <MyText bold>Format</MyText>
         </View>
         <ButtonGroup
-          buttons={['Paragraphs', 'Bullet Points', 'Mix']}
+          buttons={['Paragraphs', 'Bullet Points', 'Mix', 'Numbered List']}
           selectedIndex={selectedIndexFormat}
           onPress={(value) => setSelectedIndexFormat(value)}
           selectedButtonStyle={{ backgroundColor: colors.primary }}

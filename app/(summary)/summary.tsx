@@ -71,7 +71,6 @@ const Summary = () => {
       setLoading(true);
       setError(null);
       fadeAnim.setValue(0);
-
       const res = await fetch('https://sumitt-wpst.onrender.com/api/summarize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

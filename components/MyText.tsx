@@ -37,7 +37,7 @@ const MyText = ({
 
   const markdownStyles = {
     body: {
-      color, 
+      color:useTheme().colors.text, 
       fontSize: fontSizes[fontSize],
     },
   };

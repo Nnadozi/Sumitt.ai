@@ -1,24 +1,25 @@
 export const lengthDescriptions = [
-  'Short: A compact summary with minimal words, providing only the essentials.',
-  'Medium: A moderately sized summary that balances brevity and coverage.',
-  'Long: A more extensive summary with a higher word count, capturing a wider scope.'
+  'Short: A brief summary, focusing on the core message with minimal words.',
+  'Medium: A balanced summary, providing enough detail to cover key points without excess.',
+  'Long: A comprehensive summary that delves deeper, offering thorough coverage of the topic.'
 ];
 
 export const detailDescriptions = [
-  'Low: Focuses on broad strokes and high-level concepts with minimal detail.',
-  'Medium: Offers a balanced level of detail, covering key points without going too deep.',
-  'High: Delivers an in-depth and thorough explanation, including all relevant details.'
+  'Low: A high-level overview, capturing essential concepts with minimal detail.',
+  'Medium: A well-rounded summary, highlighting key points with sufficient detail.',
+  'High: A detailed and thorough explanation, including all relevant information and nuances.'
 ];
 
 export const toneDescriptions = [
-  'Casual: Informal and conversational.',
-  'Formal: Professional and neutral, suitable for official or academic purposes.'
+  'Casual: Friendly, informal, and conversational in tone.',
+  'Formal: Professional, neutral, and suitable for academic or business contexts.'
 ];
 
 export const formatDescriptions = [
-  'Paragraphs: Written as continuous flowing blocks of text.',
-  'Bullet Points: Structured as a clear list format using bullet points.',
-  'Mix: A combination of paragraphs and bullet points for versatility.'
+  'Paragraphs: A flowing, continuous narrative with detailed text.',
+  'Bullet Points: Clear, concise list format highlighting main points.',
+  'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
+  'Numbered List: A structured list format, ideal for ordered steps or sequences.',
 ];
 
 export const languageDescriptions = [

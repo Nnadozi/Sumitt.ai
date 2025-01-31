@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
@@ -7,6 +7,8 @@ import { router, useGlobalSearchParams } from 'expo-router';
 import MyInput from '@/components/MyInput';
 import MyText from '@/components/MyText';
 import { useTheme } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from 'expo-router';
 
 const Upload = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -16,13 +18,22 @@ const Upload = () => {
   const [urlSuccess, setUrlSuccess] = useState<string | null>(null);
   const [isCheckingUrl, setIsCheckingUrl] = useState(false);
 
-  const { options } = useGlobalSearchParams();
-  useEffect(() => {
-    if (options) {
-      setSelectedOptions(options);
+  const fetchOptions = async () => {
+    try {
+      const storedOptions = await AsyncStorage.getItem('summaryOptions');
+      if (storedOptions) {
+        setSelectedOptions(storedOptions);
+      }
+    } catch (error) {
+      console.error('Error fetching options:', error);
     }
-  }, [options]);
-
+  };
+  useFocusEffect(
+    useCallback(() => {
+      fetchOptions();
+    }, [])
+  );
+  
   const handleSelectOption = (option: string) => {
     if (selectedOption !== option) {
       setSelectedOption(option);

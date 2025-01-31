@@ -1,24 +1,20 @@
 Frontend
     New Features
-        - More options, like custom keywords
+        - Mukti row options
         - Summary actions (flashcards, quizzes, etc)
         - Add language support
         - Video summarization
         - New loading GIF
         - Add Updates API
     Bug Fixes / Changes
-        - Globally saved options
         - Fix post summary bug
         - Fix iOS keywords
         - Hide AdMob information
         - Make theme a dropdown
-        - Package updates
 Backend
     New Features
         - Implement proper web scraping
     Bug Fixes / Changes
-        - Try using the OpenAI SDK
-        - Start using a better moddel
 Other
     - AdMob Verification
     - Make sure test ads work

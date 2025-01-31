@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Linking, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Linking, Platform, StyleSheet, TouchableOpacity, View, Image} from "react-native";
 import Page from "@/components/Page";
 import MyText from "@/components/MyText";
 import { Divider, Icon, ButtonGroup } from "@rneui/base";
@@ -8,6 +8,7 @@ import { useNavigation } from "expo-router";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@react-navigation/native";
 import ResponsiveIcon from "@/components/ResponsiveIcon";
+import {Dropdown} from "react-native-element-dropdown"
 
 const Settings = () => {
   const { theme, setTheme, resolvedTheme } = useSettings();
@@ -25,6 +26,17 @@ const Settings = () => {
 
   const typeStore = Platform.OS === "android" ? "Google Play Store" : "App Store"
   const storeLink = Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt" : "https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741008785"
+
+  const data = [
+    { label: 'Item 1', value: '1' },
+    { label: 'Item 2', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+    { label: 'Item 7', value: '7' },
+    { label: 'Item 8', value: '8' },
+  ];
 
   return (
     <Page style={styles.page}>
