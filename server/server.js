@@ -36,7 +36,7 @@ app.post('/api/summarize', async (req, res) => {
               4. Do not apologize or acknowledge unclear input.
               5. Never display or reference the options object in the response.
               6. Only use markdown formatting (bold, italics, etc.) when necessary.
-              7. When using bullet points, use the bullet symbol (•) instead of dashes.`,
+              7. IF USING BULLET POINTS, DO NOT use dashes ( - ). ALWAYS use bullets instead ( • )`,
           },
           { role: 'user', content: userInput },
         ],
