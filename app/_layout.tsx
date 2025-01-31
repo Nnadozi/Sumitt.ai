@@ -7,6 +7,7 @@ import { MyDarkTheme } from "@/constants/Colors";
 import { useEffect } from "react";
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import React from "react";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -29,6 +30,11 @@ export default function RootLayout() {
       mobileAds().initialize();
     }
     prepareAds();
+
+    async function checkForUpdates(){
+
+    }
+    checkForUpdates()
   }, []);
 
   return (

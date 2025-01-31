@@ -1,15 +1,10 @@
 Frontend
     New Features
-        - Multi row options
         - Summary actions (flashcards, quizzes, etc)
-        - Bullet points and markdwon problem
         - Add language support
         - Video summarization
-        - New loading GIF
-        - Add Updates API
+         - Add Updates API
     Bug Fixes / Changes
-        - Fix post summary bug
-        - Fix iOS keywords
         - Hide AdMob information
         - Make theme a dropdown
 Backend
@@ -22,3 +17,9 @@ Other
     - New store art
 
 NEXT VERSION: 1.2.0
+ - Fix post summary bug
+ - Bullet points and markdwon problem
+ - Multi row options
+ - New loading GIF
+
+
