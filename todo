@@ -10,6 +10,7 @@ Frontend
         - Hide AdMob information
         - Make theme a dropdown
         - Summary bug if still there
+        - Ad serving: 2 to 3
 Backend
     New Features
         - Implement proper web scraping
