@@ -25,8 +25,6 @@ const Summary = () => {
   const [moduleVisible, setModuleVisible] = useState(false);
   const [summaryCount, setSummaryCount] = useState(0);
   const fadeAnim = useState(new Animated.Value(0))[0];
-  const [isProcessing, setIsProcessing] = useState(false);
-  const currentRequestId = useRef(0);
 
   const { userInput, options } = useLocalSearchParams();
   const { colors } = useTheme();
@@ -55,21 +53,15 @@ const Summary = () => {
   }, [userInput]);
 
   const generateSummary = async () => {
-    if (isProcessing) return;
-    setIsProcessing(true);
-    const requestId = ++currentRequestId.current;
-
     try {
       const netInfo = await NetInfo.fetch();
       if (!netInfo.isConnected) {
         setError('No internet connection');
         setLoading(false);
-        setIsProcessing(false);
         return;
       }
-
       setLoading(true);
-      setError(null);
+      setError('');
       fadeAnim.setValue(0);
       const res = await fetch('http://sumitt-wpst.onrender.com/api/summarize', {
         method: 'POST',
@@ -82,27 +74,24 @@ const Summary = () => {
       const data = await res.json();
       const summaryContent = data.choices?.[0]?.message?.content;
 
-      if (!summaryContent) throw new Error('No summary content returned from server');
-
-      if (requestId === currentRequestId.current) {
+      if (!summaryContent) {
+        setError('Failed to generate a summary');
         setSummary(summaryContent);
-        Animated.timing(fadeAnim, {
+        return;
+      }
+      
+      setSummary(summaryContent);
+      Animated.timing(fadeAnim, {
           toValue: 1,
           duration: 1000,
           useNativeDriver: true,
-        }).start();
-      }
+      }).start();
     } catch (error) {
-      if (requestId === currentRequestId.current) {
         console.error('Error generating summary:', error);
         setError('Something went wrong.');
         setSummary('');
-      }
     } finally {
-      if (requestId === currentRequestId.current) {
-        setLoading(false);
-        setIsProcessing(false);
-      }
+      setLoading(false);
     }
   };
 

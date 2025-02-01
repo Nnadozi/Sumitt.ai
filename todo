@@ -3,21 +3,20 @@ Frontend
         - Summary actions (flashcards, quizzes, etc)
         - Add language support
         - Video summarization
-         - Add Updates API
+        - Add Updates API
+        - Multi row options and more options
+        - New activity indicator
     Bug Fixes / Changes
         - Hide AdMob information
         - Make theme a dropdown
+        - Summary bug if still there
 Backend
     New Features
         - Implement proper web scraping
     Bug Fixes / Changes
 Other
     - AdMob Verification
-    - Make sure test ads work
+    - Fix invalid ad requests
     - New store art
-
-NEXT VERSION: 1.2.0
- - Fix post summary bug
- - New loading GIF
 
 

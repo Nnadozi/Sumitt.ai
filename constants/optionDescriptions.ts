@@ -1,7 +1,7 @@
 export const lengthDescriptions = [
   'Short: A brief summary, focusing on the core message with minimal words.',
   'Medium: A balanced summary, providing enough detail to cover key points without excess.',
-  'Long: A comprehensive summary that delves deeper, offering thorough coverage of the topic.'
+  'Long: A long, comprehensive summary that delves deeper, offering thorough coverage of the topic.'
 ];
 
 export const detailDescriptions = [

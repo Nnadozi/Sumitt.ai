@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   versionRow:{
     flexDirection:"row", 
     width:"100%",
-    alignItems:"center",
+    alignItems:"flex-end",
     justifyContent:"space-between"
   }
 });
