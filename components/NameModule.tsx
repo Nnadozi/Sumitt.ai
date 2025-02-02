@@ -46,10 +46,11 @@ const NameModule = ({ visible, onPress, onCancel }: NameModuleProps) => {
             value={name}
             onChangeText={(text) => setName(text)}
             maxLength={30}
+            dontShowClear = {true}
           />
           <View style={styles.buttonRow}>
-            <MyButton disabled = {!name} width="40%" title="Save" onPress={handleSave} />
-            <MyButton width="40%" title="Cancel" onPress={onCancel} />
+            <MyButton iconName='save' disabled = {!name} width="40%" title="Save" onPress={handleSave} />
+            <MyButton iconName='cancel' width="40%" title="Cancel" onPress={onCancel} />
           </View>
         </View>
       </View>

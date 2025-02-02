@@ -12,6 +12,7 @@ interface ButtonProps {
   marginTop?: string;
   disabled?: boolean;
   iconName?: string;
+  iconType?:string; 
 }
 
 const MyButton = (props: ButtonProps) => {
@@ -26,6 +27,7 @@ const MyButton = (props: ButtonProps) => {
         width:props.width, marginVertical:props.marginVertical,
         marginTop: props.marginTop
       }}
+      icon = {props.iconName ? {name:props.iconName, type:props.iconType, color:colors.background,size:15} : null}
       buttonStyle = {{backgroundColor:colors.primary, borderRadius:0}}
     >
       <MyText style={{paddingVertical:"1%",fontSize:13.5}} numberOfLines={1} color={colors.background} bold >{props.title}</MyText>

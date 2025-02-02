@@ -83,6 +83,7 @@ const Index = () => {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
           textAlignVertical="center"
+          maxLength={50}
         />
       )}
       {filteredSummaries.length === 0 ? (

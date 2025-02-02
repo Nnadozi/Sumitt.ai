@@ -158,10 +158,11 @@ const Upload = () => {
                   title="Summarize"
                   onPress={generateSummary}
                   width="100%"
+                  iconName='summarize'
                 />
             <View style={styles.buttonRow}>
-              <MyButton title="Options" onPress={() => router.navigate('/(options)/options')} width="49%" />
-              <MyButton title="Cancel" onPress={handleCancel} width="49%" />
+              <MyButton iconName='cancel' title="Cancel" onPress={handleCancel} width="49%" />
+              <MyButton iconName='options' iconType='ionicon' title="Options" onPress={() => router.navigate('/(options)/options')} width="49%" />
             </View>
           </>
         ) : (
@@ -172,29 +173,29 @@ const Upload = () => {
               onChangeText={(text) => setInputText(text)}
               placeholder="Enter text"
               multiline
-              maxLength={10000}
+              maxLength={100000}
             />
             <View style={styles.buttonRow}>
               <MyButton
                 disabled={!inputText}
                 title="Summarize"
                 onPress={generateSummary}
-                width="45%"
-              />
-              <MyButton
-                title="Options"
-                onPress={() => router.navigate('/(options)/options')}
-                width="45%"
+                width="100%"
+                iconName='summarize'
               />
             </View>
             <View style={styles.buttonRow}>
-              <MyButton title="Clear" onPress={() => setInputText('')} width="45%" />
-              <MyButton title="Cancel" onPress={handleCancel} width="45%" />
+              <MyButton iconName='cancel' title="Cancel" onPress={handleCancel} width="49%" />
+              <MyButton
+                title="Options" iconName='options' iconType='ionicon' 
+                onPress={() => router.navigate('/(options)/options')}
+                width="49%"
+              />
             </View>
           </>
         )
       ) : (
-        <MyButton title="Cancel" onPress={handleCancel} width="100%" marginVertical="3%" />
+        <MyButton iconName='cancel' title="Cancel" onPress={handleCancel} width="100%" marginVertical="3%" />
       )}
     </Page>
   );

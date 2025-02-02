@@ -179,7 +179,7 @@ const Summary = () => {
                 <ResponsiveIcon name="share" type="ionicon" size={25} primary={true} onPress={handleShare} />
               </View>
             </View>
-            <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <ScrollView persistentScrollbar contentContainerStyle={styles.scrollViewContent}>
               <MyText markdown>{summary}</MyText>
             </ScrollView>
             <View style={styles.buttonRow}>

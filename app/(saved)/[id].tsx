@@ -37,7 +37,7 @@ const SavedSummaryScreen = () => {
 
   return (
     <Page style={{justifyContent:"flex-start", padding:'5%'}}>
-      <ScrollView style = {styles.scrollContainer}>
+      <ScrollView persistentScrollbar style = {styles.scrollContainer}>
         <MyText markdown>{summary}</MyText>
       </ScrollView>
       <View style = {styles.bottomRow}>
