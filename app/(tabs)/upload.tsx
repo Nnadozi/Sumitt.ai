@@ -124,7 +124,7 @@ const Upload = () => {
       />
       <InputType
         name="URL"
-        subtitle="Paste Website / Article URL"
+        subtitle="Website / Article URL"
         selected={selectedOption === 'URL'}
         onPress={() => handleSelectOption('URL')}
       />
@@ -153,15 +153,15 @@ const Upload = () => {
                 ? 'Checking URL...'
                 : 'Please enter a valid URL containing readable text.'}
             </MyText>
-            <View style={[styles.buttonRow]}>
               <MyButton
-                disabled={!inputText || !!urlError || isCheckingUrl}
-                title="Summarize"
-                onPress={generateSummary}
-                width="32%"
-              />
-              <MyButton title="Options" onPress={() => router.navigate('/(options)/options')} width="32%" />
-              <MyButton title="Cancel" onPress={handleCancel} width="32%" />
+                  disabled={!inputText || !!urlError || isCheckingUrl}
+                  title="Summarize"
+                  onPress={generateSummary}
+                  width="100%"
+                />
+            <View style={styles.buttonRow}>
+              <MyButton title="Options" onPress={() => router.navigate('/(options)/options')} width="49%" />
+              <MyButton title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
         ) : (
