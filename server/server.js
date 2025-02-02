@@ -37,7 +37,7 @@ app.post('/api/summarize', async (req, res) => {
               5. Never display or reference the options object in the response.
               6. Always make sure to summarize in the specified language
               7. Use this for the bullet point symbol (•)
-              8. Never use any markdown styles if the format option is set to bullet points.`,
+              8. Never use any markdown styles`,
           },
           { role: 'user', content: userInput },
         ],
