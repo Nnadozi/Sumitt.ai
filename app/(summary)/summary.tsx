@@ -73,7 +73,7 @@ const Summary = () => {
 
       const data = await res.json();
       const summaryContent = data.choices?.[0]?.message?.content;
-
+      
       if (!summaryContent) {
         setError('Failed to generate a summary');
         setSummary(summaryContent);
@@ -180,7 +180,7 @@ const Summary = () => {
               </View>
             </View>
             <ScrollView persistentScrollbar contentContainerStyle={styles.scrollViewContent}>
-              <MyText markdown>{summary}</MyText>
+              <MyText>{summary}</MyText>
             </ScrollView>
             <View style={styles.buttonRow}>
               <MyButton width="35%" title="Save" onPress={() => setModuleVisible(true)} />
