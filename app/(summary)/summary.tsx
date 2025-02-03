@@ -73,7 +73,7 @@ const Summary = () => {
 
       const data = await res.json();
       const summaryContent = data.choices?.[0]?.message?.content;
-      
+   
       if (!summaryContent) {
         setError('Failed to generate a summary');
         setSummary(summaryContent);
