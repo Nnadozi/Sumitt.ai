@@ -183,8 +183,8 @@ const Summary = () => {
               <MyText markdown>{summary}</MyText>
             </ScrollView>
             <View style={styles.buttonRow}>
-              <MyButton width="35%" title="Save" onPress={() => setModuleVisible(true)} />
-              <MyButton width="35%" title="Ok" onPress={handleGoBack} />
+              <MyButton iconName='save' width="45%" title="Save" onPress={() => setModuleVisible(true)} />
+              <MyButton iconName='check' width="45%" title="Ok" onPress={handleGoBack} />
             </View>
             <NameModule
               visible={moduleVisible}

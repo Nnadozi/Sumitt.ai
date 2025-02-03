@@ -12,7 +12,6 @@ Frontend
         - Make theme a dropdown
         - Ad serving: 2 to 3
         - fix summarization bug
-        - Add back markdown somehow
 Backend
     New Features
         - Implement proper web scraping
