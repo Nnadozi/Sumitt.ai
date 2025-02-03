@@ -180,7 +180,7 @@ const Summary = () => {
               </View>
             </View>
             <ScrollView persistentScrollbar contentContainerStyle={styles.scrollViewContent}>
-              <MyText>{summary}</MyText>
+              <MyText markdown>{summary}</MyText>
             </ScrollView>
             <View style={styles.buttonRow}>
               <MyButton width="35%" title="Save" onPress={() => setModuleVisible(true)} />
