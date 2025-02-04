@@ -13,7 +13,7 @@ export default function MainNavigator() {
   const screenOptions = (name: string, title: string) => ({
     title,
     tabBarIcon: ({ focused }: { focused: boolean }) => (
-      <Icon name={name} size={30} color={focused ? colors.primary : colors.border} />
+      <Icon containerStyle={{alignSelf:"center"}} name={name} size={30} color={focused ? colors.primary : colors.border} />
     ),
   });
 

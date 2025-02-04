@@ -161,8 +161,8 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
       </ScrollView>
       <View style={styles.buttonRow}>
-        <MyButton width="30%" title="Apply" onPress={saveOptions} />
-        <MyButton width="30%" title="Done" onPress={router.back} disabled={!optionsApplied} />
+        <MyButton iconName='save' width="40%" title="Apply" onPress={saveOptions} />
+        <MyButton iconName='done' width="40%" title="Done" onPress={router.back} disabled={!optionsApplied} />
       </View>
     </Page>
   );
@@ -176,8 +176,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: '4%',
-    marginBottom:"3%",
-    marginTop:"5%"
+    marginVertical:"3%"
   },
   iconRow:{
     flexDirection:"row",

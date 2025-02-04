@@ -15,17 +15,18 @@ interface IconProps {
 
 const ResponsiveIcon = ({ color, size, name, type, primary, onPress,style }: IconProps) => {
   const { colors } = useTheme();
+  /*
   const { width } = Dimensions.get('window');
   const scaleSize = (size: number) => {
-    return (width / 375) * size;
+    return (width / 395) * size;
   };
-
+  */
   return (
     <Icon
       color={primary ? colors.primary : color}
       name={name}
       type={type}
-      size={scaleSize(size)} 
+      size={size} 
       onPress={onPress}
       style={style}
     />

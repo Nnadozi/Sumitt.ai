@@ -224,9 +224,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: '3%',
-    marginBottom: '8%',
     gap: '3%',
+    marginVertical:'3%'
   },
 });
 
