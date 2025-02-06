@@ -1,9 +1,9 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Page from '@/components/Page';
 import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
-import { router, useGlobalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 import MyInput from '@/components/MyInput';
 import MyText from '@/components/MyText';
 import { useTheme } from '@react-navigation/native';
@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
 
 const Upload = () => {
+  const { colors } = useTheme();
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [inputText, setInputText] = useState('');
   const [selectedOptions, setSelectedOptions] = useState<string | string[] | null>(null);
@@ -21,30 +22,33 @@ const Upload = () => {
   const fetchOptions = async () => {
     try {
       const storedOptions = await AsyncStorage.getItem('summaryOptions');
-      if (storedOptions) {
-        setSelectedOptions(storedOptions);
-      }
+      if (storedOptions) setSelectedOptions(storedOptions);
     } catch (error) {
       console.error('Error fetching options:', error);
     }
   };
+
   useFocusEffect(
-    useCallback(() => {
-      fetchOptions();
-    }, [])
+    useCallback(() => { fetchOptions(); }, [])
   );
-  
+
   const handleSelectOption = (option: string) => {
     if (selectedOption !== option) {
       setSelectedOption(option);
-      setInputText("")
+      setInputText('');
       setUrlError(null);
-      setUrlSuccess(null); 
+      setUrlSuccess(null);
     }
   };
 
   const validateUrlAndContent = async (url: string) => {
-    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+)\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?$/;
+    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
+    const isVideoUrl = /(?:youtube|youtu.be|vimeo|dailymotion|twitch)/i.test(url);
+    if (isVideoUrl) {
+      setUrlError('Video links are not supported.');
+      setUrlSuccess(null);
+      return;
+    }
     if (!urlPattern.test(url)) {
       setUrlError('Invalid URL format.');
       setUrlSuccess(null);
@@ -60,26 +64,14 @@ const Upload = () => {
       const contentType = response.headers.get('Content-Type');
 
       if (!contentType || !contentType.includes('text/html')) {
-        setUrlError('The URL does not lead to a valid article or text-based page.');
-        setUrlSuccess(null);
+        setUrlError('The URL does not lead to a readable webpage.');
         return;
       }
 
-      const htmlResponse = await fetch(url);
-      const html = await htmlResponse.text();
-
-      if (!/<p[^>]*>.*?<\/p>/.test(html)) {
-        setUrlError('The page does not contain sufficient text content.');
-        setUrlSuccess(null);
-        return;
-      }
-
-      setUrlError(null);
-      setUrlSuccess('The URL is valid and leads to a readable article.');
+      setUrlSuccess('Valid webpage detected.');
     } catch (error) {
-      console.error('Error validating URL: ', error);
-      setUrlError('Unable to fetch content from the URL.');
-      setUrlSuccess(null);
+      console.error('Error validating URL:', error);
+      setUrlError('Could not reach the website.');
     } finally {
       setIsCheckingUrl(false);
     }
@@ -88,10 +80,8 @@ const Upload = () => {
   const handleUrlInputChange = async (text: string) => {
     setInputText(text);
     setUrlError(null);
-    setUrlSuccess(null); 
-    if (text.trim() !== '') {
-      await validateUrlAndContent(text.trim());
-    }
+    setUrlSuccess(null);
+    if (text.trim() !== '') await validateUrlAndContent(text.trim());
   };
 
   const handleCancel = () => {
@@ -102,17 +92,13 @@ const Upload = () => {
     router.back();
   };
 
-  const generateSummary = async () => {
-    if (selectedOption === 'URL' && urlError) {
-      return;
-    }
+  const generateSummary = () => {
+    if (selectedOption === 'URL' && urlError) return;
     router.navigate({
       pathname: '/(summary)/summary',
       params: { userInput: inputText, options: selectedOptions },
     });
   };
-
-  const {colors} = useTheme()
 
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: 'flex-start', margin: '5%' }}>
@@ -123,11 +109,12 @@ const Upload = () => {
         onPress={() => handleSelectOption('Manual Input')}
       />
       <InputType
-        name="URL"
-        subtitle="Website / Article URL"
+        name="Website URL"
+        subtitle="Website or Article URL"
         selected={selectedOption === 'URL'}
         onPress={() => handleSelectOption('URL')}
       />
+
       {selectedOption ? (
         selectedOption === 'URL' ? (
           <>
@@ -145,24 +132,18 @@ const Upload = () => {
                 color: urlError ? 'red' : urlSuccess ? colors.primary : colors.text,
               }}
             >
-              {urlError
-                ? urlError
-                : urlSuccess
-                ? urlSuccess
-                : isCheckingUrl
-                ? 'Checking URL...'
-                : 'Please enter a valid URL containing readable text.'}
+              {urlError ? urlError : urlSuccess ? urlSuccess : isCheckingUrl ? 'Checking URL...' : 'Please enter a valid URL containing readable text.'}
             </MyText>
-              <MyButton
-                  disabled={!inputText || !!urlError || isCheckingUrl}
-                  title="Summarize"
-                  onPress={generateSummary}
-                  width="100%"
-                  iconName='summarize'
-                />
+            <MyButton
+              disabled={!inputText || !!urlError || isCheckingUrl}
+              title="Summarize"
+              onPress={generateSummary}
+              width="100%"
+              iconName="summarize"
+            />
             <View style={styles.buttonRow}>
-              <MyButton iconName='cancel' title="Cancel" onPress={handleCancel} width="49%" />
-              <MyButton iconName='options' iconType='ionicon' title="Options" onPress={() => router.navigate('/(options)/options')} width="49%" />
+              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
+              <MyButton iconName="options" iconType="ionicon" title="Options" onPress={() => router.navigate('/(options)/options')} width="49%" />
             </View>
           </>
         ) : (
@@ -170,7 +151,7 @@ const Upload = () => {
             <MyInput
               height="50%"
               value={inputText}
-              onChangeText={(text) => setInputText(text)}
+              onChangeText={setInputText}
               placeholder="Enter text"
               multiline
               maxLength={100000}
@@ -181,13 +162,13 @@ const Upload = () => {
                 title="Summarize"
                 onPress={generateSummary}
                 width="100%"
-                iconName='summarize'
+                iconName="summarize"
               />
             </View>
             <View style={styles.buttonRow}>
-              <MyButton iconName='cancel' title="Cancel" onPress={handleCancel} width="49%" />
+              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
               <MyButton
-                title="Options" iconName='options' iconType='ionicon' 
+                title="Options" iconName="options" iconType="ionicon"
                 onPress={() => router.navigate('/(options)/options')}
                 width="49%"
               />
@@ -195,7 +176,7 @@ const Upload = () => {
           </>
         )
       ) : (
-        <MyButton iconName='cancel' title="Cancel" onPress={handleCancel} width="100%" marginVertical="3%" />
+        <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="100%" marginVertical="3%" />
       )}
     </Page>
   );

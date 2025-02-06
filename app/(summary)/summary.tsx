@@ -63,7 +63,8 @@ const Summary = () => {
       setLoading(true);
       setError('');
       fadeAnim.setValue(0);
-      const res = await fetch('https://sumitt-wpst.onrender.com/api/summarize', {
+      //'https://sumitt-wpst.onrender.com/api/summarize'
+      const res = await fetch('http://192.168.0.151:3000/api/summarize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userInput, options }),
@@ -159,7 +160,8 @@ const Summary = () => {
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
         <>
-          <MyText bold fontSize="large">Summarizing with AI</MyText>
+          <MyText bold fontSize="XL">Summarizing with AI...</MyText>
+          <MyText fontSize="small">Please be patient</MyText>
           <ActivityIndicator size="large" color={colors.primary} style={{ marginVertical: '3%' }} />
         </>
       ) : error ? (

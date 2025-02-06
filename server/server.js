@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import fetch from 'node-fetch';  
 import dotenv from 'dotenv';
+import * as cheerio from 'cheerio';
+import axios from 'axios';
 
 dotenv.config();
 
@@ -10,11 +12,34 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
+const fetchContentFromUrl = async (url) => {
+  try {
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+    return $('body').text(); 
+  } catch (error) {
+    console.error('Error scraping URL:', error);
+    throw new Error('Error scraping URL');
+  }
+};
+
 app.post('/api/summarize', async (req, res) => {
   const { userInput, options } = req.body;
 
   if (!userInput) {
     return res.status(400).json({ error: 'User input is required.' });
+  }
+
+  let contentToSummarize = userInput;
+  const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
+
+  if (urlPattern.test(userInput)) {
+    try {
+      console.log('Type is web URL!')
+      contentToSummarize = await fetchContentFromUrl(userInput);
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to scrape the URL' });
+    }
   }
 
   try {
@@ -36,10 +61,10 @@ app.post('/api/summarize', async (req, res) => {
               4. Do not apologize or acknowledge unclear input.
               5. Never display or reference the options object in the response.
               6. Always make sure to summarize in the specified language
-              7. The ONLY markdown styles that can be used is bold and italics. Do not use ANY OTHER markdown style.
+              7. The ONLY markdown styles that can be used are bold, italicized, and quoted text. Do not use ANY OTHER markdown style.
               8. Use this symbol for bullet points: (•)`,
           },
-          { role: 'user', content: userInput },
+          { role: 'user', content: contentToSummarize },
         ],
       }),
     });

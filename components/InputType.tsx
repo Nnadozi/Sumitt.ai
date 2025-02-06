@@ -17,7 +17,7 @@ const InputType = (props: InputTypeProps) => {
 
   const iconName = (): string => {
     switch (props.name) {
-      case "URL":
+      case "Website URL":
         return "link";
       case "Manual Input":
         return "keyboard";

@@ -1,4 +1,4 @@
-import { Platform, ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import { Platform, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -25,6 +25,14 @@ const options = () => {
   const [selectedIndexLanguage, setSelectedIndexLanguage] = useState(0);
   const [optionsApplied, setOptionsApplied] = useState(false);
 
+  const defaultOptions = {
+    length: 'Medium', 
+    detail: 'High', 
+    tone: 'Casual', 
+    format: 'Mix', 
+    language: 'English', 
+  };
+
   useEffect(() => {
     const loadOptions = async () => {
       try {
@@ -36,15 +44,21 @@ const options = () => {
           setSelectedIndexTone(toneDescriptions.indexOf(parsedOptions.tone));
           setSelectedIndexFormat(formatDescriptions.indexOf(parsedOptions.format));
           setSelectedIndexLanguage(languageDescriptions.indexOf(parsedOptions.language));
+        } else {
+          setSelectedIndexLength(lengthDescriptions.indexOf(defaultOptions.length));
+          setSelectedIndexDetail(detailDescriptions.indexOf(defaultOptions.detail));
+          setSelectedIndexTone(toneDescriptions.indexOf(defaultOptions.tone));
+          setSelectedIndexFormat(formatDescriptions.indexOf(defaultOptions.format));
+          setSelectedIndexLanguage(languageDescriptions.indexOf(defaultOptions.language));
         }
       } catch (error) {
         console.error('Error loading options:', error);
       }
     };
-    
+
     loadOptions();
   }, []);
-  
+
   const saveOptions = async () => {
     const options = {
       length: lengthDescriptions[selectedIndexLength],
@@ -73,7 +87,7 @@ const options = () => {
   return (
     <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
       <ScrollView>
-        <View style = {styles.iconRow}>
+        <View style={styles.iconRow}>
           <ResponsiveIcon name='ruler' type='entypo' color={colors.text} size={15} />
           <MyText bold>Length</MyText>
         </View>
@@ -90,7 +104,7 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <View style = {styles.iconRow}>
+        <View style={styles.iconRow}>
           <ResponsiveIcon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
           <MyText bold>Detail</MyText>
         </View>
@@ -107,7 +121,7 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <View style = {styles.iconRow}>
+        <View style={styles.iconRow}>
           <ResponsiveIcon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
           <MyText bold>Tone</MyText>
         </View>
@@ -124,7 +138,7 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <View style = {styles.iconRow}>
+        <View style={styles.iconRow}>
           <ResponsiveIcon name='book' type='entypo' color={colors.text} size={18} />
           <MyText bold>Format</MyText>
         </View>
@@ -141,19 +155,19 @@ const options = () => {
         />
         <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
         <Divider width={10} color="rgba(0,0,0,0)" />
-        <View style = {styles.iconRow}>
+        <View style={styles.iconRow}>
           <ResponsiveIcon name='globe' type='entypo' color={colors.text} size={17} />
           <MyText bold>Language {Platform.OS === "ios" ? "(Scroll)" : ""} </MyText>
         </View>
-        <ScrollView persistentScrollbar horizontal contentContainerStyle={{width:"300%"}} >
+        <ScrollView persistentScrollbar horizontal contentContainerStyle={{ width: "300%" }}>
           <ButtonGroup
-            buttons={['English', 'Spanish', 'French', 'Arabic', 'German', 'Chinese', 'Hindi', 'Japaneese','Russian','Portuguese']}
+            buttons={['English', 'Spanish', 'French', 'Arabic', 'German', 'Chinese', 'Hindi', 'Japanese', 'Russian', 'Portuguese']}
             selectedIndex={selectedIndexLanguage}
             onPress={(value) => setSelectedIndexLanguage(value)}
             selectedButtonStyle={{ backgroundColor: colors.primary }}
             innerBorderStyle={{ color: colors.border }}
             containerStyle={{
-              marginVertical: '1%', width:"100%", marginLeft: '0%',
+              marginVertical: '1%', width: "100%", marginLeft: '0%',
               backgroundColor: colors.card, borderColor: colors.border,
             }}
           />
@@ -176,12 +190,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: '4%',
-    marginVertical:"3%"
+    marginVertical: "3%",
   },
-  iconRow:{
-    flexDirection:"row",
-    width:"100%",
+  iconRow: {
+    flexDirection: "row",
+    width: "100%",
     alignItems: 'center',
-    gap:"2%"
+    gap: "2%",
   }
 });
