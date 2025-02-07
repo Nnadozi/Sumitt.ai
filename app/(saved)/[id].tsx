@@ -20,7 +20,7 @@ const SavedSummaryScreen = () => {
       if(Platform.OS === "ios"){
         Snackbar.show({
           text: 'Copied to clipboard',
-          duration: Snackbar.LENGTH_SHORT,
+          duration: 500,
         });
       }
   };

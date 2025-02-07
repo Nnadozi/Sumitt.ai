@@ -28,7 +28,7 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
     if(Platform.OS === "ios"){
       Snackbar.show({
         text: 'Copied to clipboard',
-        duration: Snackbar.LENGTH_SHORT,
+        duration: 500
       });
     }
   };
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: '2%',
     alignSelf: 'center',
-    width: '97%',
+    width: '92%',
     padding: '4%',
     paddingBottom: '10%',
   },

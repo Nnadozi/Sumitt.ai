@@ -63,15 +63,20 @@ const Summary = () => {
       setLoading(true);
       setError('');
       fadeAnim.setValue(0);
+      
       const res = await fetch('https://sumitt-wpst.onrender.com/api/summarize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userInput, options }),
       });
 
-      if (!res.ok) throw new Error('Failed to fetch summary from server');
-
       const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || 'Failed to fetch summary from server');
+        return;
+      }
+
       const summaryContent = data.choices?.[0]?.message?.content;
    
       if (!summaryContent) {
@@ -108,7 +113,7 @@ const Summary = () => {
     if (Platform.OS === 'ios') {
       Snackbar.show({
         text: 'Copied to clipboard',
-        duration: Snackbar.LENGTH_SHORT,
+        duration: 500,
       });
     }
   };
@@ -143,7 +148,7 @@ const Summary = () => {
   const handleGoBack = async () => {
     setSummaryCount((prevCount) => {
       const newCount = prevCount + 1;
-      if (newCount === 2) {
+      if (newCount === 3) {
         showInterstitialAd();
         return 0;
       }
@@ -165,8 +170,10 @@ const Summary = () => {
         </>
       ) : error ? (
         <>
-          <Icon name="sad" type="ionicon" size={100} color={colors.primary} />
-          <MyText style={{ marginVertical: '5%' }} textAlign="center">{error}</MyText>
+          <Icon name="error" size={100} color={colors.primary} />
+          <MyText style={{ marginVertical: '5%' }} textAlign="center">
+            {`${error} Paywall may be detected.`}
+          </MyText>
           <MyButton width="50%" title="Go Back" onPress={handleGoBack} />
         </>
       ) : (

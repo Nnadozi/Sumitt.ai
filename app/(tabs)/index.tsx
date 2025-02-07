@@ -96,7 +96,7 @@ const Index = () => {
           </MyText>
         </View>
       ) : (
-        <ScrollView contentContainerStyle={{ marginTop: "3%", paddingBottom: "15%",width:"100%" }}>
+        <ScrollView style={{width:"100%"}} contentContainerStyle={{ marginTop: "3%", paddingBottom: "15%" }}>
           {filteredSummaries.map((summary) => (
             <SavedSummary
               title={summary.id}

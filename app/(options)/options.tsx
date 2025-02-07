@@ -70,16 +70,17 @@ const options = () => {
     try {
       await AsyncStorage.setItem('summaryOptions', JSON.stringify(options));
       setOptionsApplied(true);
-      ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
+      ToastAndroid.show('Options applied successfully',ToastAndroid.SHORT);
       if (Platform.OS === 'ios') {
         Snackbar.show({
           text: 'Options applied!',
-          duration: Snackbar.LENGTH_SHORT,
+          duration: 500
         });
       }
     } catch (error) {
       console.error('Error saving options:', error);
     }
+    router.back()
   };
 
   const { colors } = useTheme();
@@ -175,8 +176,8 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
       </ScrollView>
       <View style={styles.buttonRow}>
+        <MyButton iconName='cancel' width="40%" title="Cancel" onPress={router.back} />
         <MyButton iconName='save' width="40%" title="Apply" onPress={saveOptions} />
-        <MyButton iconName='done' width="40%" title="Done" onPress={router.back} disabled={!optionsApplied} />
       </View>
     </Page>
   );
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: '4%',
+    gap: '3%',
     marginVertical: "3%",
   },
   iconRow: {

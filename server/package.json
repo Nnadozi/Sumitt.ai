@@ -19,6 +19,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "node-fetch": "^2.7.0",
-    "openai": "^4.81.0"
+    "openai": "^4.81.0",
+    "puppeteer": "^24.2.0"
   }
 }
