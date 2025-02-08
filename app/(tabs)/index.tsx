@@ -48,7 +48,7 @@ const Index = () => {
   useEffect(() => {
     setFilteredSummaries(
       summaries.filter((summary) =>
-        summary.id.toLowerCase().startsWith(searchQuery.toLowerCase())
+        summary.id.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
   }, [searchQuery, summaries]);
@@ -84,6 +84,7 @@ const Index = () => {
           onChangeText={(text) => setSearchQuery(text)}
           textAlignVertical="center"
           maxLength={50}
+          dontShowClear
         />
       )}
       {filteredSummaries.length === 0 ? (

@@ -149,7 +149,7 @@ const Upload = () => {
         ) : (
           <>
             <MyInput
-              height="50%"
+              height="45%"
               value={inputText}
               onChangeText={setInputText}
               placeholder="Enter text"
@@ -176,7 +176,7 @@ const Upload = () => {
           </>
         )
       ) : (
-        <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="100%" marginVertical="3%" />
+        <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="100%" marginVertical="2%" />
       )}
     </Page>
   );

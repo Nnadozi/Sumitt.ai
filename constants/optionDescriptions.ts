@@ -5,10 +5,11 @@ export const lengthDescriptions = [
 ];
 
 export const detailDescriptions = [
-  'Low: A high-level overview, capturing essential concepts with minimal detail.',
-  'Medium: A well-rounded summary, highlighting key points with sufficient detail.',
-  'High: A detailed and thorough explanation, including all relevant information and nuances.'
+  'Low: A brief summary that captures the main ideas with minimal elaboration.',
+  'Medium: A balanced summary, covering important points with adequate detail.',
+  'High: A comprehensive and in-depth explanation, covering all aspects and subtleties.'
 ];
+
 
 export const toneDescriptions = [
   'Casual: Friendly, informal, and conversational in tone.',
@@ -16,7 +17,7 @@ export const toneDescriptions = [
 ];
 
 export const formatDescriptions = [
-  'Paragraphs: A flowing, continuous narrative with detailed text.',
+  'Paragraphs: A flowing, continuous narrative with detailed blocks of text.',
   'Bullet Points: Structured as a clear list format using bullet points.',
   'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
 ];

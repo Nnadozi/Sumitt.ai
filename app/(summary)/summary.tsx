@@ -148,7 +148,7 @@ const Summary = () => {
   const handleGoBack = async () => {
     setSummaryCount((prevCount) => {
       const newCount = prevCount + 1;
-      if (newCount === 3) {
+      if (newCount === (Math.floor(Math.random() * 3) + 2)) {
         showInterstitialAd();
         return 0;
       }
@@ -160,21 +160,38 @@ const Summary = () => {
     router.navigate('/(tabs)');
   };
 
+  const [showLoadingMessage, setShowLoadingMessage] = useState(false);
+  useEffect(() => {
+    if (loading) {
+      const timeout = setTimeout(() => setShowLoadingMessage(true), 4000);
+      return () => clearTimeout(timeout); 
+    } else {
+      setShowLoadingMessage(false);
+    }
+  }, [loading]);
+
   return (
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
         <>
           <MyText bold fontSize="XL">Summarizing with AI...</MyText>
-          <MyText fontSize="small">Please be patient</MyText>
+          {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
           <ActivityIndicator size="large" color={colors.primary} style={{ marginVertical: '3%' }} />
         </>
       ) : error ? (
         <>
           <Icon name="error" size={100} color={colors.primary} />
-          <MyText style={{ marginVertical: '5%' }} textAlign="center">
-            {`${error} Paywall may be detected.`}
-          </MyText>
-          <MyButton width="50%" title="Go Back" onPress={handleGoBack} />
+            <MyText style={{ marginTop: '3%' }} textAlign="center">{`${error}`}</MyText>
+            <MyText style={{ marginTop:"1%",marginBottom:"2%"}} textAlign="center" fontSize='small'>
+            Please try a different URL. This may have occurred because:
+            {'\n'}
+            • The website requires a subscription to access content 
+            {'\n'}
+            • The page is blocked by a login or authentication prompt.
+            {'\n'}
+            • The page has restricted access (e.g., behind a paywall or subscription barrier).
+            </MyText>
+          <MyButton width="30%" title="Back" onPress={handleGoBack} />
         </>
       ) : (
         <>

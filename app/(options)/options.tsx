@@ -26,7 +26,7 @@ const options = () => {
   const [optionsApplied, setOptionsApplied] = useState(false);
 
   const defaultOptions = {
-    length: 'Medium', 
+    length: 'Long', 
     detail: 'High', 
     tone: 'Casual', 
     format: 'Mix', 
@@ -176,8 +176,8 @@ const options = () => {
         <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
       </ScrollView>
       <View style={styles.buttonRow}>
-        <MyButton iconName='cancel' width="40%" title="Cancel" onPress={router.back} />
         <MyButton iconName='save' width="40%" title="Apply" onPress={saveOptions} />
+        <MyButton iconName='cancel' width="40%" title="Cancel" onPress={router.back} />
       </View>
     </Page>
   );

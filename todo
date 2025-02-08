@@ -6,6 +6,8 @@ Frontend
         - File summarization
         - Language support
         - Updates API
+        - Support section?
+        - Add audio
     Bug Fixes / Changes
         - Hide AdMob information
         - Make theme a dropdown                                 
@@ -23,7 +25,6 @@ Other
 UI Changes, better web scraping, bug fixes and optimization, (add other finished stuff)
 Now do:
 - Fix blank summarization bugssss
-- AdMob Verification
-- Add audio
 - Cooler activity indicator
 - Multi row options and more options
+- AdMob Verification
