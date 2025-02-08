@@ -18,11 +18,10 @@ Backend
      - .....
 Other
     - Fix invalid ad requests
-    - New store art
-
 
 1.3.0:
 UI improvements, better URL summarization, bug fixes, new loading indicators, more options
 Now do:
 - Fix blank summarization bugssss
 - AdMob Verification
+- New store art

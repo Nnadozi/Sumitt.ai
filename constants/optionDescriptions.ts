@@ -26,7 +26,6 @@ export const formatDescriptions = [
   'Paragraphs: A flowing, continuous narrative with detailed blocks of text.',
   'Bullet Points: Structured as a clear list format using bullet points.',
   'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
-  'Numbered List: Structured in a sequential order with numbered items.',
 ];
 
 export const languageDescriptions = [

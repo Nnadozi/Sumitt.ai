@@ -109,7 +109,7 @@ const options = () => {
           <ResponsiveIcon name='book' type='entypo' color={colors.text} size={18} />
           <MyText bold>Format</MyText>
         </View>
-        {renderChips('format', ['Paragraphs', 'Bullet Points', 'Mix','Numbered List'], formatDescriptions)}
+        {renderChips('format', ['Paragraphs', 'Bullet Points', 'Mix'], formatDescriptions)}
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>
