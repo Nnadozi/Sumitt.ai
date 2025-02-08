@@ -1,183 +1,128 @@
-import { Platform, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
+import { Dimensions, Platform, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
 import { router } from 'expo-router';
 import MyText from '@/components/MyText';
-import { ButtonGroup, Divider, Icon } from '@rneui/base';
+import { Divider } from '@rneui/base';
+import { Chip } from '@rneui/themed';
 import { useTheme } from '@react-navigation/native';
-import { 
-  lengthDescriptions, 
-  detailDescriptions, 
-  toneDescriptions, 
-  formatDescriptions,
-  languageDescriptions 
-} from '../../constants/optionDescriptions';
 import Snackbar from 'react-native-snackbar';
 import ResponsiveIcon from '@/components/ResponsiveIcon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+  lengthDescriptions,
+  detailDescriptions,
+  toneDescriptions,
+  formatDescriptions,
+  languageDescriptions,
+} from '../../constants/optionDescriptions';
 
 const options = () => {
-  const [selectedIndexLength, setSelectedIndexLength] = useState(0);
-  const [selectedIndexDetail, setSelectedIndexDetail] = useState(0);
-  const [selectedIndexTone, setSelectedIndexTone] = useState(0);
-  const [selectedIndexFormat, setSelectedIndexFormat] = useState(0);
-  const [selectedIndexLanguage, setSelectedIndexLanguage] = useState(0);
-  const [optionsApplied, setOptionsApplied] = useState(false);
+  const { colors } = useTheme();
 
-  const defaultOptions = {
-    length: 'Long', 
-    detail: 'High', 
-    tone: 'Casual', 
-    format: 'Mix', 
-    language: 'English', 
-  };
+  const [selectedOptions, setSelectedOptions] = useState<{
+    length: string;
+    detail: string;
+    tone: string;
+    format: string;
+    language: string;
+  }>({
+    length: 'Long',
+    detail: 'High',
+    tone: 'Casual',
+    format: 'Mix',
+    language: 'English',
+  });
 
   useEffect(() => {
     const loadOptions = async () => {
       try {
         const savedOptions = await AsyncStorage.getItem('summaryOptions');
         if (savedOptions) {
-          const parsedOptions = JSON.parse(savedOptions);
-          setSelectedIndexLength(lengthDescriptions.indexOf(parsedOptions.length));
-          setSelectedIndexDetail(detailDescriptions.indexOf(parsedOptions.detail));
-          setSelectedIndexTone(toneDescriptions.indexOf(parsedOptions.tone));
-          setSelectedIndexFormat(formatDescriptions.indexOf(parsedOptions.format));
-          setSelectedIndexLanguage(languageDescriptions.indexOf(parsedOptions.language));
-        } else {
-          setSelectedIndexLength(lengthDescriptions.indexOf(defaultOptions.length));
-          setSelectedIndexDetail(detailDescriptions.indexOf(defaultOptions.detail));
-          setSelectedIndexTone(toneDescriptions.indexOf(defaultOptions.tone));
-          setSelectedIndexFormat(formatDescriptions.indexOf(defaultOptions.format));
-          setSelectedIndexLanguage(languageDescriptions.indexOf(defaultOptions.language));
+          setSelectedOptions(JSON.parse(savedOptions));
         }
       } catch (error) {
         console.error('Error loading options:', error);
       }
     };
-
     loadOptions();
   }, []);
 
   const saveOptions = async () => {
-    const options = {
-      length: lengthDescriptions[selectedIndexLength],
-      detail: detailDescriptions[selectedIndexDetail],
-      tone: toneDescriptions[selectedIndexTone],
-      format: formatDescriptions[selectedIndexFormat],
-      language: languageDescriptions[selectedIndexLanguage],
-    };
     try {
-      await AsyncStorage.setItem('summaryOptions', JSON.stringify(options));
-      setOptionsApplied(true);
-      ToastAndroid.show('Options applied successfully',ToastAndroid.SHORT);
+      await AsyncStorage.setItem('summaryOptions', JSON.stringify(selectedOptions));
+      ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
       if (Platform.OS === 'ios') {
-        Snackbar.show({
-          text: 'Options applied!',
-          duration: 500
-        });
+        Snackbar.show({ text: 'Options applied!', duration: 500 });
       }
     } catch (error) {
       console.error('Error saving options:', error);
     }
-    router.back()
+    router.back();
   };
 
-  const { colors } = useTheme();
+  const renderChips = (category: keyof typeof selectedOptions, optionsArray: string[], descriptions: string[]) => (
+    <View>
+      <View style={styles.chipContainer}>
+        {optionsArray.map((option, index) => (
+          <Chip
+            key={option}
+            title={option}
+            onPress={() => setSelectedOptions((prev) => ({ ...prev, [category]: option }))}
+            buttonStyle={{ backgroundColor: selectedOptions[category] === option ? colors.primary : colors.card,
+              borderWidth:1, borderColor:colors.border
+            }}
+            titleStyle={{ color: selectedOptions[category] === option ? colors.background : colors.text }}
+          />
+        ))}
+      </View>
+      <MyText opacity={0.5} fontSize='small'>{descriptions[optionsArray.indexOf(selectedOptions[category])]}</MyText>
+    </View>
+  );
 
   return (
     <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingBottom:"10%"}}>
         <View style={styles.iconRow}>
           <ResponsiveIcon name='ruler' type='entypo' color={colors.text} size={15} />
           <MyText bold>Length</MyText>
         </View>
-        <ButtonGroup
-          buttons={['Short', 'Medium', 'Long']}
-          selectedIndex={selectedIndexLength}
-          onPress={(value) => setSelectedIndexLength(value)}
-          selectedButtonStyle={{ backgroundColor: colors.primary }}
-          innerBorderStyle={{ color: colors.border }}
-          containerStyle={{
-            marginVertical: '3%', width: '100%', marginLeft: '0%',
-            backgroundColor: colors.card, borderColor: colors.border,
-          }}
-        />
-        <MyText opacity={0.5} fontSize="small">{lengthDescriptions[selectedIndexLength]}</MyText>
-        <Divider width={10} color="rgba(0,0,0,0)" />
+        {renderChips('length', ['Short', 'Medium', 'Long', 'Auto'], lengthDescriptions)}
+        <Divider width={10} color='rgba(0,0,0,0)' />
+
         <View style={styles.iconRow}>
           <ResponsiveIcon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
           <MyText bold>Detail</MyText>
         </View>
-        <ButtonGroup
-          buttons={['Low', 'Medium', 'High']}
-          selectedIndex={selectedIndexDetail}
-          onPress={(value) => setSelectedIndexDetail(value)}
-          selectedButtonStyle={{ backgroundColor: colors.primary }}
-          innerBorderStyle={{ color: colors.border }}
-          containerStyle={{
-            marginVertical: '3%', width: '100%', marginLeft: '0%',
-            backgroundColor: colors.card, borderColor: colors.border,
-          }}
-        />
-        <MyText opacity={0.5} fontSize="small">{detailDescriptions[selectedIndexDetail]}</MyText>
-        <Divider width={10} color="rgba(0,0,0,0)" />
+        {renderChips('detail', ['Low', 'Medium', 'High', 'Auto'], detailDescriptions)}
+        <Divider width={10} color='rgba(0,0,0,0)' />
+
         <View style={styles.iconRow}>
           <ResponsiveIcon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
           <MyText bold>Tone</MyText>
         </View>
-        <ButtonGroup
-          buttons={['Casual', 'Formal']}
-          selectedIndex={selectedIndexTone}
-          onPress={(value) => setSelectedIndexTone(value)}
-          selectedButtonStyle={{ backgroundColor: colors.primary }}
-          innerBorderStyle={{ color: colors.border }}
-          containerStyle={{
-            marginVertical: '3%', width: '100%', marginLeft: '0%', 
-            backgroundColor: colors.card, borderColor: colors.border,
-          }}
-        />
-        <MyText opacity={0.5} fontSize="small">{toneDescriptions[selectedIndexTone]}</MyText>
-        <Divider width={10} color="rgba(0,0,0,0)" />
+        {renderChips('tone', ['Casual', 'Formal','Humorous','Serious','Optimistic', 'Sarcastic', 'Storyteller'], toneDescriptions)}
+        <Divider width={10} color='rgba(0,0,0,0)' />
+
         <View style={styles.iconRow}>
           <ResponsiveIcon name='book' type='entypo' color={colors.text} size={18} />
           <MyText bold>Format</MyText>
         </View>
-        <ButtonGroup
-          buttons={['Paragraphs', 'Bullet Points', 'Mix']}
-          selectedIndex={selectedIndexFormat}
-          onPress={(value) => setSelectedIndexFormat(value)}
-          selectedButtonStyle={{ backgroundColor: colors.primary }}
-          innerBorderStyle={{ color: colors.border }}
-          containerStyle={{
-            marginVertical: '3%', width: '100%', marginLeft: '0%',
-            backgroundColor: colors.card, borderColor: colors.border,
-          }}
-        />
-        <MyText opacity={0.5} fontSize="small">{formatDescriptions[selectedIndexFormat]}</MyText>
-        <Divider width={10} color="rgba(0,0,0,0)" />
+        {renderChips('format', ['Paragraphs', 'Bullet Points', 'Mix','Numbered List'], formatDescriptions)}
+        <Divider width={10} color='rgba(0,0,0,0)' />
+
         <View style={styles.iconRow}>
           <ResponsiveIcon name='globe' type='entypo' color={colors.text} size={17} />
-          <MyText bold>Language {Platform.OS === "ios" ? "(Scroll)" : ""} </MyText>
+          <MyText bold>Language</MyText>
         </View>
-        <ScrollView persistentScrollbar horizontal contentContainerStyle={{ width: "300%" }}>
-          <ButtonGroup
-            buttons={['English', 'Spanish', 'French', 'Arabic', 'German', 'Chinese', 'Hindi', 'Japanese', 'Russian', 'Portuguese']}
-            selectedIndex={selectedIndexLanguage}
-            onPress={(value) => setSelectedIndexLanguage(value)}
-            selectedButtonStyle={{ backgroundColor: colors.primary }}
-            innerBorderStyle={{ color: colors.border }}
-            containerStyle={{
-              marginVertical: '1%', width: "100%", marginLeft: '0%',
-              backgroundColor: colors.card, borderColor: colors.border,
-            }}
-          />
-        </ScrollView>
-        <MyText opacity={0.5} fontSize="small">{languageDescriptions[selectedIndexLanguage]}</MyText>
+        {renderChips('language', ['English', 'Spanish', 'French', 'Arabic', 
+          'German', 'Chinese', 'Hindi', 'Japanese', 'Russian', 'Portuguese','Italian','Korean',
+          'Turkish', 'Swahili', 'Dutch', 'Greek', 'Bengail','Vietnamese', 'Thai','Pirate'], languageDescriptions)}
       </ScrollView>
       <View style={styles.buttonRow}>
-        <MyButton iconName='save' width="40%" title="Apply" onPress={saveOptions} />
-        <MyButton iconName='cancel' width="40%" title="Cancel" onPress={router.back} />
+        <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />
+        <MyButton iconName='cancel' width='40%' title='Cancel' onPress={router.back} />
       </View>
     </Page>
   );
@@ -185,18 +130,27 @@ const options = () => {
 
 export default options;
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   buttonRow: {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     gap: '3%',
-    marginVertical: "3%",
+    marginVertical: '3%',
   },
   iconRow: {
-    flexDirection: "row",
-    width: "100%",
+    flexDirection: 'row',
+    width: '100%',
     alignItems: 'center',
-    gap: "2%",
-  }
+    gap: '2%',
+    marginBottom:"1%"
+  },
+  chipContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 0.01 * height,
+    marginVertical: "2%",
+  },
 });

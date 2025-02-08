@@ -142,8 +142,8 @@ const Upload = () => {
               iconName="summarize"
             />
             <View style={styles.buttonRow}>
-              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
               <MyButton iconName="options" iconType="ionicon" title="Options" onPress={() => router.navigate('/(options)/options')} width="49%" />
+              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
         ) : (
@@ -166,12 +166,12 @@ const Upload = () => {
               />
             </View>
             <View style={styles.buttonRow}>
-              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
               <MyButton
                 title="Options" iconName="options" iconType="ionicon"
                 onPress={() => router.navigate('/(options)/options')}
                 width="49%"
               />
+              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
         )

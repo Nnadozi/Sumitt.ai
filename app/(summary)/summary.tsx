@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView } from 'react-native';
+import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView,Image} from 'react-native';
 import React, { useEffect, useState, useRef } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
@@ -163,20 +163,37 @@ const Summary = () => {
   const [showLoadingMessage, setShowLoadingMessage] = useState(false);
   useEffect(() => {
     if (loading) {
-      const timeout = setTimeout(() => setShowLoadingMessage(true), 4000);
+      const timeout = setTimeout(() => setShowLoadingMessage(true), 5000);
       return () => clearTimeout(timeout); 
     } else {
       setShowLoadingMessage(false);
     }
   }, [loading]);
 
+  const loadingGifs = colors.card === 'rgb(255, 255, 255)' 
+  ? [
+      require('../../assets/images/infinity.gif'),
+      require('../../assets/images/pacman.gif')
+    ]
+  : [
+      require('../../assets/images/infinity-dark.gif'),
+      require('../../assets/images/pacman-dark.gif')
+    ];
+
+
+  const [loadingGif, setLoadingGif] = useState(loadingGifs[0]);
+  useEffect(() => {
+    setLoadingGif(loadingGifs[Math.floor(Math.random() * loadingGifs.length)]);
+  }, []);
+
+
   return (
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
         <>
-          <MyText bold fontSize="XL">Summarizing with AI...</MyText>
+          <Image source={loadingGif} />
+          <MyText style={{marginTop:"-3%"}} bold fontSize="XL">Summarizing...</MyText>
           {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
-          <ActivityIndicator size="large" color={colors.primary} style={{ marginVertical: '3%' }} />
         </>
       ) : error ? (
         <>

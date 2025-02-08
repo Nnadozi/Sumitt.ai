@@ -22,9 +22,7 @@ Other
 
 
 1.3.0:
-UI Changes, better web scraping, bug fixes and optimization, (add other finished stuff)
+UI improvements, better URL summarization, bug fixes, new loading indicators, more options
 Now do:
 - Fix blank summarization bugssss
-- Cooler activity indicator
-- Multi row options and more options
 - AdMob Verification
