@@ -21,18 +21,12 @@ import {
 const options = () => {
   const { colors } = useTheme();
 
-  const [selectedOptions, setSelectedOptions] = useState<{
-    length: string;
-    detail: string;
-    tone: string;
-    format: string;
-    language: string;
-  }>({
-    length: 'Long',
-    detail: 'High',
-    tone: 'Casual',
-    format: 'Mix',
-    language: 'English',
+  const [selectedOptions, setSelectedOptions] = useState({
+    length: `${lengthDescriptions[2]}`,
+    detail: `${detailDescriptions[2]}`,
+    tone: `${toneDescriptions[0]}`,
+    format: `${formatDescriptions[2]}`,
+    language: `${languageDescriptions[0]}`,
   });
 
   useEffect(() => {
@@ -69,21 +63,28 @@ const options = () => {
           <Chip
             key={option}
             title={option}
-            onPress={() => setSelectedOptions((prev) => ({ ...prev, [category]: option }))}
-            buttonStyle={{ backgroundColor: selectedOptions[category] === option ? colors.primary : colors.card,
-              borderWidth:1, borderColor:colors.border
+            onPress={() => setSelectedOptions((prev) => ({
+              ...prev,
+              [category]: `${descriptions[index]}`,
+            }))}
+            buttonStyle={{
+              backgroundColor: selectedOptions[category].startsWith(option) ? colors.primary : colors.card,
+              borderWidth: 1,
+              borderColor: colors.border,
             }}
-            titleStyle={{ color: selectedOptions[category] === option ? colors.background : colors.text }}
+            titleStyle={{
+              color: selectedOptions[category].startsWith(option) ? colors.background : colors.text,
+            }}
           />
         ))}
       </View>
-      <MyText opacity={0.5} fontSize='small'>{descriptions[optionsArray.indexOf(selectedOptions[category])]}</MyText>
+      <MyText opacity={0.5} fontSize="small">{selectedOptions[category]}</MyText>
     </View>
   );
 
   return (
     <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
-      <ScrollView contentContainerStyle={{paddingBottom:"10%"}}>
+      <ScrollView contentContainerStyle={{ paddingBottom: "10%" }}>
         <View style={styles.iconRow}>
           <ResponsiveIcon name='ruler' type='entypo' color={colors.text} size={15} />
           <MyText bold>Length</MyText>
@@ -102,7 +103,7 @@ const options = () => {
           <ResponsiveIcon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
           <MyText bold>Tone</MyText>
         </View>
-        {renderChips('tone', ['Casual', 'Formal','Humorous','Serious','Optimistic', 'Sarcastic', 'Storyteller'], toneDescriptions)}
+        {renderChips('tone', ['Casual', 'Formal', 'Optimistic', 'Storyteller'], toneDescriptions)}
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>
@@ -116,9 +117,9 @@ const options = () => {
           <ResponsiveIcon name='globe' type='entypo' color={colors.text} size={17} />
           <MyText bold>Language</MyText>
         </View>
-        {renderChips('language', ['English', 'Spanish', 'French', 'Arabic', 
-          'German', 'Chinese', 'Hindi', 'Japanese', 'Russian', 'Portuguese','Italian','Korean',
-          'Turkish', 'Swahili', 'Dutch', 'Greek', 'Bengail','Vietnamese', 'Thai','Pirate'], languageDescriptions)}
+        {renderChips('language', ['English', 'Spanish', 'French', 'Arabic',
+          'German', 'Chinese', 'Hindi', 'Japanese', 'Russian', 'Portuguese', 'Italian', 'Korean',
+          'Turkish', 'Swahili', 'Dutch', 'Greek', 'Bengali', 'Vietnamese', 'Thai', 'Pirate'], languageDescriptions)}
       </ScrollView>
       <View style={styles.buttonRow}>
         <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     gap: '2%',
-    marginBottom:"1%"
+    marginBottom: "1%",
   },
   chipContainer: {
     flexDirection: 'row',

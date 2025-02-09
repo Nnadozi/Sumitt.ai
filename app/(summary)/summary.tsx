@@ -2,7 +2,7 @@ import { ActivityIndicator, Alert, Animated, ScrollView, Share, StyleSheet, View
 import React, { useEffect, useState, useRef } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
-import { useLocalSearchParams } from 'expo-router';
+import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { useTheme } from '@react-navigation/native';
 import { router } from 'expo-router';
 import MyButton from '@/components/MyButton';
@@ -26,7 +26,7 @@ const Summary = () => {
   const [summaryCount, setSummaryCount] = useState(0);
   const fadeAnim = useState(new Animated.Value(0))[0];
 
-  const { userInput, options } = useLocalSearchParams();
+  const { userInput, options } = useGlobalSearchParams();
   const { colors } = useTheme();
 
   useEffect(() => {
@@ -49,7 +49,9 @@ const Summary = () => {
   }, []);
 
   useEffect(() => {
-    if (userInput) generateSummary();
+    if (userInput) {
+      generateSummary()
+    }
   }, [userInput]);
 
   const generateSummary = async () => {
@@ -60,9 +62,10 @@ const Summary = () => {
         setLoading(false);
         return;
       }
+      
       setLoading(true);
-      setError('');
       fadeAnim.setValue(0);
+      setError('');
       
       const res = await fetch('https://sumitt-wpst.onrender.com/api/summarize', {
         method: 'POST',
@@ -170,20 +173,16 @@ const Summary = () => {
     }
   }, [loading]);
 
-  const loadingGifs = colors.card === 'rgb(255, 255, 255)' 
-  ? [
+  const loadingGifs = [
+      require('../../assets/images/ball.gif'),
       require('../../assets/images/infinity.gif'),
-      require('../../assets/images/pacman.gif')
-    ]
-  : [
-      require('../../assets/images/infinity-dark.gif'),
-      require('../../assets/images/pacman-dark.gif')
-    ];
-
+      require('../../assets/images/dual.gif'),
+      require('../../assets/images/pacman.gif'),
+  ];
 
   const [loadingGif, setLoadingGif] = useState(loadingGifs[0]);
   useEffect(() => {
-    setLoadingGif(loadingGifs[Math.floor(Math.random() * loadingGifs.length)]);
+    setLoadingGif(loadingGifs[Math .floor(Math.random() * loadingGifs.length)]);
   }, []);
 
 
@@ -192,7 +191,7 @@ const Summary = () => {
       {loading ? (
         <>
           <Image source={loadingGif} />
-          <MyText style={{marginTop:"-3%"}} bold fontSize="XL">Summarizing...</MyText>
+          <MyText bold fontSize="XL">Summarizing...</MyText>
           {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
         </>
       ) : error ? (

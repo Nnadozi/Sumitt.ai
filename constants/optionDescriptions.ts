@@ -15,10 +15,7 @@ export const detailDescriptions = [
 export const toneDescriptions = [
   'Casual: Friendly, informal, and conversational in tone.',
   'Formal: Professional, neutral, and suitable for academic or business contexts.',
-  'Humorous: Light-hearted, witty, and playful in tone.',
-  'Serious: Straightforward, earnest, and focused on the matter at hand.',
   'Optimistic: Positive, hopeful, and encouraging in tone.',
-  'Sarcastic: Using irony or mockery to convey a message, often with a biting tone.',
   'Storyteller: Vivid, engaging, and full of narrative flair, drawing the listener into the story with rich detail and emotion.'
 ];
 
