@@ -48,9 +48,8 @@ const styles = StyleSheet.create({
   con: {
     borderWidth: 1,
     width: "100%",
-    height: "10%",
     marginBottom: '3%',
-    padding: "3%",
+    padding: "4%",
     flexDirection: "row",
     alignItems: "center"
   },

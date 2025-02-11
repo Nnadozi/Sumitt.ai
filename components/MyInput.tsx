@@ -31,7 +31,7 @@ interface MyInputProps {
 const MyInput = (props: MyInputProps) => {
   const { colors } = useTheme();
   const screenHeight = Dimensions.get('window').height;
-  const dynamicHeight = props.height ? (parseFloat(props.height) / 100) * screenHeight : 50;
+  const dynamicHeight = props.height ? (parseFloat(props.height) / 100) * screenHeight : null;
 
   const [text, setText] = useState(props.value || '');
 

@@ -11,11 +11,13 @@ export default function MainNavigator() {
   const router = useRouter();
 
   const screenOptions = (name: string, title: string) => ({
-    title,
-    tabBarIcon: ({ focused }: { focused: boolean }) => (
-      <Icon containerStyle={{alignSelf:"center"}} name={name} size={30} color={focused ? colors.primary : colors.border} />
-    ),
-  });
+  title,
+  tabBarIcon: ({ focused }: { focused: boolean }) => (
+    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
+      <Icon name={name} size={30} color={focused ? colors.primary : colors.border} />
+    </View>
+  ),
+});
 
   return (
     <Tabs screenOptions={{ tabBarShowLabel: false, tabBarStyle: { paddingTop: "1%" }, headerTitleAlign:"center" }}>

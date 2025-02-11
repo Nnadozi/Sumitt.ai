@@ -8,19 +8,18 @@ Frontend
         - Updates API
         - Support section?
         - Add audio
+        - Share to summarize
     Bug Fixes / Changes
         - Hide AdMob information
         - Make theme a dropdown     
-        - Sharper GIFs                            
+        - Sharper GIFs      
+        - Tab bar icons aren't centered                
+        - Increase summary button margin
 Backend
     New Features
      - ...........
     Bug Fixes / Changes
-     - .....
+     - paywall bug (even when there isn't)
 Other
     - Fix invalid ad requests
     - AdMob Verification
-    - New store art
-
-1.3.0:
-UI improvements, better URL summarization, bug fixes, new loading indicators, more options

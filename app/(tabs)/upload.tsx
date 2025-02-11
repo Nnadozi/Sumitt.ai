@@ -118,8 +118,7 @@ const Upload = () => {
       {selectedOption ? (
         selectedOption === 'URL' ? (
           <>
-            <MyInput
-              height="7.5%"
+            <MyInput 
               value={inputText}
               onChangeText={handleUrlInputChange}
               placeholder="Paste URL"

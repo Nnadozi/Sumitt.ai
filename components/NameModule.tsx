@@ -42,7 +42,6 @@ const NameModule = ({ visible, onPress, onCancel }: NameModuleProps) => {
           <MyInput
             style={{ marginTop: '3%' }}
             placeholder="Enter name"
-            height="5%"
             value={name}
             onChangeText={(text) => setName(text)}
             maxLength={30}
