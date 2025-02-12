@@ -1,20 +1,17 @@
 Frontend
     New Features
         - Summary actions (flashcards, quizzes, etc)
-        - Video summarization
-        - Image summarization
         - File summarization
         - Language support
         - Updates API
         - Support section?
         - Add audio
         - Share to summarize
+        - App tutorial
     Bug Fixes / Changes
         - Hide AdMob information
         - Make theme a dropdown     
-        - Sharper GIFs      
-        - Tab bar icons aren't centered                
-        - Increase summary button margin
+        - Sharper GIFs               
 Backend
     New Features
      - ...........

@@ -1,4 +1,4 @@
-import { Dimensions, Platform, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
+import { Dimensions, Platform, SafeAreaView, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -84,6 +84,7 @@ const options = () => {
 
   return (
     <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
+      <SafeAreaView>
       <ScrollView contentContainerStyle={{ paddingBottom: "10%" }}>
         <View style={styles.iconRow}>
           <ResponsiveIcon name='ruler' type='entypo' color={colors.text} size={15} />
@@ -125,6 +126,7 @@ const options = () => {
         <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />
         <MyButton iconName='cancel' width='40%' title='Cancel' onPress={router.back} />
       </View>
+      </SafeAreaView>
     </Page>
   );
 };
@@ -139,14 +141,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     gap: '3%',
-    marginVertical: '3%',
+    marginTop:"3%"
   },
   iconRow: {
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
     gap: '2%',
-    marginBottom: "1%",
+    marginVertical: "1%",
   },
   chipContainer: {
     flexDirection: 'row',

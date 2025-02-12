@@ -223,10 +223,10 @@ const Summary = () => {
             <ScrollView persistentScrollbar contentContainerStyle={styles.scrollViewContent}>
               <MyText markdown>{summary}</MyText>
             </ScrollView>
-            <View style={styles.buttonRow}>
+            <SafeAreaView style={styles.buttonRow}>
               <MyButton iconName='save' width="45%" title="Save" onPress={() => setModuleVisible(true)} />
               <MyButton iconName='check' width="45%" title="Ok" onPress={handleGoBack} />
-            </View>
+            </SafeAreaView>
             <NameModule
               visible={moduleVisible}
               onPress={handleSave}

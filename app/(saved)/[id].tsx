@@ -1,4 +1,4 @@
-import { Alert, Button, Platform, ScrollView, Share, StyleSheet, View, } from 'react-native'
+import { Alert, Button, Platform, SafeAreaView, ScrollView, Share, StyleSheet, View, } from 'react-native'
 import React from 'react'
 import Page from '@/components/Page'
 import MyText from '@/components/MyText'
@@ -40,15 +40,15 @@ const SavedSummaryScreen = () => {
       <ScrollView persistentScrollbar style = {styles.scrollContainer}>
         <MyText markdown>{summary}</MyText>
       </ScrollView>
-      <View style = {styles.bottomRow}>
-        <View style = {{ flexDirection: 'row'}}>
-          <ResponsiveIcon primary size={30} name="copy" type="ionicon" onPress={handleCopy} />
-          <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />
-        </View>
-        {Platform.OS === "ios" && (
-            <Button title='Back' onPress={router.back} color={colors.primary} />
-          )}
-      </View>
+      <SafeAreaView style = {styles.bottomRow}>
+          <View style = {{ flexDirection: 'row'}}>
+            <ResponsiveIcon primary size={30} name="copy" type="ionicon" onPress={handleCopy} />
+            <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />
+          </View>
+          {Platform.OS === "ios" && (
+              <Button title='Back' onPress={router.back} color={colors.primary} />
+            )}
+      </SafeAreaView>
     </Page>
   )
 }
@@ -61,10 +61,10 @@ const styles = StyleSheet.create({
   },
   bottomRow:{
     width:"100%",
-    alignItems:"flex-end",
-    marginVertical:"1%",
+    alignItems:"center",
     flexDirection:"row-reverse",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    marginVertical:"1%"
   }
 })
 
