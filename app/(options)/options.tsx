@@ -104,7 +104,7 @@ const options = () => {
           <ResponsiveIcon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
           <MyText bold>Tone</MyText>
         </View>
-        {renderChips('tone', ['Casual', 'Formal', 'Optimistic', 'Storyteller', 'Poetic'], toneDescriptions)}
+        {renderChips('tone', ['Casual', 'Formal', 'Optimistic', 'Storyteller'], toneDescriptions)}
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>

@@ -17,7 +17,6 @@ export const toneDescriptions = [
   'Formal: Professional, neutral, and suitable for academic or business contexts.',
   'Optimistic: Positive, hopeful, and encouraging in tone.',
   'Storyteller: Vivid, engaging, and full of narrative flair, drawing the listener into the story with rich detail and emotion.',
-  'Poetic: Summarize with lyrical elegance, using rhythmic language and vivid imagery, as if crafting a poem.'
 ];
 
 export const formatDescriptions = [

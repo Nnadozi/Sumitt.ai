@@ -114,9 +114,7 @@ app.post("/api/summarize", async (req, res) => {
               5. Never display or reference the options object in the response.
               6. Always make sure to summarize in the specified language
               7. The ONLY markdown styles that can be used are bold and italicized text. Do not use ANY OTHER markdown style.
-              8. Use this symbol for bullet points: (•)
-              9. If a tone option is provided, ensure the summary strictly follows it. For example, if the tone is poetic, make the summary poetic.`
-              ,
+              8. Use this symbol for bullet points: (•)`,
           },
           { role: 'user', content: contentToSummarize },
         ],
