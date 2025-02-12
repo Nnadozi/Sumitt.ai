@@ -10,7 +10,8 @@ Frontend
         - App tutorial
     Bug Fixes / Changes
         - Hide AdMob information
-        - Make theme a dropdown     
+        - Make theme a dropdown   
+        - Android navbar for dark mode  
         - Sharper GIFs               
 Backend
     New Features
