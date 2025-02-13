@@ -2,16 +2,16 @@ Frontend
     New Features
         - Summary actions (flashcards, quizzes, etc)
         - File summarization
-        - Language support
-        - Updates API
+        - Language support (nb)
+        - Updates API (nb)
         - Support section?
         - Add audio
-        - Share to summarize
-        - App tutorial
+        - Share to summarize (nb)
+        - App tutorial 
     Bug Fixes / Changes
+        - Make theme a dropdown (nb)
+        - Android navbar for dark mode (nb)
         - Hide AdMob information
-        - Make theme a dropdown   
-        - Android navbar for dark mode  
         - Sharper GIFs               
 Backend
     New Features

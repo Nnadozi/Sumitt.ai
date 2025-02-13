@@ -9,6 +9,7 @@ import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import React from "react";
 
+
 export default function RootLayout() {
   useEffect(() => {
     async function prepareAds() {
@@ -32,7 +33,7 @@ export default function RootLayout() {
     prepareAds();
 
     async function checkForUpdates(){
-
+      
     }
     checkForUpdates()
   }, []);
