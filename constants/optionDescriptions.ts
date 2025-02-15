@@ -1,48 +1,49 @@
 export const lengthDescriptions = [
   'Short: A brief summary, focusing on the core message with minimal words.',
-  'Medium: A balanced summary, providing enough detail to cover key points without excess.',
-  'Long: A long, comprehensive summary that delves deeper, offering thorough coverage of the topic.',
-  'Auto: Automatically adjusts the length based on the content and context for optimal summarization.'
+  'Long: A comprehensive summary that delves deeper into the topic.',
+  'Auto: Automatically adjusts the length based on the content and context for optimal summarization (recommended).'
 ];
 
 export const detailDescriptions = [
-  'Low: A brief summary that captures the main ideas with minimal elaboration.',
-  'Medium: A balanced summary, covering important points with adequate detail.',
-  'High: A comprehensive and in-depth explanation, covering all aspects and subtleties.',
-  'Auto: Automatically adjusts the level of detail based on the content, ensuring clarity without excessive elaboration.'
+  'Low: Captures only the main ideas with minimal elaboration.',
+  'High: Provides a detailed and in-depth explanation.',
+  'Auto: Automatically adjusts the level of detail based on the content (recommended).'
 ];
 
+export const toneDescriptions = [
+  'Casual: Relaxed and conversational, ideal for general reading.',
+  'Informative: Focused on delivering clear facts and explanations.',
+];
+
+
 export const formatDescriptions = [
-  'Paragraphs: A flowing, continuous narrative with detailed blocks of text.',
+  'Paragraphs: A flowing, continuous narrative with detailed text blocks.',
   'Bullet Points: Structured as a clear list format using bullet points.',
-  'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
+  'Mix: A combination of paragraphs and bullet points for clarity.',
   'Q&A: Information presented in a question-and-answer format.',
 ];
 
-
 export const languageDescriptions = [
-  'English: A global language commonly used for international communication.',
-  'Spanish: Widely spoken across Spain, Latin America, and parts of the U.S.',
-  'French: Frequently used in France, Canada, and several African regions.',
-  'Arabic: A major language across the Middle East and North Africa.',
-  'German: Widely spoken in Germany, Austria, and parts of Switzerland.',
-  'Chinese: Primarily spoken in China and among Chinese communities worldwide.',
-  'Hindi: A major language spoken widely in India and among Indian communities abroad.',
-  'Japanese: Predominantly spoken in Japan and recognized globally for its cultural significance.',
-  'Russian: A widely spoken language in Russia, Eastern Europe, and Central Asia.',
-  'Portuguese: Commonly used in Portugal, Brazil, and several African countries.',
-  'Italian: Widely spoken in Italy and recognized for its influence in art, music, and cuisine.',
-  'Korean: Predominantly spoken in South and North Korea, with growing global influence.',
-  'Turkish: Widely spoken in Turkey and Cyprus, and increasingly recognized in parts of Europe.',
-  'Swahili: Spoken widely in East Africa, including countries like Kenya, Tanzania, and Uganda.',
-  'Dutch: Primarily spoken in the Netherlands, Belgium, and parts of Suriname.',
-  'Greek: Spoken in Greece and Cyprus, with historical significance in philosophy and science.',
-  'Bengali: Primarily spoken in Bangladesh and parts of India, one of the most spoken languages in the world.',
-  'Vietnamese: Widely spoken in Vietnam and among Vietnamese communities worldwide.',
-  'Thai: Spoken primarily in Thailand and by Thai communities abroad.',
-  'Hebrew: An ancient language with deep religious and cultural significance, primarily spoken in Israel.',
-  'Finnish: Spoken in Finland, known for its unique grammar and lack of gendered pronouns.',
-  'Pirate: Argh matey! Bold, adventurous, and full of seafaring lingo, often exaggerated for fun.',
-  'Shakespearean: Hark! A tongue most poetic, where words doth dance like leaves upon the autumn breeze.',
+  'English: A global language used for international communication.',
+  'Spanish: Widely spoken across Spain, Latin America, and the U.S.',
+  'French: Common in France, Canada, and parts of Africa.',
+  'Arabic: A major language in the Middle East and North Africa.',
+  'Chinese: Spoken widely in China and among Chinese communities.',
+  'Hindi: One of the most spoken languages in India and globally.',
+  'Japanese: Predominantly spoken in Japan with global cultural significance.',
+  'Russian: Common in Russia, Eastern Europe, and Central Asia.',
+  'Portuguese: Used in Portugal, Brazil, and some African nations.',
+  'German: Widely spoken in Germany, Austria, and Switzerland.',
+  'Italian: Spoken in Italy and recognized in art, music, and cuisine.',
+  'Korean: The primary language of South and North Korea.',
+  'Turkish: Spoken in Turkey and Cyprus with growing influence.',
+  'Bengali: Common in Bangladesh and parts of India.',
+  'Vietnamese: The primary language of Vietnam.',
+  'Thai: Spoken mainly in Thailand.',
+  'Dutch: Primarily spoken in the Netherlands and Belgium.',
+  'Greek: Used in Greece and Cyprus with deep historical significance.',
+  'Hebrew: The official language of Israel with historical and cultural importance.',
+  'Pirate: Arrr! Speak like a true buccaneer with swashbucklin’ lingo and salty sea dog phrases! The pirate language.'
 ];
+
 

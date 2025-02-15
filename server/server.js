@@ -107,12 +107,13 @@ app.post("/api/summarize", async (req, res) => {
           { 
             role: 'system',
             content: `You are a professional summarizer tasked with creating concise, meaningful, and complete summaries of the provided text, regardless of its length or clarity. Follow these instructions:
-              1. Always generate a summary based on the provided options when available: ${options}. Follow all the options very strictly. For example, if the format is Q&A, then the summary must be in Q&A format.
+              1. Always generate a summary based on the provided options when available: ${options}. Follow all the options very strictly. For example, 
+              if the format is Q&A, then the summary must be in Q&A format. If the length is 'short', then the summary should be short.
               2. Generate a summary even if the input is minimal or unclear, ensuring the response remains coherent and relevant.
               3. Avoid asking for clarification. Instead, provide thoughtful context, interpretations, or additional details when necessary.
               4. Do not apologize or acknowledge unclear input.
               5. Never display or reference the options object in the response.
-              6. Always make sure to summarize in the specified language
+              6. Always summarize in the specified language, maintaining accuracy and readability (especially for the pirate language).
               7. The ONLY markdown styles that can be used are bold and italicized text. Do not use ANY OTHER markdown style.
               8. Use this symbol for bullet points: (•)`,
           },

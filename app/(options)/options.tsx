@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   lengthDescriptions,
   detailDescriptions,
+  toneDescriptions,
   formatDescriptions,
   languageDescriptions,
 } from '../../constants/optionDescriptions';
@@ -23,6 +24,7 @@ const options = () => {
   const [selectedOptions, setSelectedOptions] = useState({
     length: `${lengthDescriptions[2]}`,
     detail: `${detailDescriptions[2]}`,
+    tone: `${toneDescriptions[0]}`,
     format: `${formatDescriptions[2]}`,
     language: `${languageDescriptions[0]}`,
   });
@@ -88,14 +90,21 @@ const options = () => {
           <ResponsiveIcon name='ruler' type='entypo' color={colors.text} size={15} />
           <MyText bold>Length</MyText>
         </View>
-        {renderChips('length', ['Short', 'Medium', 'Long', 'Auto'], lengthDescriptions)}
+        {renderChips('length', ['Short', 'Long', 'Auto'], lengthDescriptions)}
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>
           <ResponsiveIcon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
           <MyText bold>Detail</MyText>
         </View>
-        {renderChips('detail', ['Low', 'Medium', 'High', 'Auto'], detailDescriptions)}
+        {renderChips('detail', ['Low', 'High', 'Auto'], detailDescriptions)}
+        <Divider width={10} color='rgba(0,0,0,0)' />
+
+        <View style={styles.iconRow}>
+          <ResponsiveIcon name='chatbubble-ellipses' type='ionicon' color={colors.text} size={17} />
+          <MyText bold>Tone</MyText>
+        </View>
+        {renderChips('tone', ['Casual', 'Informative'], toneDescriptions)}
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>
@@ -109,10 +118,10 @@ const options = () => {
           <ResponsiveIcon name='globe' type='entypo' color={colors.text} size={17} />
           <MyText bold>Language</MyText>
         </View>
-        {renderChips('language', ['English', 'Spanish', 'French', 'Arabic',
-          'German', 'Chinese', 'Hindi', 'Japanese', 'Russian', 'Portuguese', 'Italian', 'Korean',
-          'Turkish', 'Swahili', 'Dutch', 'Greek', 'Bengali', 'Vietnamese', 'Thai',
-          'Hebrew', 'Finnish', 'Pirate', 'Shakespearean'], languageDescriptions)}
+        {renderChips('language', [
+      'English', 'Spanish', 'French', 'Arabic', 'Chinese', 'Hindi', 'Japanese', 'Russian', 
+      'Portuguese', 'German', 'Italian', 'Korean', 'Turkish', 'Bengali', 'Vietnamese', 'Thai', 
+      'Dutch', 'Greek', 'Hebrew', 'Pirate'], languageDescriptions)}
       </ScrollView>
       <View style={styles.buttonRow}>
         <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />
