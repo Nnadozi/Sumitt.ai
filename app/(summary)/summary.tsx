@@ -151,10 +151,10 @@ const Summary = () => {
   const handleGoBack = async () => {
     setSummaryCount((prevCount) => {
       const newCount = prevCount + 1;
-      if (newCount === (Math.floor(Math.random() * 3) + 2)) {
+      if (newCount === (Math.floor(Math.random() * 2) + 2)) {
         showInterstitialAd();
         return 0;
-      }
+      }  
       return newCount;
     });
     setSummary('');
@@ -205,7 +205,7 @@ const Summary = () => {
             {'\n'}
             • The page is blocked by a login or authentication prompt.
             {'\n'}
-            • The page has restricted access (e.g., behind a paywall or subscription barrier).
+            • The website has blocked web scraping activities
             </MyText>
           <MyButton width="30%" title="Back" onPress={handleGoBack} />
         </>

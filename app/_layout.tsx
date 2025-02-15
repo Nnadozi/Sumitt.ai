@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import React from "react";
+import Constants from 'expo-constants';
 
 
 export default function RootLayout() {
@@ -31,11 +32,7 @@ export default function RootLayout() {
       mobileAds().initialize();
     }
     prepareAds();
-
-    async function checkForUpdates(){
-      
-    }
-    checkForUpdates()
+    console.log(Constants.expoConfig?.extra?.fact);
   }, []);
 
   return (

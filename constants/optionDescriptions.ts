@@ -12,18 +12,13 @@ export const detailDescriptions = [
   'Auto: Automatically adjusts the level of detail based on the content, ensuring clarity without excessive elaboration.'
 ];
 
-export const toneDescriptions = [
-  'Casual: Friendly, informal, and conversational in tone.',
-  'Formal: Professional, neutral, and suitable for academic or business contexts.',
-  'Optimistic: Positive, hopeful, and encouraging in tone.',
-  'Storyteller: Vivid, engaging, and full of narrative flair, drawing the listener into the story with rich detail and emotion.',
-];
-
 export const formatDescriptions = [
   'Paragraphs: A flowing, continuous narrative with detailed blocks of text.',
   'Bullet Points: Structured as a clear list format using bullet points.',
   'Mix: A blend of paragraphs and bullet points for clarity and versatility.',
+  'Q&A: Information presented in a question-and-answer format.',
 ];
+
 
 export const languageDescriptions = [
   'English: A global language commonly used for international communication.',
@@ -45,6 +40,9 @@ export const languageDescriptions = [
   'Bengali: Primarily spoken in Bangladesh and parts of India, one of the most spoken languages in the world.',
   'Vietnamese: Widely spoken in Vietnam and among Vietnamese communities worldwide.',
   'Thai: Spoken primarily in Thailand and by Thai communities abroad.',
+  'Hebrew: An ancient language with deep religious and cultural significance, primarily spoken in Israel.',
+  'Finnish: Spoken in Finland, known for its unique grammar and lack of gendered pronouns.',
   'Pirate: Argh matey! Bold, adventurous, and full of seafaring lingo, often exaggerated for fun.',
+  'Shakespearean: Hark! A tongue most poetic, where words doth dance like leaves upon the autumn breeze.',
 ];
 

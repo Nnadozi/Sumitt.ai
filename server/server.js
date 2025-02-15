@@ -107,7 +107,7 @@ app.post("/api/summarize", async (req, res) => {
           { 
             role: 'system',
             content: `You are a professional summarizer tasked with creating concise, meaningful, and complete summaries of the provided text, regardless of its length or clarity. Follow these instructions:
-              1. Always generate a summary based on the provided options when available: ${options}.
+              1. Always generate a summary based on the provided options when available: ${options}. Follow all the options very strictly. For example, if the format is Q&A, then the summary must be in Q&A format.
               2. Generate a summary even if the input is minimal or unclear, ensuring the response remains coherent and relevant.
               3. Avoid asking for clarification. Instead, provide thoughtful context, interpretations, or additional details when necessary.
               4. Do not apologize or acknowledge unclear input.

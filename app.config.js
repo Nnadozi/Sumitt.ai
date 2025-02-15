@@ -17,4 +17,7 @@ export default {
       package: IS_DEV ? 'com.nnadozi.sumitt.dev' : appConfig.expo.android.package,
     },
   },
+  extra: {
+    fact: 'Test',
+  },
 };
