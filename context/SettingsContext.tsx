@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, ReactNode, useMemo, useEffe
 import { MyLightTheme, MyDarkTheme } from '@/constants/Colors';
 import { useColorScheme } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as NavigationBar from 'expo-navigation-bar'; 
 
 type ThemeType = 'light' | 'dark' | 'system';
 
@@ -30,6 +31,15 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
     };
     loadSettings();
   }, []);
+
+  useEffect(() => {
+    const activeTheme = theme === 'system' ? systemScheme : theme;
+    if (activeTheme === 'dark') {
+      NavigationBar.setBackgroundColorAsync(MyDarkTheme.colors.background);
+    } else {
+      NavigationBar.setBackgroundColorAsync(MyLightTheme.colors.background);
+    }
+  }, [theme, systemScheme]);
 
   const setTheme = async (newTheme: ThemeType) => {
     try {

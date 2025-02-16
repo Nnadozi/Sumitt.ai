@@ -112,7 +112,7 @@ app.post("/api/summarize", async (req, res) => {
             3. **Detail level:** Must align with the user's preference (low, high, or auto).
             4. **Tone:** If a tone is specified, use it strictly.
             5. **Format:** Ensure the summary follows the specified format (paragraphs, bullet points, mix, or Q&A).
-            6. **Language:** The summary **must** be in the exact language specified by the user.
+            6. **Language:** The summary **must** be in the exact language specified by the user. After generating the summary, infer the **language code** for the summary and return it alongside the summary text. Do **not** show the language code to the user.
             7. **Markdown Usage:** Only use **bold** and *italicized* text. No other markdown elements are allowed.
             8. **Bullet Points:** When bullet points are required, use **(•)** as the symbol.
             9. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
@@ -131,12 +131,25 @@ app.post("/api/summarize", async (req, res) => {
     }
 
     const data = await response.json();
-    res.json(data);
+
+    // Extract the inferred language code from the AI's response
+    const languageCode = data.choices[0].message.content.match(/Language code: (\w{2})/i)?.[1] || "en"; 
+
+    // Remove the language code from the summary text
+    const summaryText = data.choices[0].message.content.replace(/Language code: \w{2}/i, "").trim();
+
+    // Send the summary and the inferred language code back to the client
+    res.json({
+      summary: summaryText,
+      languageCode, // Return the inferred language code
+    });
+
   } catch (error) {
     console.error("Unexpected error:", error.message);
     res.status(500).json({ error: "An unexpected error occurred.", details: error.message });
   }
 });
+
 
 app.get("/", (req, res) =>
   res.send("Server is running! Use the /api/summarize endpoint for summarization.")

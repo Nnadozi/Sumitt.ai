@@ -175,7 +175,10 @@ const Upload = () => {
           </>
         )
       ) : (
+        <>
         <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="100%" marginVertical="2%" />
+        <MyText style={{ marginTop: '2%', opacity: 0.5 }} fontSize='small'>*Note: AI output may not always be correct*</MyText>
+        </>
       )}
     </Page>
   );

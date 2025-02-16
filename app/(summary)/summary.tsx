@@ -15,7 +15,9 @@ import { InterstitialAd, AdEventType, TestIds } from 'react-native-google-mobile
 import Snackbar from 'react-native-snackbar';
 import ResponsiveIcon from '@/components/ResponsiveIcon';
 
-const id = Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986";
+const id = __DEV__
+  ? TestIds.INTERSTITIAL
+  : (Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986");
 const interstitialAd = InterstitialAd.createForAdRequest(id);
 
 const Summary = () => {
@@ -189,7 +191,7 @@ const Summary = () => {
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
         <>
-          <Image source={loadingGif} />
+          <Image source={loadingGif} key={loadingGif.uri} />
           <MyText bold fontSize="XL">Summarizing...</MyText>
           {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
         </>

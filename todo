@@ -8,13 +8,13 @@ Frontend
         - Add audio (nb)
     Bug Fixes / Changes
         - Hide AdMob information
-        - Sharper GIFs         
-        - Make theme a dropdown (nb)
-        - Android navbar for dark mode (nb)       
+        - Sharper GIFs           
 Backend
     New Features
      - ...........
     Bug Fixes / Changes
-     - paywall bug (even when there isn't)
+     - ............
 Other
-    - Fix invalid ad requests (nb)
+    - .............
+
+1.4.0: (Navbar theme fixing, new dropdowns, Fix invalid ad requests)
