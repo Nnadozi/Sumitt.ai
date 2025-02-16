@@ -59,6 +59,8 @@
     "firebase-admin": "^13.0.2",
     "firebase-functions": "^6.2.0",
     "i18n-js": "^4.5.1",
+    "langdetect": "^0.2.1",
+    "languagedetect": "^2.0.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-i18next": "^15.4.0",
@@ -79,7 +81,8 @@
     "react-native-toast-message": "^2.2.1",
     "react-native-version-check": "^3.4.7",
     "react-native-web": "~0.19.13",
-    "react-native-webview": "13.12.5"
+    "react-native-webview": "13.12.5",
+    "tinyld": "^1.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
