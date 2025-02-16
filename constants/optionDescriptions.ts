@@ -43,7 +43,7 @@ export const languageDescriptions = [
   'Dutch: Primarily spoken in the Netherlands and Belgium.',
   'Greek: Used in Greece and Cyprus with deep historical significance.',
   'Hebrew: The official language of Israel with historical and cultural importance.',
-  'Pirate: Arrr! Speak like a true buccaneer with swashbucklin’ lingo and salty sea dog phrases! The pirate language.'
+  'Polish: The primary language of Poland, spoken by millions worldwide.'
 ];
 
 

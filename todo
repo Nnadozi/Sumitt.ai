@@ -2,22 +2,19 @@ Frontend
     New Features
         - Summary actions (flashcards, quizzes, etc)
         - File summarization
+        - Share to summarize (nb)
         - Language support (nb)
         - Updates API (nb)
-        - Support section?
-        - Add audio
-        - Share to summarize (nb)
-        - App tutorial 
+        - Add audio (nb)
     Bug Fixes / Changes
-        - Make theme a dropdown (nb)
-        - Android navbar for dark mode (nb)
         - Hide AdMob information
-        - Sharper GIFs               
+        - Sharper GIFs         
+        - Make theme a dropdown (nb)
+        - Android navbar for dark mode (nb)       
 Backend
     New Features
      - ...........
     Bug Fixes / Changes
      - paywall bug (even when there isn't)
 Other
-    - Fix invalid ad requests
-    - AdMob Verification
+    - Fix invalid ad requests (nb)

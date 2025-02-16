@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import appConfig from './app.json';
 
-const IS_DEV = process.env.APP_VARIANT === 'development';
+const IS_DEV = process.env.EXPO_PUBLIC_APP_VARIANT === 'development';
 
 export default {
   ...appConfig, 
@@ -18,6 +18,6 @@ export default {
     },
   },
   extra: {
-    fact: 'Test',
+    EXPO_PUBLIC_APP_VARIANT: process.env.EXPO_PUBLIC_APP_VARIANT
   },
 };

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '92%',
     padding: '4%',
-    paddingBottom: '10%',
+    paddingBottom: '5%',
   },
   topRow:{
     flexDirection:"row",
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
   bottomRow: {
     flexDirection: 'row',
     marginTop:"3%",
-    marginBottom:"-5%",
     gap:"1%"
   },
 });

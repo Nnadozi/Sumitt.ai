@@ -43,7 +43,7 @@ const SavedSummaryScreen = () => {
       <SafeAreaView style = {styles.bottomRow}>
           <View style = {{ flexDirection: 'row'}}>
             <ResponsiveIcon primary size={30} name="copy" type="ionicon" onPress={handleCopy} />
-            <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />
+            <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />z
           </View>
           {Platform.OS === "ios" && (
               <Button title='Back' onPress={router.back} color={colors.primary} />

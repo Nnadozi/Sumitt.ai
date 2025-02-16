@@ -32,7 +32,6 @@ export default function RootLayout() {
       mobileAds().initialize();
     }
     prepareAds();
-    console.log(Constants.expoConfig?.extra?.fact);
   }, []);
 
   return (
