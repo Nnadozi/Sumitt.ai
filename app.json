@@ -66,6 +66,7 @@
       ],
       "expo-secure-store",
       "expo-tracking-transparency",
+      "expo-share-intent",
       ["expo-localization"]
     ],
     "experiments": {

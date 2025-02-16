@@ -1,5 +1,5 @@
 import { Alert, Button, Platform, SafeAreaView, ScrollView, Share, StyleSheet, View, } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Page from '@/components/Page'
 import MyText from '@/components/MyText'
 import { router, useLocalSearchParams } from 'expo-router'
@@ -10,6 +10,7 @@ import { useTheme } from '@react-navigation/native'
 import MyButton from '@/components/MyButton'
 import Snackbar from 'react-native-snackbar'
 import ResponsiveIcon from '@/components/ResponsiveIcon'
+import * as Speech from "expo-speech"
 
 const SavedSummaryScreen = () => {
   const {summary} = useLocalSearchParams()
@@ -34,16 +35,16 @@ const SavedSummaryScreen = () => {
         Alert.alert(error.message);
       }
   };
-
+  
   return (
-    <Page style={{justifyContent:"flex-start", padding:'5%'}}>
+    <Page style={{justifyContent:"flex-start", padding:'4%'}}>
       <ScrollView persistentScrollbar style = {styles.scrollContainer}>
         <MyText markdown>{summary}</MyText>
       </ScrollView>
       <SafeAreaView style = {styles.bottomRow}>
-          <View style = {{ flexDirection: 'row'}}>
+          <View style = {styles.iconRow}>
             <ResponsiveIcon primary size={30} name="copy" type="ionicon" onPress={handleCopy} />
-            <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />z
+            <ResponsiveIcon primary size={30} name='share' type="ionicon" onPress={handleShare} />
           </View>
           {Platform.OS === "ios" && (
               <Button title='Back' onPress={router.back} color={colors.primary} />
@@ -64,7 +65,14 @@ const styles = StyleSheet.create({
     alignItems:"center",
     flexDirection:"row-reverse",
     justifyContent:"space-between",
-    marginVertical:"1%"
+    marginVertical:"1%",
+    alignSelf:"center",
+  },
+  iconRow:{
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"space-evenly",
+    gap:"1%"
   }
 })
 

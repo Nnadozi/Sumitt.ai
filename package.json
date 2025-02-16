@@ -44,6 +44,7 @@
     "expo-navigation-bar": "~4.0.8",
     "expo-router": "~4.0.16",
     "expo-secure-store": "~14.0.1",
+    "expo-share-intent": "^3.2.1",
     "expo-sharing": "~13.0.1",
     "expo-speech": "~13.0.1",
     "expo-splash-screen": "~0.29.22",
