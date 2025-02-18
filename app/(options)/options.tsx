@@ -121,7 +121,7 @@ const options = () => {
         {renderChips('language', [
       'English', 'Spanish', 'French', 'Arabic', 'Chinese', 'Hindi', 'Japanese', 'Russian', 
       'Portuguese', 'German', 'Italian', 'Korean', 'Turkish', 'Bengali', 'Vietnamese', 'Thai', 
-      'Dutch', 'Greek', 'Hebrew', 'Polish'], languageDescriptions)}
+      'Dutch', 'Greek', 'Hebrew', 'Polish','Swedish', 'Ukranian','Hungarian', 'Igbo'], languageDescriptions)}
       </ScrollView>
       <View style={styles.buttonRow}>
         <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />

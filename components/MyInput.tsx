@@ -71,6 +71,7 @@ const MyInput = (props: MyInputProps) => {
             backgroundColor: colors.card,
             color: colors.text,
             height: dynamicHeight, 
+            borderRadius:10
           },
           props.style,
         ]}

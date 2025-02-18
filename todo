@@ -2,13 +2,14 @@ Frontend
     New Features
         - Summary actions (flashcards, quizzes, etc)
         - File summarization
+        - Image summarization
         - Share to summarize (nb)
         - Language support (nb)
         - Updates API (nb)
-        - Add audio (nb)
     Bug Fixes / Changes
-        - Hide AdMob information
-        - Sharper GIFs           
+        - Hide AdMob information     
+        - UI Improvements   
+        - Fix GIFs (random + theme)
 Backend
     New Features
      - ...........
@@ -17,3 +18,5 @@ Backend
 Other
     - .............
 
+v1.5.0
+- Add audio (nb)

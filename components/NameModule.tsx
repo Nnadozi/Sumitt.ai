@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '80%',
     padding: '5%',
+    borderRadius:15
   },
   buttonRow: {
     flexDirection: 'row',
