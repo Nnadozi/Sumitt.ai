@@ -3,14 +3,11 @@ import React, { useEffect } from 'react'
 import Page from '@/components/Page'
 import MyText from '@/components/MyText'
 import { router, useLocalSearchParams } from 'expo-router'
-import { Divider } from '@rneui/base'
-import { Icon } from '@rneui/base'
 import * as Clipboard from 'expo-clipboard';
 import { useTheme } from '@react-navigation/native'
 import MyButton from '@/components/MyButton'
 import Snackbar from 'react-native-snackbar'
 import ResponsiveIcon from '@/components/ResponsiveIcon'
-import * as Speech from "expo-speech"
 
 const SavedSummaryScreen = () => {
   const {summary} = useLocalSearchParams()
@@ -72,7 +69,7 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     alignItems:"center",
     justifyContent:"space-evenly",
-    gap:"1%"
+    gap:"2%",
   }
 })
 

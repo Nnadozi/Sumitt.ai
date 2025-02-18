@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     width: '92%',
     padding: '4%',
     paddingBottom: '5%',
+    borderRadius:15
   },
   topRow:{
     flexDirection:"row",
@@ -90,6 +91,6 @@ const styles = StyleSheet.create({
   bottomRow: {
     flexDirection: 'row',
     marginTop:"3%",
-    gap:"1%"
+    gap:"1%",
   },
 });

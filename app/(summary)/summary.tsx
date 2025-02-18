@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   },
   iconRow: {
     flexDirection: 'row',
-    width: '17.5%',
+    gap: '2%',
     justifyContent: 'space-around',
   },
   scrollViewContent: {

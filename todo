@@ -3,8 +3,9 @@ Frontend
         - Summary actions (flashcards, quizzes, etc)
         - File summarization
         - Image summarization
+        - Language support 
+        - Find someway to add audio
         - Share to summarize (nb)
-        - Language support (nb)
         - Updates API (nb)
     Bug Fixes / Changes
         - Hide AdMob information     
@@ -17,6 +18,3 @@ Backend
      - ............
 Other
     - .............
-
-v1.5.0
-- Add audio (nb)
