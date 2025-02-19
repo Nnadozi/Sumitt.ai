@@ -100,6 +100,14 @@ const Upload = () => {
     });
   };
 
+  const handleUpload = () =>{
+
+  }
+
+  const handlePicture = () =>{
+
+  }
+
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: 'flex-start', margin: '5%' }}>
       <InputType
@@ -114,7 +122,12 @@ const Upload = () => {
         selected={selectedOption === 'URL'}
         onPress={() => handleSelectOption('URL')}
       />
-
+      <InputType
+        name="Image"
+        subtitle="Takep or upload image"
+        selected={selectedOption === 'Image'}
+        onPress={() => handleSelectOption('Image')}
+      />
       {selectedOption ? (
         selectedOption === 'URL' ? (
           <>
@@ -145,10 +158,10 @@ const Upload = () => {
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
-        ) : (
+        ) :    selectedOption === 'Manual Input' ? (
           <>
             <MyInput
-              height="45%"
+              height="35%"
               value={inputText}
               onChangeText={setInputText}
               placeholder="Enter text"
@@ -172,6 +185,25 @@ const Upload = () => {
               />
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
+          </>
+        ):(
+          <>
+            <View style={styles.buttonRow}>
+              <MyButton
+                title="Upload Image" iconName="cloudupload" iconType="antdesign"
+                onPress={handleUpload}
+                width="49%"
+              />
+              <MyButton title="Take Picture" iconName="camera" iconType="antdesign" onPress={handlePicture} width="49%" />
+            </View>
+            <View style={styles.buttonRow}>
+              <MyButton
+                title="Options" iconName="options" iconType="ionicon"
+                onPress={() => router.navigate('/(options)/options')}
+                width="49%"
+              />
+              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
+          </View>
           </>
         )
       ) : (

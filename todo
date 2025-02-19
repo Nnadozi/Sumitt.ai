@@ -2,14 +2,13 @@ Frontend
     New Features
         - Summary actions (flashcards, quizzes, etc)
         - File summarization
-        - Image summarization
-        - Language support 
+        - Add things ChatGPT can't do
+        - Localization
         - Find someway to add audio
         - Share to summarize (nb)
         - Updates API (nb)
     Bug Fixes / Changes
         - Hide AdMob information     
-        - UI Improvements   
         - Fix GIFs (random + theme)
 Backend
     New Features
@@ -17,4 +16,12 @@ Backend
     Bug Fixes / Changes
      - ............
 Other
-    - .............
+    - App store localization
+
+
+1.5.0
+- Image summarization
+- Disable swipe gesture for Android
+- Seperate screen for each option
+- Prevent using URLs in manaul text mode
+- UI Improvements   

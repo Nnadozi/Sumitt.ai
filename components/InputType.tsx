@@ -21,6 +21,8 @@ const InputType = (props: InputTypeProps) => {
         return "link";
       case "Manual Input":
         return "keyboard";
+      case "Image":
+          return "image";
       default:
         return 'help-outline';
     }
