@@ -9,6 +9,7 @@ import MyText from '@/components/MyText';
 import { useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
 
 const Upload = () => {
   const { colors } = useTheme();

@@ -8,30 +8,40 @@ import { useEffect } from "react";
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import React from "react";
-import LanguageDetect from 'languagedetect';
 
 export default function RootLayout() {
-  useEffect(() => {
-    async function prepareAds() {
-      const { status } = await getTrackingPermissionsAsync();
-      if (status !== 'granted') {
-        const { status: newStatus } = await requestTrackingPermissionsAsync();
-        console.log(`Tracking permission status: ${newStatus}`);
-      } else {
-        console.log(`Tracking already granted: ${status}`);
+  
+ useEffect(() => {
+  async function prepareAds() {
+    const { status } = await getTrackingPermissionsAsync();
+
+    if (status === 'granted') {
+      console.log(`Tracking already granted: ${status}`);
+      setupAds();
+    } else {
+      const { status: newStatus } = await requestTrackingPermissionsAsync();
+      console.log(`Tracking permission status: ${newStatus}`);
+      if (newStatus === 'granted') {
+        setupAds();
       }
-      mobileAds()
-        .setRequestConfiguration({
-          maxAdContentRating: MaxAdContentRating.T,
-          tagForUnderAgeOfConsent: true,
-        })
-        .then(() => {
-          console.log("Ad setup done!");
-        });
-      mobileAds().initialize();
     }
-    prepareAds();
-  }, []);
+  }
+
+  function setupAds() {
+    mobileAds()
+      .setRequestConfiguration({
+        maxAdContentRating: MaxAdContentRating.T,
+        tagForUnderAgeOfConsent: true,
+      })
+      .then(() => {
+        console.log("Ad setup done!");
+        mobileAds().initialize();
+      });
+  }
+
+  prepareAds();
+}, []);
+
 
   return (
     <SettingsProvider>
@@ -48,7 +58,7 @@ const AppNavigator = () => {
   return (
     <ThemeProvider value={resolvedTheme}>
       <StatusBar style={resolvedTheme === MyDarkTheme ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false, gestureEnabled:false }}>
+      <Stack screenOptions={{ headerShown: false, gestureEnabled:false}} >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="(options)" />
         <Stack.Screen name="(summary)" />

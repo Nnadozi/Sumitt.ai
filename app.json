@@ -64,9 +64,20 @@
           "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
         }
       ],
-      "expo-secure-store",
-      "expo-tracking-transparency",
-      ["expo-localization"]
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ],
+      [
+        "expo-image-picker",
+          {
+            "photosPermission": "Sumitt needs access to your photos to provide image summarization."
+          }
+      ],
+      ["expo-localization"],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
