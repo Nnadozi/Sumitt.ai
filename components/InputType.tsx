@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useTheme } from '@react-navigation/native';
 import MyText from './MyText';
@@ -8,7 +8,6 @@ import ResponsiveIcon from './ResponsiveIcon';
 interface InputTypeProps {
     name?: string;
     subtitle?: string;
-    selected: boolean;
     onPress: () => void;
 }
 
@@ -29,18 +28,14 @@ const InputType = (props: InputTypeProps) => {
   };
 
   return (
-    <Pressable  
-      style={[styles.con, 
-        { backgroundColor: props.selected ? colors.primary : colors.card, 
-          borderColor: props.selected ? colors.primary : colors.border }]} 
-      onPress={props.onPress} 
-    >
-        <ResponsiveIcon color={props.selected ? colors.card : colors.primary} size={30} name={iconName()} />
+    <TouchableOpacity style={[styles.con,{ backgroundColor: colors.card, borderColor: colors.border }]} 
+    onPress={props.onPress} activeOpacity={0.5}>
+        <ResponsiveIcon color={colors.primary} size={30} name={iconName()} />
         <View style={styles.textCon}>
-            <MyText style={{ color: props.selected ? colors.card : colors.text }} bold>{props.name}</MyText>
-            <MyText style={{ color: props.selected ? colors.card : colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>
+            <MyText style={{ color: colors.text }} bold>{props.name}</MyText>
+            <MyText style={{ color: colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>
         </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -51,9 +46,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: "100%",
     marginBottom: '3%',
-    padding: "3.5%",
+    padding: "4%",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    borderRadius:10
   },
   textCon: {
     marginLeft: '5%'
