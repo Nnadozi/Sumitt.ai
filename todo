@@ -1,20 +1,14 @@
 Frontend
     New Features
-        - Summary actions (flashcards, quizzes, etc)
-        - File summarization
-        - Image summarization
-        - Add things ChatGPT can't do
+        - Audio
+        - Updates API
         - Localization
-        - Find someway to add audio
-        - Share to summarize (nb)
-        - Updates API (nb)
-        - "Please avoid" section
+        - Share to summarize
+        - PDF and document summarization
+        - Summary actions (flashcards, quizzes, etc)
     Bug Fixes / Changes
         - Hide AdMob information     
         - Fix GIFs (random + theme)
-        - Disable swipe gesture for Android
-        - Back arrows not showing / working
-        - UI improvements
 Backend
     New Features
      - ...........
@@ -24,8 +18,10 @@ Other
     - App store localization
 
 1.4.1 (2)
-- Seperate screen for each option
-- Prevent using URLs in manaul text mode
-- Text input size glitch
-- Weird crash glitch
 - Fiox iPadOS tracking not showing
+
+1.5.0
+- Image summarization
+- "Please avoid" section
+- Back arrows not showing / working
+- Disable swipe gesture for Android

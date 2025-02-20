@@ -1,15 +1,18 @@
-import { StyleSheet, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
-import Page from '@/components/Page'
-import MyText from '@/components/MyText'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { router, useFocusEffect } from 'expo-router'
-import MyInput from '@/components/MyInput'
-import MyButton from '@/components/MyButton'
+import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import Page from '@/components/Page';
+import MyText from '@/components/MyText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { router, useFocusEffect } from 'expo-router';
+import MyInput from '@/components/MyInput';
+import { useTheme } from '@react-navigation/native';
+import MyButton from '@/components/MyButton';
 
 const Manual = () => {
   const [inputText, setInputText] = useState('');
   const [selectedOptions, setSelectedOptions] = useState<string | string[] | null>(null);
+  const [inputError, setInputError] = useState<string | null>(null);
+  const { colors } = useTheme();
 
   const fetchOptions = async () => {
     try {
@@ -23,16 +26,27 @@ const Manual = () => {
   useFocusEffect(
     useCallback(() => {
       fetchOptions();
-      return () => setInputText(''); 
     }, [])
   );
 
+  const handleInputChange = (text: string) => {
+    const urlPattern = /https?:\/\/[^\s]+|www\.[^\s]+/gi;
+    if (urlPattern.test(text)) {
+      setInputError('URLs are not allowed. Please enter plain text.');
+    } else {
+      setInputError(null);
+      setInputText(text);
+    }
+  };
+
   const handleCancel = () => {
     setInputText('');
+    setInputError(null);
     router.back();
   };
 
   const generateSummary = () => {
+    if (inputError) return;
     router.navigate({
       pathname: '/(summary)/summary',
       params: { userInput: inputText, options: selectedOptions },
@@ -44,13 +58,18 @@ const Manual = () => {
       <MyInput
         height="65%"
         value={inputText}
-        onChangeText={setInputText}
+        onChangeText={handleInputChange}
         placeholder="Enter text"
         multiline
         maxLength={300000}
       />
+      {inputError && (
+        <MyText fontSize="small" style={{ color: 'red', marginVertical: '2%' }}>
+          {inputError}
+        </MyText>
+      )}
       <MyButton
-        disabled={!inputText}
+        disabled={!inputText || !!inputError}
         title="Summarize"
         onPress={generateSummary}
         width="100%"

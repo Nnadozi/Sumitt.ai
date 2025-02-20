@@ -29,7 +29,7 @@ const InputType = (props: InputTypeProps) => {
 
   return (
     <TouchableOpacity style={[styles.con,{ backgroundColor: colors.card, borderColor: colors.border }]} 
-    onPress={props.onPress} activeOpacity={0.5}>
+    onPress={props.onPress} activeOpacity={0.35}>
         <ResponsiveIcon color={colors.primary} size={30} name={iconName()} />
         <View style={styles.textCon}>
             <MyText style={{ color: colors.text }} bold>{props.name}</MyText>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     padding: "4%",
     flexDirection: "row",
     alignItems: "center",
-    borderRadius:10
+    borderRadius:20
   },
   textCon: {
     marginLeft: '5%'

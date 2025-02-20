@@ -45,7 +45,7 @@ const Settings = () => {
           marginLeft: "0%",
           backgroundColor: colors.card,
           borderColor: colors.border,
-          borderRadius:15
+          borderRadius:20
         }}
       />
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
