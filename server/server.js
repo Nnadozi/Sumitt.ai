@@ -117,7 +117,6 @@ app.post("/api/summarize", async (req, res) => {
             8. **Bullet Points:** When bullet points are required, use **•** as the symbol.
             9. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
             10. **Do not reference or mention the options**: The response should feel natural, not machine-generated.
-            11. **Do not apologize**: Never express regret for being unable to create a summary. Always provide a summary of the given content, no matter what.
             `            
           },
           { role: 'user', content: contentToSummarize },
