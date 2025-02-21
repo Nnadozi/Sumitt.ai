@@ -8,11 +8,18 @@ import { useEffect } from "react";
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import React from "react";
+import { Platform } from "react-native";
 
 export default function RootLayout() {
   
  useEffect(() => {
   async function prepareAds() {
+
+    if (Platform.OS !== 'ios') {
+      setupAds(); 
+      return;
+    }
+
     const { status } = await getTrackingPermissionsAsync();
 
     if (status === 'granted') {
