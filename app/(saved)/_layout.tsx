@@ -1,5 +1,6 @@
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { Icon } from "@rneui/base";
+import React from "react";
 
 export default function SavedNavigator() {
   const { id } = useLocalSearchParams();
