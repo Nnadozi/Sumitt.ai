@@ -45,19 +45,3 @@ const styles = StyleSheet.create({
   },
 });
 
-/**
- * IPAD DEBUGGING
- * import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
-import { Alert } from 'react-native';
-
-async function checkTrackingStatus() {
-  const { status } = await getTrackingPermissionsAsync();
-  Alert.alert("Tracking Status", `Current status: ${status}`);
-
-  if (status === 'not-determined') {
-    const { status: newStatus } = await requestTrackingPermissionsAsync();
-    Alert.alert("New Tracking Status", `Updated status: ${newStatus}`);
-  }
-}
-
- */
