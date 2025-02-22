@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
@@ -9,7 +9,6 @@ import MyText from '@/components/MyText';
 import { useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
-import * as ImagePicker from 'expo-image-picker';
 
 const Upload = () => {
   const { colors } = useTheme();
@@ -19,6 +18,7 @@ const Upload = () => {
   const [urlError, setUrlError] = useState<string | null>(null);
   const [urlSuccess, setUrlSuccess] = useState<string | null>(null);
   const [isCheckingUrl, setIsCheckingUrl] = useState(false);
+  const [manualInputWarning, setManualInputWarning] = useState<string | null>(null);
 
   const fetchOptions = async () => {
     try {
@@ -32,19 +32,26 @@ const Upload = () => {
   useFocusEffect(
     useCallback(() => { fetchOptions(); }, [])
   );
+  
+  useEffect(() => {
+    setInputText('');
+  }, [selectedOption]);
+  
 
-  const handleSelectOption = (option: string) => {
-    if (selectedOption !== option) {
-      setSelectedOption(option);
-      setInputText('');
-      setUrlError(null);
-      setUrlSuccess(null);
-    }
-  };
+const handleSelectOption = (option: string) => {
+  if (selectedOption !== option) {
+    setSelectedOption(option);
+    setInputText('');  
+    setUrlError(null);
+    setUrlSuccess(null);
+    setManualInputWarning(null);
+  }
+};
 
   const validateUrlAndContent = async (url: string) => {
     const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
     const isVideoUrl = /(?:youtube|youtu.be|vimeo|dailymotion|twitch)/i.test(url);
+    
     if (isVideoUrl) {
       setUrlError('Video links are not supported.');
       setUrlSuccess(null);
@@ -78,11 +85,24 @@ const Upload = () => {
     }
   };
 
-  const handleUrlInputChange = async (text: string) => {
+  const handleInputChange = async (text: string) => {
+    const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
+
+    if (selectedOption === 'Manual Input' && urlPattern.test(text)) {
+      setManualInputWarning('URLs are not allowed in manual input mode.');
+      setInputText(' ')
+      return;
+    } else {
+      setManualInputWarning(null);
+    }
+
     setInputText(text);
     setUrlError(null);
     setUrlSuccess(null);
-    if (text.trim() !== '') await validateUrlAndContent(text.trim());
+
+    if (selectedOption === 'URL' && text.trim() !== '') {
+      await validateUrlAndContent(text.trim());
+    }
   };
 
   const handleCancel = () => {
@@ -90,6 +110,7 @@ const Upload = () => {
     setInputText('');
     setUrlError(null);
     setUrlSuccess(null);
+    setManualInputWarning(null);
     router.back();
   };
 
@@ -100,14 +121,6 @@ const Upload = () => {
       params: { userInput: inputText, options: selectedOptions },
     });
   };
-
-  const handleUpload = () =>{
-
-  }
-
-  const handlePicture = () =>{
-
-  }
 
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: 'flex-start', margin: '5%' }}>
@@ -123,25 +136,19 @@ const Upload = () => {
         selected={selectedOption === 'URL'}
         onPress={() => handleSelectOption('URL')}
       />
-      <InputType
-        name="Image"
-        subtitle="Takep or upload image"
-        selected={selectedOption === 'Image'}
-        onPress={() => handleSelectOption('Image')}
-      />
       {selectedOption ? (
         selectedOption === 'URL' ? (
           <>
             <MyInput 
               value={inputText}
-              onChangeText={handleUrlInputChange}
+              onChangeText={handleInputChange}
               placeholder="Paste URL"
               textAlignVertical="top"
             />
             <MyText
               fontSize="small"
               style={{
-                marginVertical: '2%',
+                margin: '2%',
                 color: urlError ? 'red' : urlSuccess ? colors.primary : colors.text,
               }}
             >
@@ -159,16 +166,21 @@ const Upload = () => {
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
-        ) :    selectedOption === 'Manual Input' ? (
+        ) : (
           <>
             <MyInput
-              height="35%"
+              height="45%"
               value={inputText}
-              onChangeText={setInputText}
+              onChangeText={handleInputChange}
               placeholder="Enter text"
               multiline
-              maxLength={100000}
+              maxLength={300000}
             />
+            {manualInputWarning && (
+              <MyText fontSize="small" style={{ color: 'red', margin: '2%',marginBottom:"0%" }}>
+                {manualInputWarning}
+              </MyText>
+            )}
             <View style={styles.buttonRow}>
               <MyButton
                 disabled={!inputText}
@@ -186,25 +198,6 @@ const Upload = () => {
               />
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
-          </>
-        ):(
-          <>
-            <View style={styles.buttonRow}>
-              <MyButton
-                title="Upload Image" iconName="cloudupload" iconType="antdesign"
-                onPress={handleUpload}
-                width="49%"
-              />
-              <MyButton title="Take Picture" iconName="camera" iconType="antdesign" onPress={handlePicture} width="49%" />
-            </View>
-            <View style={styles.buttonRow}>
-              <MyButton
-                title="Options" iconName="options" iconType="ionicon"
-                onPress={() => router.navigate('/(options)/options')}
-                width="49%"
-              />
-              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
-          </View>
           </>
         )
       ) : (

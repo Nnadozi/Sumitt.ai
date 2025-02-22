@@ -26,7 +26,7 @@ const MyButton = (props: ButtonProps) => {
       containerStyle = {{
         width:props.width, marginVertical:props.marginVertical,
         marginTop: props.marginTop,
-        borderRadius:15
+        borderRadius:20
       }}
       icon = {props.iconName ? {name:props.iconName, type:props.iconType, color:colors.background,size:15} : null}
       buttonStyle = {{backgroundColor:colors.primary, borderRadius:0}}

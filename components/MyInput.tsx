@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   KeyboardTypeOptions,
   StyleSheet,
@@ -13,7 +13,6 @@ import { useTheme } from '@react-navigation/native';
 import ResponsiveIcon from './ResponsiveIcon';
 import * as Clipboard from 'expo-clipboard';
 import MyText from './MyText';
-import { Divider } from '@rneui/base';
 
 interface MyInputProps {
   height?: string; 
@@ -34,6 +33,10 @@ const MyInput = (props: MyInputProps) => {
   const dynamicHeight = props.height ? (parseFloat(props.height) / 100) * screenHeight : null;
 
   const [text, setText] = useState(props.value || '');
+
+  useEffect(() => {
+    setText(props.value || '');
+  }, [props.value]);
 
   const handleClear = () => {
     setText('');
@@ -62,33 +65,29 @@ const MyInput = (props: MyInputProps) => {
             )}
       </View> 
       }
-    <View style={styles.con}>
-      <TextInput
-        style={[
-          styles.textInput,
-          {
+      <View style={styles.con}>
+        <TextInput
+          style={[styles.textInput, {
             borderColor: colors.border,
             backgroundColor: colors.card,
             color: colors.text,
             height: dynamicHeight, 
-            borderRadius:10
-          },
-          props.style,
-        ]}
-        value={text}  
-        onChangeText={(newText) => {
-          setText(newText);
-          if (props.onChangeText) props.onChangeText(newText);
-        }}
-        placeholder={props.placeholder}
-        placeholderTextColor={colors.text}
-        multiline={props.multiline}
-        keyboardType={props.keyboardType}
-        textAlignVertical={props.textAlignVertical || "top"}
-        maxLength={props.maxLength}
-        {...(Platform.OS === 'ios' ? { submitBehavior: 'blurAndSubmit' } : {})}
-      />    
-    </View>
+            borderRadius: 20
+          }, props.style]}
+          value={text}  // Use the state value
+          onChangeText={(newText) => {
+            setText(newText);
+            if (props.onChangeText) props.onChangeText(newText);
+          }}
+          placeholder={props.placeholder}
+          placeholderTextColor={colors.text}
+          multiline={props.multiline}
+          keyboardType={props.keyboardType}
+          textAlignVertical={props.textAlignVertical || "top"}
+          maxLength={props.maxLength}
+          {...(Platform.OS === 'ios' ? { submitBehavior: 'blurAndSubmit' } : {})}
+        />    
+      </View>
     </>
   );
 };
@@ -105,21 +104,18 @@ const styles = StyleSheet.create({
   textInput: {
     width: '100%',
     padding: '3%',
-    borderRadius: 5,
     borderWidth: 1,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical:"2%"
+    marginVertical: "2%"
   },
   iconButton: {
     flexDirection: 'row',
-    justifyContent:"center",
+    justifyContent: "center",
     alignItems: 'center',
-    gap:'3%',
+    gap: '3%',
   },
 });
-
-

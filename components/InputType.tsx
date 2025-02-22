@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     marginBottom: '3%',
     padding: "3.5%",
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    borderRadius:20
   },
   textCon: {
     marginLeft: '5%'

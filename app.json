@@ -2,7 +2,7 @@
   "expo": {
     "name": "Sumitt",
     "slug": "Sumitt-1",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -27,8 +27,7 @@
         "resizeMode": "contain",
         "backgroundColor": "#6ad478",
         "imageWidth": 1000
-      },
-      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt"
+      }
     },
     "web": {
       "bundler": "metro",
