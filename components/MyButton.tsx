@@ -23,6 +23,7 @@ const MyButton = (props: ButtonProps) => {
       activeOpacity={0.5}
       onPress={props.disabled ? () => {} : props.onPress}
       disabled = {props.disabled}
+      disabledStyle = {{backgroundColor:colors.primary,opacity:0.35}}
       containerStyle = {{
         width:props.width, marginVertical:props.marginVertical,
         marginTop: props.marginTop,

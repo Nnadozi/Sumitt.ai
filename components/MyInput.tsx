@@ -74,7 +74,7 @@ const MyInput = (props: MyInputProps) => {
             height: dynamicHeight, 
             borderRadius: 20
           }, props.style]}
-          value={text}  // Use the state value
+          value={text} 
           onChangeText={(newText) => {
             setText(newText);
             if (props.onChangeText) props.onChangeText(newText);

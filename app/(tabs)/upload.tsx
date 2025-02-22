@@ -32,21 +32,20 @@ const Upload = () => {
   useFocusEffect(
     useCallback(() => { fetchOptions(); }, [])
   );
-  
+
   useEffect(() => {
     setInputText('');
   }, [selectedOption]);
-  
 
-const handleSelectOption = (option: string) => {
-  if (selectedOption !== option) {
-    setSelectedOption(option);
-    setInputText('');  
-    setUrlError(null);
-    setUrlSuccess(null);
-    setManualInputWarning(null);
-  }
-};
+  const handleSelectOption = (option: string) => {
+    if (selectedOption !== option) {
+      setSelectedOption(option);
+      setInputText('');  
+      setUrlError(null);
+      setUrlSuccess(null);
+      setManualInputWarning(null);
+    }
+  };
 
   const validateUrlAndContent = async (url: string) => {
     const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
@@ -90,7 +89,7 @@ const handleSelectOption = (option: string) => {
 
     if (selectedOption === 'Manual Input' && urlPattern.test(text)) {
       setManualInputWarning('URLs are not allowed in manual input mode.');
-      setInputText(' ')
+      setInputText(' ');  
       return;
     } else {
       setManualInputWarning(null);
@@ -177,7 +176,7 @@ const handleSelectOption = (option: string) => {
               maxLength={300000}
             />
             {manualInputWarning && (
-              <MyText fontSize="small" style={{ color: 'red', margin: '2%',marginBottom:"0%" }}>
+              <MyText fontSize="small" style={{ color: 'red', margin: '2%', marginBottom: "0%" }}>
                 {manualInputWarning}
               </MyText>
             )}
@@ -202,8 +201,8 @@ const handleSelectOption = (option: string) => {
         )
       ) : (
         <>
-        <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="100%" marginVertical="2%" />
-        <MyText style={{ marginTop: '2%', opacity: 0.5 }} fontSize='small'>*Note: AI output may not always be correct*</MyText>
+          <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="100%" marginVertical="2%" />
+          <MyText style={{ marginTop: '2%', opacity: 0.5 }} fontSize="small">*Note: AI output may not always be correct*</MyText>
         </>
       )}
     </Page>
