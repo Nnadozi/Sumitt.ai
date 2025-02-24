@@ -1,6 +1,7 @@
 Frontend
     New Features
         - Audio
+        - Tutorial
         - Updates API
         - Localization
         - Seperate Screens
@@ -19,8 +20,6 @@ Other
     - App store localization
 
 1.5.0
-- Better AI
-- More options
 - New store art
 - Ipad rotation lock
 - Image summarization

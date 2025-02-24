@@ -1,4 +1,4 @@
-import { Dimensions, Platform, SafeAreaView, ScrollView, StyleSheet, ToastAndroid, View } from 'react-native';
+import { Dimensions, Platform, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -16,6 +16,7 @@ import {
   toneDescriptions,
   formatDescriptions,
   languageDescriptions,
+  readingLevelDescriptions
 } from '../../constants/optionDescriptions';
 
 const options = () => {
@@ -26,27 +27,15 @@ const options = () => {
     detail: `${detailDescriptions[2]}`,
     tone: `${toneDescriptions[0]}`,
     format: `${formatDescriptions[2]}`,
+    readingLevel: `${readingLevelDescriptions[1]}`,
     language: `${languageDescriptions[0]}`,
   });
-
-  useEffect(() => {
-    const loadOptions = async () => {
-      try {
-        const savedOptions = await AsyncStorage.getItem('summaryOptions');
-        if (savedOptions) {
-          setSelectedOptions(JSON.parse(savedOptions));
-        }
-      } catch (error) {
-        console.error('Error loading options:', error);
-      }
-    };
-    loadOptions();
-  }, []);
 
   const saveOptions = async () => {
     try {
       await AsyncStorage.setItem('summaryOptions', JSON.stringify(selectedOptions));
       ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
+      console.log(selectedOptions)
       if (Platform.OS === 'ios') {
         Snackbar.show({ text: 'Options applied!', duration: 500 });
       }
@@ -115,13 +104,21 @@ const options = () => {
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>
-          <ResponsiveIcon name='globe' type='entypo' color={colors.text} size={17} />
+          <ResponsiveIcon name='graduation-cap' type = 'entypo' color={colors.text} size={18} />
+          <MyText bold>Reading Level</MyText>
+        </View>
+        {renderChips('readingLevel', ['Simple', 'Standard', 'Advanced'], readingLevelDescriptions)}
+        <Divider width={10} color='rgba(0,0,0,0)' />
+
+        <View style={styles.iconRow}>
+          <ResponsiveIcon name='language' type='fontawesome' color={colors.text} size={17} />
           <MyText bold>Language</MyText>
         </View>
         {renderChips('language', [
       'English', 'Spanish', 'French', 'Arabic', 'Chinese', 'Hindi', 'Japanese', 'Russian', 
-      'Portuguese', 'German', 'Italian', 'Korean', 'Turkish', 'Bengali', 'Vietnamese', 'Thai', 
-      'Dutch', 'Greek', 'Hebrew', 'Polish','Swedish', 'Ukranian','Hungarian', 'Igbo'], languageDescriptions)}
+      'Portuguese', 'German', 'Italian', 'Korean', 'Turkish', 'Bengali', 'Vietnamese', 
+      'Dutch', 'Greek', 'Hebrew', 'Polish','Swedish', 'Ukranian','Hungarian', 'Igbo','Pirate'], languageDescriptions)}
+
       </ScrollView>
       <View style={styles.buttonRow}>
         <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />

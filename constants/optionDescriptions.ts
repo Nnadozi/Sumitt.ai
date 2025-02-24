@@ -22,6 +22,12 @@ export const formatDescriptions = [
   'Q&A: Information presented in a question-and-answer format.',
 ];
 
+export const readingLevelDescriptions = [
+  'Simple: Easy-to-read language, suitable for younger audiences or non-native speakers.',
+  'Standard: A balanced reading level for general audiences.',
+  'Advanced: More complex vocabulary and sentence structures for expert readers.'
+];
+
 export const languageDescriptions = [
   'English: A widely spoken global language.',
   'Spanish: Spoken across Spain, Latin America, and the U.S.',
@@ -38,7 +44,6 @@ export const languageDescriptions = [
   'Turkish: Spoken in Turkey and Cyprus.',
   'Bengali: Common in Bangladesh and parts of India.',
   'Vietnamese: The main language of Vietnam.',
-  'Thai: Spoken in Thailand.',
   'Dutch: Spoken in the Netherlands and Belgium.',
   'Greek: Spoken in Greece and Cyprus.',
   'Hebrew: The official language of Israel.',
@@ -46,5 +51,6 @@ export const languageDescriptions = [
   'Swedish: Spoken in Sweden and Finland.',
   'Ukrainian: The official language of Ukraine.',
   'Hungarian: Spoken in Hungary.',
-  'Igbo: Spoken in southeastern Nigeria.'
+  'Igbo: Spoken in southeastern Nigeria.',
+  'Pirate: Translates the summary into a swashbucklin’ pirate dialect!'
 ];

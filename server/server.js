@@ -110,13 +110,14 @@ app.post("/api/summarize", async (req, res) => {
             1. **Strictly adhere to the provided options**: ${JSON.stringify(options)}. Do **not** deviate from them.
             2. **Summary length:** Must strictly match the user's chosen length in the provided options.
             3. **Detail level:** Must strictly align with the user's detail preference in the provided options.
-            4. **Tone:** If a tone is specified, use it strictly.
+            4. **Tone:** Must strictly align with the user's tone preference in the provided options.
             5. **Format:** Ensure the summary follows the specified format (paragraphs, bullet points, mix, or Q&A).
-            6. **Language:** The summary **must** be in the exact language specified by the user in the provided options.
-            7. **Markdown Usage:** Only use **bold** and *italicized* text. No other markdown elements are allowed.
-            8. **Bullet Points:** When bullet points are required, use **•** as the symbol.
-            9. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
-            10. **Do not reference or mention the options**: The response should feel natural, not machine-generated.
+            6. **Reading Level:** The overall reading difficulty and vocabulary level must match with the user's preference in the provided options (simple, standard, or advanced).
+            7. **Language:** The summary **must** be in the exact language specified by the user in the provided options.
+            8. **Markdown Usage:** Only use **bold** and *italicized* text. No other markdown elements are allowed.
+            9. **Bullet Points:** When bullet points are required, use **•** as the symbol.
+            10. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
+            11. **Do not reference or mention the options**: The response should feel natural, not machine-generated.
             `            
           },
           { role: 'user', content: contentToSummarize },
