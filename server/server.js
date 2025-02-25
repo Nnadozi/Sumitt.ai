@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import * as cheerio from "cheerio";
 import axios from "axios";
 import puppeteer from "puppeteer";
+import OpenAI from "openai";
 
 dotenv.config();
 
@@ -12,6 +13,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+
+const openai = new OpenAI({
+  apiKey: process.env.EXPO_PUBLIC_API_KEY,
+});
 
 /**
  * Fetches website content using Puppeteer for JavaScript-heavy sites.
@@ -81,38 +86,23 @@ const isImageUrl = (input) => /\.(jpg|jpeg|png|gif|webp)$/i.test(input);
  */
 const extractTextFromImage = async (imageUrl) => {
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: [
-          {
-            role: "system",
-            content: "Extract and return the text from this image as accurately as possible.",
-          },
-          {
-            role: "user",
-            content: [
-              { type: "text", text: "Extract the text from this image." },
-              { type: "image_url", image_url: { url: imageUrl } },
-            ],
-          },
-        ],
-      }),
+    console.log("🔍 Extracting text from image...");
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: "Summarize this image." },
+            { type: "image_url", image_url: { url: imageUrl } },
+          ],
+        },
+      ],
     });
 
-    const data = await response.json();
-    if (!data.choices || !data.choices.length) {
-      throw new Error("Failed to extract text from image.");
-    }
-    
-    return data.choices[0].message.content;
+    return response.choices[0]?.message?.content || null;
   } catch (error) {
-    console.error("Image text extraction error:", error.message);
+    console.error("❌ Image text extraction error:", error.message);
     return null;
   }
 };
@@ -130,65 +120,51 @@ app.post("/api/summarize", async (req, res) => {
   const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
 
   if (urlPattern.test(userInput)) {
-    console.log("Type is web URL!");
+    console.log("🌍 Processing web URL...");
     const result = await fetchContentFromUrl(userInput);
     if (result.error) return res.status(403).json({ error: result.error });
     contentToSummarize = result.content;
   } else if (isImageUrl(userInput)) {
-    console.log("Type is image URL!");
+    console.log("🖼️ Processing image URL...");
     contentToSummarize = await extractTextFromImage(userInput);
     if (!contentToSummarize) return res.status(400).json({ error: "Failed to extract text from image." });
   }
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          { 
-            role: 'system',
-            content: `You are a professional AI summarizer. Your job is to create a precise, high-quality summary based on user preferences. You must follow these instructions **exactly:
-            1. **Strictly adhere to the provided options**: ${JSON.stringify(options)}. Do **not** deviate from them.
-            2. **Summary length:** Must strictly match the user's chosen length in the provided options.
-            3. **Detail level:** Must strictly align with the user's detail preference in the provided options.
-            4. **Tone:** Must strictly align with the user's tone preference in the provided options.
-            5. **Format:** Ensure the summary follows the specified format (paragraphs, bullet points, mix, or Q&A).
-            6. **Reading Level:** The overall reading difficulty and vocabulary level must match with the user's preference in the provided options (simple, standard, or advanced).
-            7. **Language:** The summary **must** be in the exact language specified by the user in the provided options.
-            8. **Markdown Usage:** Only use **bold** and *italicized* text. No other markdown elements are allowed.
-            9. **Bullet Points:** When bullet points are required, use **•** as the symbol.
-            10. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
-            11. **Do not reference or mention the options**: The response should feel natural, not machine-generated.
-            `            
-          },
-          { role: 'user', content: contentToSummarize },
-        ],
-      }),
+    console.log("📝 Summarizing content...");
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: `You are a professional AI summarizer. Your job is to create a precise, high-quality summary based on user preferences. You must follow these instructions **exactly**:
+          1. **Strictly adhere to the provided options**: ${JSON.stringify(options)}. Do **not** deviate from them.
+          2. **Summary length:** Must strictly match the user's chosen length in the provided options.
+          3. **Detail level:** Must strictly align with the user's detail preference in the provided options.
+          4. **Tone:** Must strictly align with the user's tone preference in the provided options.
+          5. **Format:** Ensure the summary follows the specified format (paragraphs, bullet points, mix, or Q&A).
+          6. **Reading Level:** The overall reading difficulty and vocabulary level must match the user's preference in the provided options (simple, standard, or advanced).
+          7. **Language:** The summary **must** be in the exact language specified by the user in the provided options.
+          8. **Markdown Usage:** Only use **bold** and *italicized* text. No other markdown elements are allowed.
+          9. **Bullet Points:** When bullet points are required, use **•** as the symbol.
+          10. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
+          11. **Do not reference or mention the options**: The response should feel natural, not machine-generated.`,
+        },
+        { role: "user", content: contentToSummarize },
+      ],
     });
 
-    if (!response.ok) {
-      const errorText = await response.text(); 
-      console.error("OpenAI API Error:", errorText);
-      return res.status(response.status).json({ error: "Failed to generate summary.", details: errorText });
-    }
-
-    const data = await response.json();
-    res.json(data);
+    res.json(response.choices[0]);
   } catch (error) {
-    console.error("Unexpected error:", error.message);
+    console.error("❌ Summarization error:", error.message);
     res.status(500).json({ error: "An unexpected error occurred.", details: error.message });
   }
 });
 
 app.get("/", (req, res) =>
-  res.send("Server is running! Use the /api/summarize endpoint for summarization.")
+  res.send("🚀 Server is running! Use the /api/summarize endpoint for summarization.")
 );
 
 app.listen(PORT, () =>
-  console.log(`🚀 Server running on http://localhost:${PORT}`)
+  console.log(`✅ Server running on http://localhost:${PORT}`)
 );
