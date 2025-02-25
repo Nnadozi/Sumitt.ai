@@ -9,6 +9,9 @@ import MyText from '@/components/MyText';
 import { useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
+import * as ImagePicker from "expo-image-picker"
+import { Image } from 'react-native';
+import { Camera } from "expo-camera";
 
 const Upload = () => {
   const { colors } = useTheme();
@@ -19,6 +22,7 @@ const Upload = () => {
   const [urlSuccess, setUrlSuccess] = useState<string | null>(null);
   const [isCheckingUrl, setIsCheckingUrl] = useState(false);
   const [manualInputWarning, setManualInputWarning] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const fetchOptions = async () => {
     try {
@@ -107,6 +111,7 @@ const Upload = () => {
   const handleCancel = () => {
     setSelectedOption(null);
     setInputText('');
+    setPreviewImage(null)
     setUrlError(null);
     setUrlSuccess(null);
     setManualInputWarning(null);
@@ -115,10 +120,43 @@ const Upload = () => {
 
   const generateSummary = () => {
     if (selectedOption === 'URL' && urlError) return;
+    if (selectedOption === "Image") setInputText(previewImage)
     router.navigate({
       pathname: '/(summary)/summary',
       params: { userInput: inputText, options: selectedOptions },
     });
+  };
+
+  const handleUpload = async () =>{
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setPreviewImage(result.assets[0].uri);
+    }
+  }
+
+  const handlePicture = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      alert("Camera access is required to take pictures.");
+      return;
+    }
+  
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      aspect: [4, 3],
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      setPreviewImage(result.assets[0].uri);
+    }
   };
 
   return (
@@ -131,9 +169,15 @@ const Upload = () => {
       />
       <InputType
         name="Website URL"
-        subtitle="Website or Article URL"
+        subtitle="Website or article URL"
         selected={selectedOption === 'URL'}
         onPress={() => handleSelectOption('URL')}
+      />
+      <InputType
+        name="Image"
+        subtitle="Take photo or upload image"
+        selected={selectedOption === 'Image'}
+        onPress={() => handleSelectOption('Image')}
       />
       {selectedOption ? (
         selectedOption === 'URL' ? (
@@ -165,10 +209,10 @@ const Upload = () => {
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
-        ) : (
+        ) : selectedOption === "Manual Input" ? (
           <>
             <MyInput
-              height="45%"
+              height="38%"
               value={inputText}
               onChangeText={handleInputChange}
               placeholder="Enter text"
@@ -198,6 +242,37 @@ const Upload = () => {
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
+        ):(
+            <>
+            {previewImage !== null && (
+              <Image resizeMode='contain' style = {styles.previewImage} source={{uri:previewImage}} />
+            )}
+            <View style={styles.buttonRow}>
+              <MyButton
+                title="Upload Image" iconName="upload"
+                onPress={handleUpload}
+                width="49%"
+              />
+              <MyButton title="Take Photo" iconName='camera' iconType='antdesign' onPress={handlePicture} width="49%" />
+            </View>
+            <View style={styles.buttonRow}>
+              <MyButton
+                disabled={!previewImage}
+                title="Summarize"
+                onPress={generateSummary}
+                width="100%"
+                iconName="summarize"
+              />
+            </View>
+            <View style={styles.buttonRow}>
+              <MyButton
+                title="Options" iconName="options" iconType="ionicon"
+                onPress={() => router.navigate('/(options)/options')}
+                width="49%"
+              />
+              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
+            </View>
+            </>
         )
       ) : (
         <>
@@ -220,4 +295,9 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     gap: '2%',
   },
+  previewImage:{
+    width:"55%",
+    height:"40%",
+    alignSelf:"center",
+  }
 });

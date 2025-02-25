@@ -72,7 +72,53 @@ const fetchContentFromUrl = async (url) => {
 };
 
 /**
- * API Endpoint to summarize content (supports URLs and text input).
+ * Checks if the input is an image URL.
+ */
+const isImageUrl = (input) => /\.(jpg|jpeg|png|gif|webp)$/i.test(input);
+
+/**
+ * Extracts text from an image using OpenAI's GPT-4o Vision API.
+ */
+const extractTextFromImage = async (imageUrl) => {
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content: "Extract and return the text from this image as accurately as possible.",
+          },
+          {
+            role: "user",
+            content: [
+              { type: "text", text: "Extract the text from this image." },
+              { type: "image_url", image_url: { url: imageUrl } },
+            ],
+          },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    if (!data.choices || !data.choices.length) {
+      throw new Error("Failed to extract text from image.");
+    }
+    
+    return data.choices[0].message.content;
+  } catch (error) {
+    console.error("Image text extraction error:", error.message);
+    return null;
+  }
+};
+
+/**
+ * API Endpoint to summarize content (supports URLs, images, and text input).
  */
 app.post("/api/summarize", async (req, res) => {
   const { userInput, options } = req.body;
@@ -84,14 +130,14 @@ app.post("/api/summarize", async (req, res) => {
   const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
 
   if (urlPattern.test(userInput)) {
-    try {
-      console.log("Type is web URL!");
-      const result = await fetchContentFromUrl(userInput);
-      if (result.error) return res.status(403).json({ error: result.error });
-      contentToSummarize = result.content;
-    } catch (error) {
-      return res.status(500).json({ error: "Failed to fetch content from the URL." });
-    }
+    console.log("Type is web URL!");
+    const result = await fetchContentFromUrl(userInput);
+    if (result.error) return res.status(403).json({ error: result.error });
+    contentToSummarize = result.content;
+  } else if (isImageUrl(userInput)) {
+    console.log("Type is image URL!");
+    contentToSummarize = await extractTextFromImage(userInput);
+    if (!contentToSummarize) return res.status(400).json({ error: "Failed to extract text from image." });
   }
 
   try {
@@ -144,5 +190,5 @@ app.get("/", (req, res) =>
 );
 
 app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
 );
