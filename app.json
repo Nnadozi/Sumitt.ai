@@ -81,6 +81,14 @@
           "iCloudContainerEnvironment": "Production"
         }
       ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Sumitt to access your camera",
+          "microphonePermission": "Allow Sumitt to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ],
       ["expo-localization"],
       "expo-secure-store"
     ],
