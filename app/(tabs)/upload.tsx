@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import React, { useCallback, useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import InputType from '@/components/InputType';
@@ -24,6 +24,7 @@ const Upload = () => {
   const [manualInputWarning, setManualInputWarning] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false)
 
   const fetchOptions = async () => {
     try {
@@ -35,7 +36,10 @@ const Upload = () => {
   };
 
   useFocusEffect(
-    useCallback(() => { fetchOptions(); }, [])
+    useCallback(() => { 
+      fetchOptions();
+      setLoading(false)
+     }, [])
   );
 
   useEffect(() => {
@@ -125,12 +129,15 @@ const Upload = () => {
   
     if (selectedOption === 'Image' && base64Image) {
       userInput = base64Image; 
+      setLoading(true)
     }
   
-    router.navigate({
-      pathname: '/(summary)/summary',
-      params: { userInput, options: selectedOptions },
-    });
+    setTimeout(() => {
+      router.navigate({
+        pathname: '/(summary)/summary',
+        params: { userInput, options: selectedOptions },
+      });
+    },500)
   };
 
   const handleUpload = async () => {
@@ -255,31 +262,40 @@ const Upload = () => {
             {previewImage !== null && (
               <Image resizeMode='contain' style = {styles.previewImage} source={{uri:previewImage}} />
             )}
-            <View style={styles.buttonRow}>
-              <MyButton
-                title="Upload Image" iconName="upload"
-                onPress={handleUpload}
-                width="49%"
-              />
-              <MyButton title="Take Photo" iconName='camera' iconType='antdesign' onPress={handlePicture} width="49%" />
-            </View>
-            <View style={styles.buttonRow}>
-              <MyButton
-                disabled={!previewImage}
-                title="Summarize"
-                onPress={generateSummary}
-                width="100%"
-                iconName="summarize"
-              />
-            </View>
-            <View style={styles.buttonRow}>
-              <MyButton
-                title="Options" iconName="options" iconType="ionicon"
-                onPress={() => router.navigate('/(options)/options')}
-                width="49%"
-              />
-              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
-            </View>
+            {loading === true ? (
+              <View style = {styles.loadingText}>
+                <MyText bold fontSize='large'>Loading</MyText>
+                <ActivityIndicator size={'large'} color={colors.primary} />
+              </View>
+            ):(
+              <>
+              <View style={styles.buttonRow}>
+                <MyButton
+                  title="Upload Image" iconName="upload"
+                  onPress={handleUpload}
+                  width="49%"
+                />
+                <MyButton title="Take Photo" iconName='camera' iconType='antdesign' onPress={handlePicture} width="49%" />
+              </View>
+              <View style={styles.buttonRow}>
+                <MyButton
+                  disabled={!previewImage}
+                  title="Summarize"
+                  onPress={generateSummary}
+                  width="100%"
+                  iconName="summarize"
+                />
+              </View>
+              <View style={styles.buttonRow}>
+                <MyButton
+                  title="Options" iconName="options" iconType="ionicon"
+                  onPress={() => router.navigate('/(options)/options')}
+                  width="49%"
+                />
+                <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
+              </View>
+            </>
+            )}
             </>
         )
       ) : (
@@ -304,8 +320,16 @@ const styles = StyleSheet.create({
     gap: '2%',
   },
   previewImage:{
-    width:"55%",
-    height:"40%",
+    width:"100%",
+    height:"42.5%",
     alignSelf:"center",
+  },
+  loadingText:{
+    flexDirection:"row",
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    alignSelf: 'center',
+    gap:'5%',
+    marginTop:"5%"
   }
 });
