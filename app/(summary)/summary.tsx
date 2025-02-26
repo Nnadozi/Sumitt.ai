@@ -68,7 +68,8 @@ const Summary = () => {
       setLoading(true);
       fadeAnim.setValue(0);
       setError('');
-      const res = await fetch('https://sumitt-wpst.onrender.com/api/summarize', {
+      //https://sumitt-wpst.onrender.com/api/summarize
+      const res = await fetch('http://192.168.0.151:3000/api/summarize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userInput, options }),

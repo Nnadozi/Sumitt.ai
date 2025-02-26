@@ -22,6 +22,20 @@ import {
 const options = () => {
   const { colors } = useTheme();
 
+  useEffect(() => {
+    const loadOptions = async () => {
+      try {
+        const savedOptions = await AsyncStorage.getItem('summaryOptions');
+        if (savedOptions) {
+          setSelectedOptions(JSON.parse(savedOptions));
+        }
+      } catch (error) {
+        console.error('Error loading options:', error);
+      }
+    };
+    loadOptions();
+  }, []);
+  
   const [selectedOptions, setSelectedOptions] = useState({
     length: `${lengthDescriptions[2]}`,
     detail: `${detailDescriptions[2]}`,

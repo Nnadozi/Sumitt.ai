@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" })); // Increase payload limit for images
 
 /**
  * Fetches website content using Puppeteer for JavaScript-heavy sites.
@@ -72,7 +72,7 @@ const fetchContentFromUrl = async (url) => {
 };
 
 /**
- * API Endpoint to summarize content (supports URLs and text input).
+ * API Endpoint to summarize content (supports URLs, text, and images).
  */
 app.post("/api/summarize", async (req, res) => {
   const { userInput, options } = req.body;
@@ -82,7 +82,9 @@ app.post("/api/summarize", async (req, res) => {
 
   let contentToSummarize = userInput;
   const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
+  const base64Pattern = /^data:image\/(png|jpeg|jpg);base64,/;
 
+  // If userInput is a URL, fetch its content
   if (urlPattern.test(userInput)) {
     try {
       console.log("Type is web URL!");
@@ -93,7 +95,66 @@ app.post("/api/summarize", async (req, res) => {
       return res.status(500).json({ error: "Failed to fetch content from the URL." });
     }
   }
+  
+  // If userInput is a Base64-encoded image, process it with OpenAI Vision
+  if (base64Pattern.test(userInput)) {
+    try {
+      console.log("Type is Base64 Image!");
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system",
+              content: `You are a professional AI summarizer. Your job is to create a precise, high-quality summary based on user preferences. You must follow these instructions **exactly**:
+              1. **Strictly adhere to the provided options**: ${JSON.stringify(options)}. Do **not** deviate from them.
+              2. **Summary length:** Must strictly match the user's chosen length in the provided options.
+              3. **Detail level:** Must strictly align with the user's detail preference in the provided options.
+              4. **Tone:** Must strictly align with the user's tone preference in the provided options.
+              5. **Format:** Ensure the summary follows the specified format (paragraphs, bullet points, mix, or Q&A).
+              6. **Reading Level:** The overall reading difficulty and vocabulary level must match with the user's preference in the provided options (simple, standard, or advanced).
+              7. **Language:** The summary **must** be in the exact language specified by the user in the provided options.
+              8. **Markdown Usage:** Only use **bold** and *italicized* text. No other markdown elements are allowed.
+              9. **Bullet Points:** When bullet points are required, use **•** as the symbol.
+              10. **Do not acknowledge user input issues**: If the input is unclear, infer context but never ask for clarification.
+              11. **Do not reference or mention the options**: The response should feel natural, not machine-generated.
+              12. Even if the image/photo is unusual or weird (like a person), always provide a summary or ATLEAST a description.
+              ` },
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "Summarize the key details of this image." },
+                { 
+                  type: "image_url", 
+                  image_url: {
+                    url: userInput,
+                  },
+                 },
+              ],
+            },
+          ],
+        }),
+      });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("OpenAI Vision API Error:", errorText);
+        return res.status(response.status).json({ error: "Failed to generate image summary.", details: errorText });
+      }
+
+      const data = await response.json();
+      return res.json(data);
+    } catch (error) {
+      console.error("Unexpected Vision API error:", error.message);
+      return res.status(500).json({ error: "An unexpected error occurred with image processing.", details: error.message });
+    }
+  }
+
+  // Summarize text content
   try {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -106,7 +167,7 @@ app.post("/api/summarize", async (req, res) => {
         messages: [
           { 
             role: 'system',
-            content: `You are a professional AI summarizer. Your job is to create a precise, high-quality summary based on user preferences. You must follow these instructions **exactly:
+            content: `You are a professional AI summarizer. Your job is to create a precise, high-quality summary based on user preferences. You must follow these instructions **exactly**:
             1. **Strictly adhere to the provided options**: ${JSON.stringify(options)}. Do **not** deviate from them.
             2. **Summary length:** Must strictly match the user's chosen length in the provided options.
             3. **Detail level:** Must strictly align with the user's detail preference in the provided options.

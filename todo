@@ -11,6 +11,7 @@ Frontend
     Bug Fixes / Changes
         - Hide AdMob information     
         - Fix GIFs (random + theme)
+        - Error categorization
 Backend
     New Features
      - ...........
@@ -25,4 +26,10 @@ Other
 - Image summarization
 - Back arrows not showing / working
 - Disable swipe gesture for Android
+- Shorten server code (maybe new file?)
+- Shorten code in general
+- Loading indicator
+- Tell to read text
+- Bullet point BS
+
 

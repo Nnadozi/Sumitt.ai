@@ -23,6 +23,7 @@ const Upload = () => {
   const [isCheckingUrl, setIsCheckingUrl] = useState(false);
   const [manualInputWarning, setManualInputWarning] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [base64Image, setBase64Image] = useState<string | null>(null);
 
   const fetchOptions = async () => {
     try {
@@ -120,27 +121,32 @@ const Upload = () => {
 
   const generateSummary = () => {
     if (selectedOption === 'URL' && urlError) return;
-    if (selectedOption === "Image") setInputText(previewImage)
+    let userInput = inputText;
+  
+    if (selectedOption === 'Image' && base64Image) {
+      userInput = base64Image; 
+    }
+  
     router.navigate({
       pathname: '/(summary)/summary',
-      params: { userInput: inputText, options: selectedOptions },
+      params: { userInput, options: selectedOptions },
     });
   };
 
-  const handleUpload = async () =>{
+  const handleUpload = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5,
+      base64: true, 
     });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      setPreviewImage(result.assets[0].uri);
+  
+    if (!result.canceled && result.assets[0].base64) {
+      setPreviewImage(result.assets[0].uri); 
+      setBase64Image(`data:image/jpeg;base64,${result.assets[0].base64}`); 
     }
-  }
-
+  };
+  
   const handlePicture = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -149,13 +155,15 @@ const Upload = () => {
     }
   
     let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'],
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5,
+      base64: true, 
     });
   
-    if (!result.canceled) {
+    if (!result.canceled && result.assets[0].base64) {
       setPreviewImage(result.assets[0].uri);
+      setBase64Image(`data:image/jpeg;base64,${result.assets[0].base64}`);
     }
   };
 
