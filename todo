@@ -4,14 +4,11 @@ Frontend
         - Tutorial
         - Updates API
         - Localization
-        - Seperate Screens
         - Share to summarize 
-        - PDF and document summarization
         - Summary actions (flashcards, quizzes, etc)
     Bug Fixes / Changes
         - Hide AdMob information     
         - Fix GIFs (random + theme)
-        - Error categorization
 Backend
     New Features
      - ...........
@@ -24,13 +21,17 @@ Other
 - New store art
 - Ipad rotation lock
 - Image summarization
+- Error categorization
 - Back arrows not showing / working
 - Disable swipe gesture for Android
 - Shorten server code (maybe new file?)
+- PDF and document summarization
 - Shorten code in general
 - Tell to read text
 - Bullet point BS
 - Better prompts
 - Custom prompt
 - View original input
+- UI improvements
+- Seperate Screens
 
