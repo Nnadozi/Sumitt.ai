@@ -19,7 +19,7 @@ const interstitialAd = InterstitialAd.createForAdRequest(
 );
 
 const Summary = () => {
-  const { userInput, options } = useGlobalSearchParams();
+  const { userInput, options, inputType } = useGlobalSearchParams();
   const { colors } = useTheme();
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState('');
@@ -109,7 +109,10 @@ const Summary = () => {
     setModuleVisible(false);
     try {
       const currentDate = new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: '2-digit', day: '2-digit' });
-      await AsyncStorage.setItem(name, JSON.stringify({ summary, userInput, timestamp: currentDate }));
+      let originalInput = inputType !== 'Image' ? userInput : null;
+      await AsyncStorage.setItem(name, JSON.stringify({
+         summary, userInput:originalInput, timestamp: currentDate, inputType
+         }));
       console.log(`Summary saved successfully with key: ${name}`);
       handleGoBack();
     } catch (error) {

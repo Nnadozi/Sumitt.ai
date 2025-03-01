@@ -19,7 +19,7 @@ const InputType = (props: InputTypeProps) => {
     switch (props.name) {
       case "Website URL":
         return "link";
-      case "Manual Input":
+      case "Text":
         return "keyboard";
       case "Image":
           return "image";

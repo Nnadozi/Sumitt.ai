@@ -96,7 +96,7 @@ const Upload = () => {
   const handleInputChange = async (text: string) => {
     const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:\d+)?(\/[^\s]*)?)$/;
 
-    if (selectedOption === 'Manual Input' && urlPattern.test(text)) {
+    if (selectedOption === 'Text' && urlPattern.test(text)) {
       setManualInputWarning('URLs are not allowed in manual input mode.');
       setInputText(' ');  
       return;
@@ -135,7 +135,7 @@ const Upload = () => {
     setTimeout(() => {
       router.navigate({
         pathname: '/(summary)/summary',
-        params: { userInput, options: selectedOptions },
+        params: { userInput, options: selectedOptions, inputType:selectedOption },
       });
     },500)
   };
@@ -177,10 +177,10 @@ const Upload = () => {
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: 'flex-start', margin: '5%' }}>
       <InputType
-        name="Manual Input"
+        name="Text"
         subtitle="Input text manually"
-        selected={selectedOption === 'Manual Input'}
-        onPress={() => handleSelectOption('Manual Input')}
+        selected={selectedOption === 'Text'}
+        onPress={() => handleSelectOption('Text')}
       />
       <InputType
         name="Website URL"
@@ -224,7 +224,7 @@ const Upload = () => {
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
           </>
-        ) : selectedOption === "Manual Input" ? (
+        ) : selectedOption === "Text" ? (
           <>
             <MyInput
               height="38%"

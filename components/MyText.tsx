@@ -13,6 +13,7 @@ interface TextProps {
   numberOfLines?: number;
   markdown?: boolean;
   children: React.ReactNode;
+  onPress?: () => void;
 }
 
 const fontSizes = {
@@ -32,6 +33,7 @@ const MyText = ({
   textAlign,
   numberOfLines,
   markdown,
+  onPress
 }: TextProps) => {
   const fontWeight = bold ? 'bold' : 'normal';  
 
@@ -48,6 +50,7 @@ const MyText = ({
     </Markdown>
   ) : (
     <Text
+    onPress={onPress}
       numberOfLines={numberOfLines}
       style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}
     >

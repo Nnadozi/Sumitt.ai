@@ -13,11 +13,12 @@ interface SavedSummaryProps {
   timeStamp: string;
   summary: string;
   userInput: string; 
+  inputType:string;
   title: string;
   onDelete: (id: string) => void;
 }
 
-const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title }: SavedSummaryProps) => {
+const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title, inputType }: SavedSummaryProps) => {
   const { colors } = useTheme();
 
   const handleDelete = () => {
@@ -40,7 +41,8 @@ const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title }: Sa
       params:{
         id:id,
         summary:summary.toString(),
-        originalInput:userInput
+        originalInput:userInput,
+        inputType:inputType
        }
     })
   };
@@ -63,6 +65,7 @@ const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title }: Sa
         <MyText bold fontSize='small' opacity={0.5} style={{marginVertical:"2%" }}>{timeStamp}</MyText>
       </View>
       <MyText numberOfLines={3}>{summary}</MyText>
+      <MyText>Type: {inputType}</MyText>
       <View style={styles.bottomRow}>
           <ResponsiveIcon primary size={24} name='delete' onPress={handleDelete} />
           <ResponsiveIcon primary size={23} name="copy" type="ionicon" onPress={handleCopy} />

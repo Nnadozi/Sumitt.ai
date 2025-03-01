@@ -9,6 +9,7 @@ Frontend
     Bug Fixes / Changes
         - Hide AdMob information     
         - Fix GIFs (random + theme)
+        - Potential clipping bug (original input)
 Backend
     New Features
      - ...........
@@ -21,13 +22,13 @@ Other
 
 1.5.0
 - New store art
+- View original for images
 - Ipad rotation lock
 - Error categorization
 - Back arrows not showing / working
 - Disable swipe gesture for Android
 - PDF and document summarization
 - Custom prompt for options
-- View original input + styling
 - UI improvements
 - Seperate Screens
 - Tinker with options
