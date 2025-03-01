@@ -12,11 +12,12 @@ interface SavedSummaryProps {
   id: string;
   timeStamp: string;
   summary: string;
+  userInput: string; 
   title: string;
   onDelete: (id: string) => void;
 }
 
-const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryProps) => {
+const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title }: SavedSummaryProps) => {
   const { colors } = useTheme();
 
   const handleDelete = () => {
@@ -38,7 +39,8 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
       pathname:"/(saved)/[id]",
       params:{
         id:id,
-        summary:summary.toString()
+        summary:summary.toString(),
+        originalInput:userInput
        }
     })
   };
@@ -70,6 +72,7 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
     </View>
   );
 };
+
 
 export default SavedSummary;
 

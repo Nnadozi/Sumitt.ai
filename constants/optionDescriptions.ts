@@ -4,12 +4,6 @@ export const lengthDescriptions = [
   'Auto: Automatically adjusts the length based on the content and context for optimal summarization (recommended).'
 ];
 
-export const detailDescriptions = [
-  'Low: Captures only the main ideas with minimal elaboration.',
-  'High: Provides a detailed and in-depth explanation.',
-  'Auto: Automatically adjusts the level of detail based on the content (recommended).'
-];
-
 export const toneDescriptions = [
   'Casual: Relaxed and conversational, ideal for general reading.',
   'Informative: Focused on delivering clear facts and explanations.',
@@ -17,7 +11,7 @@ export const toneDescriptions = [
 
 export const formatDescriptions = [
   'Paragraphs: A flowing narrative with multiple paragraphs',
-  'Bullet Points: Structured as a clear list format using bullet points.',
+  'Bullet Points: Structured using bullet points.',
   'Mix: A combination of paragraphs and bullet points for clarity.',
   'Q&A: Information presented in a question-and-answer format.',
 ];

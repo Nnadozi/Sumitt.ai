@@ -10,7 +10,7 @@ import Snackbar from 'react-native-snackbar'
 import ResponsiveIcon from '@/components/ResponsiveIcon'
 
 const SavedSummaryScreen = () => {
-  const {summary} = useLocalSearchParams()
+  const {summary,originalInput} = useLocalSearchParams()
   const {colors} = useTheme()
 
   const handleCopy = () => {
@@ -37,6 +37,7 @@ const SavedSummaryScreen = () => {
     <Page style={{justifyContent:"flex-start", padding:'4%'}}>
       <ScrollView persistentScrollbar style = {styles.scrollContainer}>
         <MyText markdown>{summary}</MyText>
+        <MyText>Original: {originalInput}</MyText>
       </ScrollView>
       <SafeAreaView style = {styles.bottomRow}>
           <View style = {styles.iconRow}>

@@ -13,25 +13,22 @@ Backend
     New Features
      - ...........
     Bug Fixes / Changes
-     - ............
+     - Width problem
+     - Bullet point problem
 Other
     - App store localization
+    - Marketing
 
 1.5.0
 - New store art
 - Ipad rotation lock
-- Image summarization
 - Error categorization
 - Back arrows not showing / working
 - Disable swipe gesture for Android
-- Shorten server code (maybe new file?)
 - PDF and document summarization
-- Shorten code in general
-- Tell to read text
-- Bullet point BS
-- Better prompts
-- Custom prompt
-- View original input
+- Custom prompt for options
+- View original input + styling
 - UI improvements
 - Seperate Screens
+- Tinker with options
 

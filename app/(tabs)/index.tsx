@@ -8,7 +8,9 @@ import MyInput from "@/components/MyInput";
 import React from "react";
 
 const Index = () => {
-  const [summaries, setSummaries] = useState<Array<{ id: string; summary: string; timestamp: string }>>([]);
+  const [summaries, setSummaries] = useState<Array<{
+    userInput: string; id: string; summary: string; timestamp: string 
+}>>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSummaries, setFilteredSummaries] = useState(summaries);
 
@@ -103,6 +105,7 @@ const Index = () => {
               title={summary.id}
               key={summary.id}
               id={summary.id}
+              userInput={summary.userInput}
               timeStamp={summary.timestamp}
               summary={summary.summary}
               onDelete={handleDelete}

@@ -12,7 +12,6 @@ import ResponsiveIcon from '@/components/ResponsiveIcon';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   lengthDescriptions,
-  detailDescriptions,
   toneDescriptions,
   formatDescriptions,
   languageDescriptions,
@@ -38,7 +37,6 @@ const options = () => {
   
   const [selectedOptions, setSelectedOptions] = useState({
     length: `${lengthDescriptions[2]}`,
-    detail: `${detailDescriptions[2]}`,
     tone: `${toneDescriptions[0]}`,
     format: `${formatDescriptions[2]}`,
     readingLevel: `${readingLevelDescriptions[1]}`,
@@ -49,7 +47,6 @@ const options = () => {
     try {
       await AsyncStorage.setItem('summaryOptions', JSON.stringify(selectedOptions));
       ToastAndroid.show('Options applied successfully', ToastAndroid.SHORT);
-      console.log(selectedOptions)
       if (Platform.OS === 'ios') {
         Snackbar.show({ text: 'Options applied!', duration: 500 });
       }
@@ -94,13 +91,6 @@ const options = () => {
           <MyText bold>Length</MyText>
         </View>
         {renderChips('length', ['Short', 'Long', 'Auto'], lengthDescriptions)}
-        <Divider width={10} color='rgba(0,0,0,0)' />
-
-        <View style={styles.iconRow}>
-          <ResponsiveIcon name='magnifying-glass' type='entypo' color={colors.text} size={18} />
-          <MyText bold>Detail</MyText>
-        </View>
-        {renderChips('detail', ['Low', 'High', 'Auto'], detailDescriptions)}
         <Divider width={10} color='rgba(0,0,0,0)' />
 
         <View style={styles.iconRow}>
