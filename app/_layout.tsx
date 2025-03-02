@@ -67,6 +67,7 @@ const AppNavigator = () => {
       <StatusBar style={resolvedTheme === MyDarkTheme ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false, gestureEnabled:false}} >
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(input)" />
         <Stack.Screen name="(options)" />
         <Stack.Screen name="(summary)" />
       </Stack>

@@ -37,16 +37,14 @@ const SavedSummaryScreen = () => {
   return (
     <Page style={{ justifyContent: 'flex-start', padding: '4%' }}>
       <ScrollView persistentScrollbar style={styles.scrollContainer}>
-      <MyText markdown>{summary}</MyText>
+        <MyText markdown>{summary}</MyText>
         <TouchableOpacity style={styles.viewPrompt} onPress={() => setShowOriginal(!showOriginal)}>
-          { inputType !== "Image" && (
-            <>
-              <MyText fontSize='small' bold color={colors.primary}>
-                {showOriginal ? 'Hide Original Input' : 'View Original Input'}
-              </MyText>
-              <ResponsiveIcon primary size={10} type="antdesign" name={showOriginal ? 'caretup' : 'caretdown'} />
-            </>
-          )}
+          <>
+            <MyText fontSize='small' bold color={colors.primary}>
+              {showOriginal ? 'Hide Original Input' : 'View Original Input'}
+            </MyText>
+            <ResponsiveIcon primary size={10} type="antdesign" name={showOriginal ? 'caretup' : 'caretdown'} />
+          </>
         </TouchableOpacity>
         {showOriginal && (
           inputType === 'URL' ? (
@@ -56,7 +54,14 @@ const SavedSummaryScreen = () => {
               </MyText>      
             </TouchableOpacity>
           ) : (
-            <MyText fontSize='small'>{originalInput}</MyText>
+            inputType === 'Text' ? (
+              <MyText fontSize='small'>{originalInput}</MyText>
+            ) : (
+              // Wrapping the image with a ScrollView to allow scrolling if it's too large
+              <ScrollView contentContainerStyle={styles.imageContainer}>
+                <Image source={{ uri: originalInput }} resizeMode='contain' style={styles.previewImage} />
+              </ScrollView>
+            )
           )
         )}
       </ScrollView>
@@ -98,5 +103,18 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     gap: '1%',
     marginTop: "3%",
+  },
+  previewImage: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1, 
+    alignSelf: 'center',
+    marginTop: "2%",
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
 });

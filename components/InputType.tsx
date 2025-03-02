@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useTheme } from '@react-navigation/native';
 import MyText from './MyText';
@@ -6,10 +6,10 @@ import { Icon } from '@rneui/base';
 import ResponsiveIcon from './ResponsiveIcon';
 
 interface InputTypeProps {
-    name?: string;
-    subtitle?: string;
-    selected: boolean;
-    onPress: () => void;
+    name: string;
+    subtitle: string;
+    inputType:string;
+    onPress?: () => void;
 }
 
 const InputType = (props: InputTypeProps) => {
@@ -29,18 +29,19 @@ const InputType = (props: InputTypeProps) => {
   };
 
   return (
-    <Pressable  
+    <TouchableOpacity
       style={[styles.con, 
-        { backgroundColor: props.selected ? colors.primary : colors.card, 
-          borderColor: props.selected ? colors.primary : colors.border }]} 
+        { backgroundColor: colors.card, 
+          borderColor: colors.border }]} 
       onPress={props.onPress} 
+      activeOpacity={0.5}
     >
-        <ResponsiveIcon color={props.selected ? colors.card : colors.primary} size={30} name={iconName()} />
+        <ResponsiveIcon color={colors.primary} size={30} name={iconName()} />
         <View style={styles.textCon}>
-            <MyText style={{ color: props.selected ? colors.card : colors.text }} bold>{props.name}</MyText>
-            <MyText style={{ color: props.selected ? colors.card : colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>
+            <MyText style={{ color:  colors.text }} bold>{props.name}</MyText>
+            <MyText style={{ color: colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>
         </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

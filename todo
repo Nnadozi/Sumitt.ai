@@ -5,6 +5,7 @@ Frontend
         - Updates API
         - Localization
         - Share to summarize 
+        - PDF and document summarization
         - Summary actions (flashcards, quizzes, etc)
     Bug Fixes / Changes
         - Hide AdMob information     
@@ -24,7 +25,3 @@ Other
 
 1.5.0
 - New store art
-- View original for images
-- Error categorization
-- PDF and document summarization
-- Seperate Screens

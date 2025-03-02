@@ -4,7 +4,7 @@ import { useTheme } from '@react-navigation/native'
 
 interface PageProps {
     style?: ViewStyle,
-    children:React.ReactNode
+    children?:React.ReactNode
 }
 
 const Page = (props:PageProps) => {

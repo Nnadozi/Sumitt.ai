@@ -19,7 +19,7 @@ const interstitialAd = InterstitialAd.createForAdRequest(
 );
 
 const Summary = () => {
-  const { userInput, options, inputType } = useGlobalSearchParams();
+  const { userInput, options, inputType,uri } = useGlobalSearchParams();
   const { colors } = useTheme();
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState('');
@@ -109,10 +109,10 @@ const Summary = () => {
     setModuleVisible(false);
     try {
       const currentDate = new Date().toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', year: 'numeric', month: '2-digit', day: '2-digit' });
-      let originalInput = inputType !== 'Image' ? userInput : null;
+      let originalInput = inputType === "Image" ? uri : userInput;
       await AsyncStorage.setItem(name, JSON.stringify({
          summary, userInput:originalInput, timestamp: currentDate, inputType
-         }));
+      }));
       console.log(`Summary saved successfully with key: ${name}`);
       handleGoBack();
     } catch (error) {
@@ -139,27 +139,39 @@ const Summary = () => {
   return (
     <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
       {loading ? (
-        <>
-          <Image source={loadingGif} key={loadingGif.uri} />
-          <MyText bold fontSize="XL">Summarizing...</MyText>
-          {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
-        </>
-      ) : error ? (
-        <>
-          <Icon name="error" size={100} color={colors.primary} />
-          <MyText style={{ marginTop: '3%' }} textAlign="center">{error}</MyText>
+      <>
+        <Image source={loadingGif} key={loadingGif.uri} />
+        <MyText bold fontSize="XL">Summarizing...</MyText>
+        {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
+      </>
+    ) : error ? (
+      <>
+        <Icon name="error" size={100} color={colors.primary} />
+        <MyText style={{ marginTop: '3%' }} textAlign="center">{error}</MyText>
+        {inputType === 'URL' && (
           <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
             Please try a different URL. This may have occurred because:
             {'\n'}• The website requires a subscription to access content
             {'\n'}• The page is blocked by a login or authentication prompt.
             {'\n'}• The website has blocked web scraping activities
           </MyText>
-          <MyButton width="30%" title="Back" onPress={handleGoBack} />
-        </>
-      ) : (
+        )}
+        {inputType === 'Text' && (
+          <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
+            There was an issue processing the text input. Please try again later.
+          </MyText>
+        )}
+        {inputType === 'Image' && (
+          <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
+            Image processing failed. The image might be corrupted or unsupported.
+          </MyText>
+        )}
+        <MyButton width="30%" title="Back" onPress={handleGoBack} />
+      </>
+    ) : (
         <>
           <SafeAreaView style={{ backgroundColor: colors.background }} />
-          <Animated.View style={[{ opacity: fadeAnim }, styles.container]}>
+          <Animated.View style={[{ opacity: fadeAnim, flex:1 }, styles.container]}>
             <View style={styles.headerContainer}>
               <MyText bold fontSize="XL">Summary</MyText>
               <View style={styles.iconRow}>
@@ -167,8 +179,8 @@ const Summary = () => {
                 <ResponsiveIcon name="share" size={25} primary={true} onPress={handleShare} />
               </View>
             </View>
-            <ScrollView persistentScrollbar contentContainerStyle={styles.scrollViewContent}>
-              <MyText markdown>{summary}</MyText>
+            <ScrollView persistentScrollbar style={{width:'100%'}} contentContainerStyle={styles.scrollViewContent}>
+              <MyText style={{width:"100%"}} markdown>{summary}</MyText>
             </ScrollView>
             <SafeAreaView style={styles.buttonRow}>
               <MyButton iconName='save' width="45%" title="Save" onPress={() => setModuleVisible(true)} />
@@ -186,7 +198,7 @@ const styles = StyleSheet.create({
   container: { justifyContent: 'center', alignItems: 'center' },
   headerContainer: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: '7.5%', marginBottom: '3%' },
   iconRow: { flexDirection: 'row', gap: '2%', justifyContent: 'space-around' },
-  scrollViewContent: { paddingBottom: '20%', width: "100%" },
+  scrollViewContent: { paddingBottom: '20%', width: "100%", flexGrow:1 },
   buttonRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '3%', marginVertical: '3%' },
 });
 
