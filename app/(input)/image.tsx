@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   previewImage:{
     width:"100%",
     alignSelf:"center",
-    height: undefined,
+    height: "70%",
     aspectRatio: 1, 
   },
   loadingText:{

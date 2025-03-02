@@ -57,7 +57,6 @@ const SavedSummaryScreen = () => {
             inputType === 'Text' ? (
               <MyText fontSize='small'>{originalInput}</MyText>
             ) : (
-              // Wrapping the image with a ScrollView to allow scrolling if it's too large
               <ScrollView contentContainerStyle={styles.imageContainer}>
                 <Image source={{ uri: originalInput }} resizeMode='contain' style={styles.previewImage} />
               </ScrollView>
