@@ -16,6 +16,8 @@ Backend
     Bug Fixes / Changes
      - Width problem
      - Bullet point problem
+     - Ipad rotation lock
+     - Disable swipe gesture for Android
 Other
     - App store localization
     - Marketing
@@ -23,13 +25,6 @@ Other
 1.5.0
 - New store art
 - View original for images
-- Ipad rotation lock
 - Error categorization
-- Back arrows not showing / working
-- Disable swipe gesture for Android
 - PDF and document summarization
-- Custom prompt for options
-- UI improvements
 - Seperate Screens
-- Tinker with options
-

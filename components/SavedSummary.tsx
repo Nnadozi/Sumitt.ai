@@ -65,7 +65,6 @@ const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title, inpu
         <MyText bold fontSize='small' opacity={0.5} style={{marginVertical:"2%" }}>{timeStamp}</MyText>
       </View>
       <MyText numberOfLines={3}>{summary}</MyText>
-      <MyText>Type: {inputType}</MyText>
       <View style={styles.bottomRow}>
           <ResponsiveIcon primary size={24} name='delete' onPress={handleDelete} />
           <ResponsiveIcon primary size={23} name="copy" type="ionicon" onPress={handleCopy} />
