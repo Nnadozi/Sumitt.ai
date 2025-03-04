@@ -106,14 +106,6 @@ const image = () => {
         ):(
         <>
             <View style={styles.buttonRow}>
-                <MyButton
-                title="Upload Image" iconName="upload"
-                onPress={handleUpload}
-                width="49%"
-                />
-                <MyButton title="Take Photo" iconName='camera' iconType='antdesign' onPress={handlePicture} width="49%" />
-            </View>   
-            <View style={styles.buttonRow}>
               <MyButton
                   disabled={!previewImage}
                   title="Summarize"
@@ -122,6 +114,14 @@ const image = () => {
                   iconName="summarize"
                   />
             </View>
+            <View style={styles.buttonRow}>
+                <MyButton
+                title="Upload Image" iconName="upload"
+                onPress={handleUpload}
+                width="49%"
+                />
+                <MyButton title="Take Photo" iconName='camera' iconType='antdesign' onPress={handlePicture} width="49%" />
+            </View>   
             <View style={styles.buttonRow}>
                 <MyButton
                 title="Options" iconName="options" iconType="ionicon"

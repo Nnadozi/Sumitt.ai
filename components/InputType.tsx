@@ -17,12 +17,14 @@ const InputType = (props: InputTypeProps) => {
 
   const iconName = (): string => {
     switch (props.name) {
-      case "Website URL":
-        return "link";
       case "Text":
         return "keyboard";
+      case "Website URL":
+          return "link";
       case "Image":
           return "image";
+      case "PDF":
+          return "pdffile1";
       default:
         return 'help-outline';
     }
@@ -36,7 +38,7 @@ const InputType = (props: InputTypeProps) => {
       onPress={props.onPress} 
       activeOpacity={0.5}
     >
-        <ResponsiveIcon color={colors.primary} size={30} name={iconName()} />
+        <ResponsiveIcon  type={props.name === "PDF" ? "antdesign" : "material"} color={colors.primary} size={30} name={iconName()} />
         <View style={styles.textCon}>
             <MyText style={{ color:  colors.text }} bold>{props.name}</MyText>
             <MyText style={{ color: colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>

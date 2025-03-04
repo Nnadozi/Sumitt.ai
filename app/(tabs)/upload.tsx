@@ -22,7 +22,7 @@ const Upload = () => {
       />
       <InputType
         name="Website URL"
-        subtitle="Website or article URL"
+        subtitle="Paste Website or article URL"
         inputType='URL'
         onPress={() => router.navigate({
           pathname:'/(input)/url',
@@ -39,6 +39,17 @@ const Upload = () => {
           pathname:'/(input)/image',
           params:{
             inputType:'Image'
+          }
+        })}
+      />
+      <InputType
+        name="PDF"
+        subtitle="Upload PDF from device"
+        inputType='PDF'
+        onPress={() => router.navigate({
+          pathname:'/(input)/pdf',
+          params:{
+            inputType:'PDF'
           }
         })}
       />

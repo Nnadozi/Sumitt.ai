@@ -5,13 +5,18 @@ Frontend
         - Updates API
         - Localization
         - Answers option
+        - Media summarizer
         - Share to summarize 
         - Experiment with banner ads
         - PDF and document summarization
         - Summary actions (flashcards, quizzes, etc)
     Bug Fixes / Changes
-        - Hide AdMob information     
+        - Ipad rotation lock
+        - Better font scaling
+        - New secondary color? 
+        - Hide AdMob information    
         - Fix GIFs (random + theme)
+        - Disable swipe gesture for Android
         - Potential clipping bug (original input)
 Backend
     New Features
@@ -19,10 +24,7 @@ Backend
     Bug Fixes / Changes
      - Width problem
      - Bullet point problem
-     - Ipad rotation lock
-     - Disable swipe gesture for Android
 Other
-    - Support and marketing URLs
     - App store localization
     - Better store art
     - Marketing
