@@ -45,6 +45,5 @@ export const languageDescriptions = [
   'Swedish: Spoken in Sweden and Finland.',
   'Ukrainian: The official language of Ukraine.',
   'Hungarian: Spoken in Hungary.',
-  'Igbo: Spoken in southeastern Nigeria.',
-  'Pirate: Translates the summary into a swashbucklin’ pirate dialect!'
+  'Igbo: Spoken in southeastern Nigeria.'
 ];

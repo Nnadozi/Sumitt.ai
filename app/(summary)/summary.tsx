@@ -123,7 +123,7 @@ const Summary = () => {
   const handleGoBack = () => {
     setSummaryCount((prevCount) => {
       const newCount = prevCount + 1;
-      if (newCount === Math.floor(Math.random() * 2) + 2) showInterstitialAd();
+      if (newCount === 2) showInterstitialAd();
       return newCount === 2 ? 0 : newCount;
     });
     setSummary('');
