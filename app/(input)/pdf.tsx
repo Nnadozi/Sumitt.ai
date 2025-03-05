@@ -4,6 +4,7 @@ import Page from '@/components/Page'
 import MyButton from '@/components/MyButton'
 import { router, useFocusEffect } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as DocumentPicker from "expo-document-picker"
 
 const pdf = () => {
   const[pdf, setPDF] = useState(null)
@@ -32,15 +33,29 @@ const pdf = () => {
   };
 
   const selectPDF = async () => {
+    try {
+        const result = await DocumentPicker.getDocumentAsync({
+            type: "application/pdf",
+            copyToCacheDirectory: false,
+            multiple:false
+        });
 
-  }
+        if (result.canceled) {
+            console.log("User canceled document selection");
+            return;
+        }
+
+        setPDF(result.assets[0]);
+        console.log("Selected PDF:", pdf);
+    } catch (error) {
+        console.error("Error selecting PDF:", error);
+    }
+};
 
   const handleCancel = () => {
       setPDF(null)
       router.back();
   };
-  
-  
   
   return (
     <Page style={{justifyContent:"flex-start", alignItems:"center", padding:"5%"}}>

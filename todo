@@ -8,9 +8,10 @@ Frontend
         - Media summarizer
         - Share to summarize 
         - Experiment with banner ads
-        - PDF and document summarization
         - Summary actions (flashcards, quizzes, etc)
     Bug Fixes / Changes
+        - PDF preview
+        - PDF parsing
         - Ipad rotation lock
         - Better font scaling
         - New secondary color? 
