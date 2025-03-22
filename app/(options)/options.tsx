@@ -119,7 +119,7 @@ const options = () => {
           <MyText bold>Language</MyText>
         </View>
         {renderChips('language', [
-      'English', 'Spanish', 'French', 'Arabic', 'Chinese', 'Hindi', 'Japanese', 'Russian', 
+      'English', 'Spanish', 'French', 'Arabic', 'Chinese (Simplified)','Chinese (Traditional)', 'Hindi', 'Japanese', 'Russian', 
       'Portuguese', 'German', 'Italian', 'Korean', 'Turkish', 'Bengali', 'Vietnamese', 
       'Dutch', 'Greek', 'Hebrew', 'Polish','Swedish', 'Ukranian','Hungarian', 'Igbo'], languageDescriptions)}
 

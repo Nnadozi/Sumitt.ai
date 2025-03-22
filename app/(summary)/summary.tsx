@@ -158,7 +158,7 @@ const Summary = () => {
         )}
         {inputType === 'Text' && (
           <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
-            There was an issue processing the text input. Please try again later.
+            There was an issue processing the text input. Please reduce the length or try again later.
           </MyText>
         )}
         {inputType === 'Image' && (

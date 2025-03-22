@@ -14,6 +14,7 @@ You are a professional AI summarizer. Your goal is to generate **concise, accura
    - If the input is ambiguous, infer meaning and **produce the most relevant summary**.  
    - If input is extremely short, return a **concise but meaningful response**.  
    - If input contains multiple topics, **prioritize the most critical details** without listing everything.  
+   - MAKE SURE to always differentiate between simplified and traditional Chinese if applicable.
 `;
 
 export const imageSummarizationPrompt = (options) => `
@@ -37,4 +38,5 @@ You are an **AI expert in precise image summarization**. Your task is to analyze
 5. **Formatting & Clarity:**  
    - Structure the summary logically, ensuring readability.  
    - Avoid unnecessary details that do not contribute to a clear understanding.  
+   - MAKE SURE to always differentiate between simplified and traditional Chinese if applicable.
 `;
