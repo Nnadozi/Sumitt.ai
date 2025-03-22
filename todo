@@ -19,6 +19,7 @@ Frontend
         - Fix GIFs (random + theme)
         - Disable swipe gesture for Android
         - Potential clipping bug (original input)
+        - Chinese language bug
 Backend
     New Features
      - ...........
@@ -29,3 +30,4 @@ Other
     - App store localization
     - Better store art
     - Marketing
+

@@ -42,17 +42,6 @@ const Upload = () => {
           }
         })}
       />
-      <InputType
-        name="PDF"
-        subtitle="Upload PDF from device"
-        inputType='PDF'
-        onPress={() => router.navigate({
-          pathname:'/(input)/pdf',
-          params:{
-            inputType:'PDF'
-          }
-        })}
-      />
       <View style = {{width:"100%"}}>
         <MyButton iconName="cancel" title="Cancel" onPress={ () => router.back()} width="100%" marginVertical="2%" />
         <MyText style={{ marginTop: '2%', opacity: 0.5 }} fontSize="small">
