@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import * as cheerio from "cheerio";
 import axios from "axios";
 import puppeteer from "puppeteer";
+import rateLimit from "express-rate-limit";
 import { textSummarizationPrompt, imageSummarizationPrompt } from "./prompts.js";
 
 dotenv.config();
@@ -13,6 +14,18 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json({ limit: "10mb" }));
+
+// ✅ Rate limiter: 5 requests per minute per IP
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 5, // Limit each IP to 5 requests per windowMs
+  message: { error: "You are sending requests too fast. Please slow down." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply the limiter only to the /api/summarize route
+app.use("/api/summarize", limiter);
 
 const fetchWithPuppeteer = async (url) => {
   console.log("🚀 Launching Puppeteer...");
@@ -73,10 +86,13 @@ app.post("/api/summarize", async (req, res) => {
           model: "gpt-4o-mini",
           messages: [
             { role: "system", content: imageSummarizationPrompt(options) },
-            { role: "user", content: [
+            {
+              role: "user",
+              content: [
                 { type: "text", text: imageSummarizationPrompt(options) },
                 { type: "image_url", image_url: { url: userInput } },
-              ]},
+              ],
+            },
           ],
         }
       : {
@@ -87,7 +103,12 @@ app.post("/api/summarize", async (req, res) => {
           ],
         };
 
-    const response = await fetch(apiUrl, { method: "POST", headers, body: JSON.stringify(requestBody) });
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(requestBody),
+    });
+
     if (!response.ok) throw new Error(await response.text());
     res.json(await response.json());
   } catch (error) {
@@ -98,4 +119,4 @@ app.post("/api/summarize", async (req, res) => {
 
 app.get("/", (req, res) => res.send("Server is running! Use /api/summarize."));
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
