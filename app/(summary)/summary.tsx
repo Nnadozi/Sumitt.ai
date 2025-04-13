@@ -29,8 +29,14 @@ const Summary = () => {
   const fadeAnim = useState(new Animated.Value(0))[0];
   const [summaryCount, setSummaryCount] = useState(0);
 
-  const loadingGifs = [require('../../assets/images/ball.gif'), require('../../assets/images/infinity.gif'), require('../../assets/images/dual.gif'), require('../../assets/images/pacman.gif')];
-  const [loadingGif, setLoadingGif] = useState(loadingGifs[0]);
+  const loadingGifs = [
+    require('../../assets/images/ball.gif'), 
+    require('../../assets/images/infinity.gif'), 
+    require('../../assets/images/dual.gif'), 
+    require('../../assets/images/pacman.gif')
+  ];
+  const [loadingGif, setLoadingGif] = useState(loadingGifs[0]); 
+
 
   useEffect(() => {
     interstitialAd.load();
@@ -66,6 +72,9 @@ const Summary = () => {
         setError('No internet connection');
         return;
       }
+
+      const randomGif = loadingGifs[Math.floor(Math.random() * loadingGifs.length)];
+      setLoadingGif(randomGif);
 
       setLoading(true);
       fadeAnim.setValue(0);

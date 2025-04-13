@@ -1,25 +1,22 @@
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Page from '@/components/Page';
-import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
 import { router } from 'expo-router';
-import MyInput from '@/components/MyInput';
 import MyText from '@/components/MyText';
 import { useTheme } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from 'expo-router';
-import * as ImagePicker from "expo-image-picker"
+import * as ImagePicker from "expo-image-picker";
 import { Image } from 'react-native';
 import { Camera } from "expo-camera";
 
 const image = () => {
   const { colors } = useTheme();
-  const [inputText, setInputText] = useState('');
   const [selectedOptions, setSelectedOptions] = useState<string | string[] | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [base64Image, setBase64Image] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const fetchOptions = async () => {
     try {
@@ -31,112 +28,137 @@ const image = () => {
   };
 
   useFocusEffect(
-    useCallback(() => { 
+    useCallback(() => {
       fetchOptions();
-      setLoading(false)
-     }, [])
+      setLoading(false);
+    }, [])
   );
 
-  const handleInputChange = async (text: string) => {
-    setInputText(text);
-  };
-
   const handleCancel = () => {
-    setInputText('');
-    setPreviewImage(null)
+    setPreviewImage(null);
+    setBase64Image(null);
     router.back();
   };
 
   const handleUpload = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       aspect: [4, 3],
       quality: 0.5,
-      base64: true, 
+      base64: true,
     });
-  
+
     if (!result.canceled && result.assets[0].base64) {
-      setPreviewImage(result.assets[0].uri); 
-      setBase64Image(`data:image/jpeg;base64,${result.assets[0].base64}`); 
+      setPreviewImage(result.assets[0].uri);
+      setBase64Image(`data:image/jpeg;base64,${result.assets[0].base64}`);
+    } else {
+      setPreviewImage(null);
+      setBase64Image(null);
     }
   };
-  
+
   const handlePicture = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
     if (status !== "granted") {
       alert("Camera access is required to take pictures.");
       return;
     }
-  
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ['images'],
+
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       aspect: [4, 3],
       quality: 0.5,
-      base64: true, 
+      base64: true,
     });
-  
+
     if (!result.canceled && result.assets[0].base64) {
       setPreviewImage(result.assets[0].uri);
       setBase64Image(`data:image/jpeg;base64,${result.assets[0].base64}`);
+    } else {
+      setPreviewImage(null);
+      setBase64Image(null);
     }
   };
 
   const generateSummary = () => {
-    setLoading(true)
+    if (!base64Image) {
+      alert("Something went wrong with the image upload. Please try again.");
+      return;
+    }
+
+    setLoading(true);
     setTimeout(() => {
       router.navigate({
         pathname: '/(summary)/summary',
-        params: { userInput:base64Image, options: selectedOptions, inputType:"Image",uri:previewImage },
+        params: {
+          userInput: base64Image,
+          options: selectedOptions,
+          inputType: "Image",
+          uri: previewImage,
+        },
       });
-    },500)
+    }, 500);
   };
 
-
-
   return (
-    <Page style={{ alignItems: "flex-start", justifyContent: "flex-start", padding: "5%",}}>
-        {previewImage !== null && (
-            <Image resizeMode='contain' style = {styles.previewImage} source={{uri:previewImage}} />
-        )}
-        {loading === true ? (
-            <View style = {styles.loadingText}>
-                <MyText bold fontSize='large'>Loading</MyText>
-                <ActivityIndicator size={'large'} color={colors.primary} />
-            </View>
-        ):(
-        <>
-            <View style={styles.buttonRow}>
-              <MyButton
-                  disabled={!previewImage}
-                  title="Summarize"
-                  onPress={generateSummary}
-                  width="100%"
-                  iconName="summarize"
-                  />
-            </View>
-            <View style={styles.buttonRow}>
-                <MyButton
-                title="Upload Image" iconName="upload"
-                onPress={handleUpload}
-                width="49%"
-                />
-                <MyButton title="Take Photo" iconName='camera' iconType='antdesign' onPress={handlePicture} width="49%" />
-            </View>   
-            <View style={styles.buttonRow}>
-                <MyButton
-                title="Options" iconName="options" iconType="ionicon"
-                onPress={() => router.navigate('/(options)/options')}
-                width="49%"
-            />
-              <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
-            </View>
-        </>
-        )}
-    </Page>
-  )
-}
+    <Page style={{ alignItems: "flex-start", justifyContent: "flex-start", padding: "5%" }}>
+      {previewImage !== null && (
+        <Image resizeMode='contain' style={styles.previewImage} source={{ uri: previewImage }} />
+      )}
 
-export default image
+      {loading ? (
+        <View style={styles.loadingText}>
+          <MyText bold fontSize='large'>Please be patient...</MyText>
+          <ActivityIndicator size={'large'} color={colors.primary} />
+        </View>
+      ) : (
+        <>
+          <View style={styles.buttonRow}>
+            <MyButton
+              disabled={!previewImage}
+              title="Summarize"
+              onPress={generateSummary}
+              width="100%"
+              iconName="summarize"
+            />
+          </View>
+          <View style={styles.buttonRow}>
+            <MyButton
+              title="Upload Image"
+              iconName="upload"
+              onPress={handleUpload}
+              width="49%"
+            />
+            <MyButton
+              title="Take Photo"
+              iconName='camera'
+              iconType='antdesign'
+              onPress={handlePicture}
+              width="49%"
+            />
+          </View>
+          <View style={styles.buttonRow}>
+            <MyButton
+              title="Options"
+              iconName="options"
+              iconType="ionicon"
+              onPress={() => router.navigate('/(options)/options')}
+              width="49%"
+            />
+            <MyButton
+              iconName="cancel"
+              title="Cancel"
+              onPress={handleCancel}
+              width="49%"
+            />
+          </View>
+        </>
+      )}
+    </Page>
+  );
+};
+
+export default image;
 
 const styles = StyleSheet.create({
   buttonRow: {
@@ -147,18 +169,18 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     gap: '2%',
   },
-  previewImage:{
-    width:"100%",
-    alignSelf:"center",
+  previewImage: {
+    width: "100%",
+    alignSelf: "center",
     height: undefined,
-    aspectRatio: 1, 
+    aspectRatio: 1,
   },
-  loadingText:{
-    flexDirection:"row",
+  loadingText: {
+    flexDirection: "row",
     justifyContent: 'space-evenly',
     alignItems: 'center',
     alignSelf: 'center',
-    gap:'5%',
-    marginTop:"3%"
-  }
-})
+    gap: '5%',
+    marginTop: "3%",
+  },
+});
