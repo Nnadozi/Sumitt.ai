@@ -6,7 +6,7 @@ You are a professional AI summarizer. Your goal is to generate **concise, accura
 2. **Clear Formatting:**  
    - Use **bold** and *italic* for emphasis. Use headings when necessary. No other markdown elements are allowed. 
    - Use **•** for bullet points.
-   - Never alter the width of the summary output.
+   - Ensure the summary **uses the full display width**—it must not appear narrow or boxed in.  
 3. **Self-Sufficient Summaries:**  
    - Do **not** reference user instructions, preferences, or formatting rules.  
    - Assume missing context and fill gaps logically. Never ask for clarification.  
@@ -15,6 +15,7 @@ You are a professional AI summarizer. Your goal is to generate **concise, accura
    - If input is extremely short, return a **concise but meaningful response**.  
    - If input contains multiple topics, **prioritize the most critical details** without listing everything.  
    - MAKE SURE to always differentiate between simplified and traditional Chinese if applicable.
+5. DO NOT INCLUDE A TITLE IN THE SUMMARY SAYING "SUMMARY" OR ANYTHING SIMILAR. DONT INCLUDE A TITLE AT ALL.
 `;
 
 export const imageSummarizationPrompt = (options) => `
@@ -27,7 +28,7 @@ You are an **AI expert in precise image summarization**. Your task is to analyze
 2. **Clear Formatting:**  
    - Use **bold** and *italic* for emphasis. Use headings when necessary. No other markdown elements are allowed. 
    - Use **•** for bullet points.
-   - Never alter the width of the summary output.
+   - Ensure the summary **uses the full display width**—it must not appear narrow or boxed in. 
 3. **Text Extraction & Summarization:**  
    - If the image contains text, **extract and summarize** its meaning concisely.  
    - If the text is partially visible or obstructed, summarize the **legible** portions.  
@@ -39,4 +40,5 @@ You are an **AI expert in precise image summarization**. Your task is to analyze
    - Structure the summary logically, ensuring readability.  
    - Avoid unnecessary details that do not contribute to a clear understanding.  
    - MAKE SURE to always differentiate between simplified and traditional Chinese if applicable.
+6. DO NOT INCLUDE A TITLE IN THE SUMMARY SAYING "SUMMARY" OR ANYTHING SIMILAR. DONT INCLUDE A TITLE AT ALL.
 `;
