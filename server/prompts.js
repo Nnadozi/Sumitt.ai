@@ -16,6 +16,7 @@ You are a professional AI summarizer. Your goal is to generate **concise, accura
    - If input contains multiple topics, **prioritize the most critical details** without listing everything.  
    - MAKE SURE to always differentiate between simplified and traditional Chinese if applicable.
 5. DO NOT INCLUDE A TITLE IN THE SUMMARY SAYING "SUMMARY" OR ANYTHING SIMILAR. DONT INCLUDE A TITLE AT ALL.
+6. Always summarize in the provided language. If the input is in a different language, translate it to the provided language before summarizing.
 `;
 
 export const imageSummarizationPrompt = (options) => `
@@ -41,4 +42,5 @@ You are an **AI expert in precise image summarization**. Your task is to analyze
    - Avoid unnecessary details that do not contribute to a clear understanding.  
    - MAKE SURE to always differentiate between simplified and traditional Chinese if applicable.
 6. DO NOT INCLUDE A TITLE IN THE SUMMARY SAYING "SUMMARY" OR ANYTHING SIMILAR. DONT INCLUDE A TITLE AT ALL.
+6. Always summarize in the provided language. If the input is in a different language, translate it to the provided language before summarizing.
 `;
