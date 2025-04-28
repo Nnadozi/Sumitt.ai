@@ -83,7 +83,7 @@ app.post("/api/summarize", async (req, res) => {
   try {
     const requestBody = base64Pattern.test(userInput)
       ? {
-          model: "gpt-4.1-nano",
+          model: "gpt-4o-mini",
           messages: [
             { role: "system", content: imageSummarizationPrompt(options) },
             {
@@ -96,7 +96,7 @@ app.post("/api/summarize", async (req, res) => {
           ],
         }
       : {
-          model: "gpt-4.1-nano",
+          model: "gpt-4o-mini",
           messages: [
             { role: "system", content: textSummarizationPrompt(options) },
             { role: "user", content: userInput },
