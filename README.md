@@ -7,7 +7,7 @@ Download for Android: https://play.google.com/store/apps/details?id=com.nnadozi.
 Download for iOS: https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741008785?platform=iphone
 
 ## Built With
-React Native, Expo, TypeScript, NodeJS
+React Native, Expo, TypeScript, NodeJS, Express.js 
 
  ## Pictures
 <img src="https://github.com/user-attachments/assets/37f0faee-b9a2-4e79-b626-f59409d0362a" alt="1" width="200"/>
