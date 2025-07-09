@@ -6,6 +6,14 @@ Download for Android: https://play.google.com/store/apps/details?id=com.nnadozi.
 
 Download for iOS: https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741008785?platform=iphone
 
+## Features
+- Text summarization
+- Web URL / Website summarization
+- Image summarization
+- Offline summary storage and access
+- Sharing via email, messaging apps, or social platforms.
+- Customizable options (length, format, language, etc)
+
 ## Built With
 React Native, Expo, TypeScript, NodeJS, Express.js 
 
