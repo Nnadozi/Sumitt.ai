@@ -6,6 +6,7 @@ import MyText from "@/components/MyText";
 import SavedSummary from "@/components/SavedSummary";
 import MyInput from "@/components/MyInput";
 import React from "react";
+import Toast from "react-native-toast-message";
 
 const Index = () => {
   const [summaries, setSummaries] = useState<Array<{
@@ -90,7 +91,7 @@ const Index = () => {
         />
       )}
       {filteredSummaries.length === 0 ? (
-        <View style={{ position: "absolute", top: "45%" }}>
+        <View style={styles.emptyState}>
           <MyText textAlign="center" style={{ opacity: 0.5 }}>
             No saved summaries
           </MyText>
@@ -118,6 +119,16 @@ const Index = () => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  emptyState: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default Index;

@@ -28,6 +28,17 @@
       "env": {
         "EXPO_PUBLIC_APP_VARIANT": "production"
       }
+    },
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "environment": "development",
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development"
+      },
+      "ios": {
+        "simulator": true
+      }
     }
   },
   "submit": {

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Sumitt",
     "slug": "Sumitt-1",
-    "version": "1.5.2",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -10,10 +10,19 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
+      "requireFullScreen": true,
       "infoPlist": {
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationPortraitUpsideDown"
+        ],
         "NSUserTrackingUsageDescription": "We use your data to provide a better and more personalized ad experience."
       },
-      "bundleIdentifier": "com.nnadozi.Sumitt"
+      "entitlements": {
+        "com.apple.developer.networking.wifi-info": true
+      },
+      "bundleIdentifier": "com.nnadozi.Sumitt",
+      "appStoreUrl": "https://apps.apple.com/us/app/sumitt-ai-ai-media-summarizer/id6741008785"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +36,8 @@
         "resizeMode": "contain",
         "backgroundColor": "#6ad478",
         "imageWidth": 1000
-      }
+      },
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt"
     },
     "web": {
       "bundler": "metro",
@@ -53,14 +63,6 @@
           "ios": {
             "useFrameworks": "static"
           }
-        }
-      ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-8501095031703685~6672577950",
-          "iosAppId":"ca-app-pub-8501095031703685~3195596863",
-          "userTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
         }
       ],
       [

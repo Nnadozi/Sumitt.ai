@@ -13,7 +13,7 @@ interface IconProps {
   style?:TextStyle;
 }
 
-const ResponsiveIcon = ({ color, size, name, type, primary, onPress,style }: IconProps) => {
+const ResponsiveIcon = ({ color = useTheme().colors.text, size, name, type, primary, onPress,style }: IconProps) => {
   const { colors } = useTheme();
   /*
   const { width } = Dimensions.get('window');

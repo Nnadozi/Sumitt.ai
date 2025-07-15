@@ -8,7 +8,8 @@ import { useEffect } from "react";
 import mobileAds, { MaxAdContentRating } from 'react-native-google-mobile-ads';
 import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   
@@ -61,16 +62,20 @@ export default function RootLayout() {
 
 const AppNavigator = () => {
   const { resolvedTheme } = useSettings();
-
   return (
-    <ThemeProvider value={resolvedTheme}>
-      <StatusBar style={resolvedTheme === MyDarkTheme ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false, gestureEnabled:false}} >
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="(input)" />
-        <Stack.Screen name="(options)" />
-        <Stack.Screen name="(summary)" />
-      </Stack>
-    </ThemeProvider>
+    <>
+      <StatusBar style={resolvedTheme.dark ? 'light' : 'dark'} />
+        <SafeAreaProvider>  
+          <ThemeProvider value={resolvedTheme}>
+            <Stack screenOptions={{ headerShown: false, gestureEnabled:false}} >
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(input)" />
+              <Stack.Screen name="(options)" />
+              <Stack.Screen name="(summary)" />
+            </Stack>
+          </ThemeProvider>
+        </SafeAreaProvider>
+      <Toast />
+    </>
   );
 };

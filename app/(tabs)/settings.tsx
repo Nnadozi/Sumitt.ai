@@ -2,80 +2,103 @@ import React, { useState } from "react";
 import { Linking, Platform, StyleSheet, TouchableOpacity, View, Image} from "react-native";
 import Page from "@/components/Page";
 import MyText from "@/components/MyText";
-import { Divider, Icon, ButtonGroup } from "@rneui/base";
-import Version from "@/constants/Version";
-import { useNavigation } from "expo-router";
+import { Divider } from "@rneui/base";
 import { useSettings } from "@/context/SettingsContext";
 import { useTheme } from "@react-navigation/native";
 import ResponsiveIcon from "@/components/ResponsiveIcon";
+import appConfig from "../../app.json";
+import ColorPickerModal from "@/components/ColorPickerModal";
 
-const Settings = () => {
-  const { theme, setTheme, resolvedTheme } = useSettings();
+const Settings = () => {  
+  const { theme, setTheme, customPrimaryColor, setCustomPrimaryColor } = useSettings();
   const [selectedIndex, setSelectedIndex] = useState(
     theme === "light" ? 0 : theme === "dark" ? 1 : 2
   );
-  const navigation = useNavigation();
+  const [showColorPicker, setShowColorPicker] = useState(false);
   const { colors } = useTheme();
 
-  const handleThemeChange = (index: number) => {
-    setSelectedIndex(index);
-    const selectedTheme = index === 0 ? "light" : index === 1 ? "dark" : "system";
-    setTheme(selectedTheme);
+  const handleThemeChange = () => {
+    const themes: ('light' | 'dark' | 'system')[] = ["light", "dark", "system"];
+    const currentIndex = themes.indexOf(theme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    const nextTheme = themes[nextIndex];
+    setTheme(nextTheme);
+    setSelectedIndex(nextIndex);
   };
 
-  const typeStore = Platform.OS === "android" ? "Google Play Store" : "App Store"
-  const storeLink = Platform.OS === "android" ? "https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt" : "https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741008785"
+  const handleRateApp = () => {
+    if (Platform.OS === "android") {
+      // Android: Open Play Store with showAllReviews=true
+      Linking.openURL("https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt&showAllReviews=true");
+    } else {
+      // iOS: Open App Store with action=write-review
+      Linking.openURL("https://apps.apple.com/app/apple-store/id6741008785?action=write-review");
+    }
+  };
+
+  const handleColorSelect = (color: string) => {
+    setCustomPrimaryColor(color);
+  };
+
+  const handleColorReset = () => {
+    setCustomPrimaryColor(null);
+  };
 
   return (
     <Page style={styles.page}>
-      <View style = {styles.iconRow}>
-        <MyText bold fontSize="large">App Theme</MyText>
-        <ResponsiveIcon style={{marginHorizontal:"2%"}} name="sunny" size={20} color={resolvedTheme.colors.text}/>
-      </View>
-      <MyText fontSize="small" opacity={0.5}>Customize your appearance</MyText>
-      <ButtonGroup
-        buttons={["Light", "Dark", "System"]}
-        selectedIndex={selectedIndex}
-        onPress={handleThemeChange}
-        selectedButtonStyle={{ backgroundColor: colors.primary }}
-        innerBorderStyle={{ color: colors.border }}
-        containerStyle={{
-          marginVertical: "4%",
-          width: "100%",
-          marginLeft: "0%",
-          backgroundColor: colors.card,
-          borderColor: colors.border,
-          borderRadius:20
-        }}
-      />
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={handleThemeChange}>
+        <View style = {styles.iconRow}>
+          <ResponsiveIcon name="sun" type="feather" size={20} />
+          <MyText bold >Appearance</MyText>
+        </View>
+        <MyText opacity={0.5}>{theme === "light" ? "Light" : theme === "dark" ? "Dark" : "System"}</MyText>
+      </TouchableOpacity>
+      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() => setShowColorPicker(true)}>
+        <View style = {styles.iconRow}>
+          <ResponsiveIcon name="color-lens" size={20} />
+          <MyText bold >Color</MyText>
+        </View>
+        <View style={[styles.colorPreview, { backgroundColor: customPrimaryColor || '#6ad478' }]} />
+      </TouchableOpacity>
+      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={handleRateApp}>
+        <View style = {styles.iconRow}>
+          <ResponsiveIcon name="star" size={22} />
+          <MyText bold >Rate</MyText>
+        </View>
+      </TouchableOpacity>
+      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={handleRateApp}>
+        <View style = {styles.iconRow}>
+          <ResponsiveIcon name="email" size={22} />
+          <MyText bold >Feedback</MyText>
+        </View>
+      </TouchableOpacity>
+      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
         Linking.openURL("https://www.termsfeed.com/live/cd0fe929-9586-4ec3-a520-92eb05b678be")}>
-        <View>
-          <View style = {styles.iconRow}>
-            <MyText bold fontSize="large">Privacy Policy</MyText>
-            <ResponsiveIcon style={{marginHorizontal:"3%"}} name="privacy-tip" size={19} color={resolvedTheme.colors.text}/>
-          </View>
-          <MyText fontSize="small" opacity={0.5}>Review Sumitt's privacy policy</MyText>
+        <View style = {styles.iconRow}>
+          <ResponsiveIcon name="privacy-tip" size={20} />
+          <MyText bold >Privacy Policy</MyText>
         </View>
-        <ResponsiveIcon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
       </TouchableOpacity>
-      <Divider width={15} />
-      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
-        Linking.openURL(storeLink)}>
-        <View>
-          <View style = {styles.iconRow}>
-            <MyText bold fontSize="large">Rate Sumitt</MyText>
-            <ResponsiveIcon style={{marginHorizontal:"3%"}} name="star" size={23} color={resolvedTheme.colors.text}/>
-          </View>
-          <MyText fontSize="small" opacity={0.5}>Review on the {typeStore}</MyText>
+      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <View style = {styles.row}>
+        <View style = {styles.iconRow}>
+          <ResponsiveIcon name="info" size={20} />
+          <MyText bold >Version</MyText>
         </View>
-        <ResponsiveIcon name="chevron-right" size={30} color={resolvedTheme.colors.text}/>
-      </TouchableOpacity>
-      <Divider width={15} />
-      <View style = {styles.versionRow}>
-        <MyText bold fontSize="large">Version</MyText>
-        <MyText opacity={0.5}>{Version}</MyText>
+        <MyText opacity={0.5}>{appConfig.expo.version}</MyText>
       </View>
+
+      <ColorPickerModal
+        visible={showColorPicker}
+        onClose={() => setShowColorPicker(false)}
+        onColorSelect={handleColorSelect}
+        onReset={handleColorReset}
+        initialColor={customPrimaryColor || '#6ad478'}
+      />
     </Page>
   );
 };
@@ -86,11 +109,10 @@ const styles = StyleSheet.create({
   page: {
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    padding: "5%",
+    gap: 20,
   },
   row: {
     flexDirection: "row",
-    gap: "2%",
     alignItems: "center",
     justifyContent:"space-between",
     width:"100%",
@@ -99,11 +121,13 @@ const styles = StyleSheet.create({
     justifyContent:"flex-start",
     alignItems:"center",
     flexDirection: "row",
+    gap: 10,
   },
-  versionRow:{
-    flexDirection:"row", 
-    width:"100%",
-    alignItems:"flex-end",
-    justifyContent:"space-between"
-  }
+  colorPreview: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#ccc',
+  },
 });

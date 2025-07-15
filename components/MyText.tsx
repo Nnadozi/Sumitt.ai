@@ -5,10 +5,11 @@ import Markdown from 'react-native-markdown-display';
 
 interface TextProps {
   color?: string;
+  gray?: boolean;
   fontSize?: 'small' | 'medium' | 'large' | 'XL';  
   bold?: boolean;  
   opacity?: number;
-  textAlign?: string;
+  textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   style?: TextStyle; 
   numberOfLines?: number;
   markdown?: boolean;
@@ -16,15 +17,11 @@ interface TextProps {
   onPress?: () => void;
 }
 
-const fontSizes = {
-  small: 12,
-  medium: 15,
-  large: 20,
-  XL: 24,
-};
+const fontSizes = {small: 13, medium: 17, large: 25, XL: 30}; 
 
 const MyText = ({
   color = useTheme().colors.text,
+  gray = false,
   fontSize = 'medium',
   bold = false,
   children,
@@ -52,7 +49,7 @@ const MyText = ({
     <Text
     onPress={onPress}
       numberOfLines={numberOfLines}
-      style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}
+      style={[{ color: gray ? "gray" : color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}
     >
       {children}
     </Text>

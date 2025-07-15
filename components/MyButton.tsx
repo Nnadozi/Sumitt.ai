@@ -25,7 +25,7 @@ const MyButton = (props: ButtonProps) => {
       disabled = {props.disabled}
       disabledStyle = {{backgroundColor:colors.primary,opacity:0.35}}
       containerStyle = {{
-        width:props.width, marginVertical:props.marginVertical,
+        width:props.width ?? "100%", marginVertical:props.marginVertical,
         marginTop: props.marginTop,
         borderRadius:20
       }}
