@@ -1,9 +1,10 @@
 Future:
 - better icon / preview banner?
-- Native capabilities?
+- Share intent?
 - premium?
 - lanuages?
 - PBP center?
+- force update?
 
 LOCAL ENVIRONMENT VARIABLES
 - EXPO_PUBLIC_SUPABASE_URL

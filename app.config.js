@@ -33,6 +33,12 @@ export default {
         }
       ]
     ],
+    updates: {
+      url: "https://u.expo.dev/0cc35df7-4b9f-4365-8770-aa34347f6395"
+    },
+    runtimeVersion: {
+      policy: "appVersion"
+    },
   },
   extra: {
     EXPO_PUBLIC_APP_VARIANT: process.env.EXPO_PUBLIC_APP_VARIANT
