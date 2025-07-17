@@ -1,13 +1,9 @@
+Future:
+- better icon / preview banner?
 - Native capabilities?
 - premium?
 - lanuages?
-- tutorial / onboarding?
-- better icon / preview banner?
-- new store name?
-- delete render project
 - PBP center?
-
-
 
 LOCAL ENVIRONMENT VARIABLES
 - EXPO_PUBLIC_SUPABASE_URL

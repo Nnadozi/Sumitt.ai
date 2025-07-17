@@ -9,11 +9,7 @@
       "distribution": "internal",
       "environment": "development" ,
       "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "development",
-        "EXPO_PUBLIC_SUPABASE_URL": "SUPABASE_URL",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "SUPABASE_ANON_KEY",
-        "EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL_ID": "ADMOB_ANDROID_INTERSTITIAL_ID",
-        "EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL_ID": "ADMOB_IOS_INTERSTITIAL_ID"
+        "EXPO_PUBLIC_APP_VARIANT": "development"
       }
     },
     "preview": {
@@ -23,22 +19,14 @@
       },
       "environment": "preview",
       "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "preview",
-        "EXPO_PUBLIC_SUPABASE_URL": "SUPABASE_URL",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "SUPABASE_ANON_KEY",
-        "EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL_ID": "ADMOB_ANDROID_INTERSTITIAL_ID",
-        "EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL_ID": "ADMOB_IOS_INTERSTITIAL_ID"
+        "EXPO_PUBLIC_APP_VARIANT": "preview"
       }
     },
     "production": {
       "autoIncrement": true,
       "environment": "production",
       "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "production",
-        "EXPO_PUBLIC_SUPABASE_URL": "SUPABASE_URL",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "SUPABASE_ANON_KEY",
-        "EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL_ID": "ADMOB_ANDROID_INTERSTITIAL_ID",
-        "EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL_ID": "ADMOB_IOS_INTERSTITIAL_ID"
+        "EXPO_PUBLIC_APP_VARIANT": "production"
       }
     },
     "development-simulator": {
@@ -46,11 +34,7 @@
       "distribution": "internal",
       "environment": "development",
       "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "development",
-        "EXPO_PUBLIC_SUPABASE_URL": "SUPABASE_URL",
-        "EXPO_PUBLIC_SUPABASE_ANON_KEY": "SUPABASE_ANON_KEY",
-        "EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL_ID": "ADMOB_ANDROID_INTERSTITIAL_ID",
-        "EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL_ID": "ADMOB_IOS_INTERSTITIAL_ID"
+        "EXPO_PUBLIC_APP_VARIANT": "development"
       },
       "ios": {
         "simulator": true
