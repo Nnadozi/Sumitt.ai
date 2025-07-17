@@ -54,7 +54,7 @@ const options = () => {
       console.error('Error saving options:', error);
     }
     router.back();
-  };
+  };    
 
   const renderChips = (category: keyof typeof selectedOptions, optionsArray: string[], descriptions: string[]) => (
     <View>
@@ -78,12 +78,12 @@ const options = () => {
           />
         ))}
       </View>
-      <MyText opacity={0.5} fontSize="small">{selectedOptions[category]}</MyText>
+      <MyText style={{marginVertical:3}} gray fontSize="small">{selectedOptions[category]}</MyText>
     </View>
   );
 
   return (
-    <Page style={{ alignItems: 'center', justifyContent: 'flex-start', padding: '5%' }}>
+    <Page style={{ alignItems: 'center', justifyContent: 'flex-start',paddingHorizontal:15 }}>
       <SafeAreaView>
       <ScrollView contentContainerStyle={{ paddingBottom: "10%" }}>
         <View style={styles.iconRow}>
@@ -125,8 +125,8 @@ const options = () => {
 
       </ScrollView>
       <View style={styles.buttonRow}>
-        <MyButton iconName='save' width='40%' title='Apply' onPress={saveOptions} />
-        <MyButton iconName='cancel' width='40%' title='Cancel' onPress={router.back} />
+        <MyButton iconName='save' width='42%' title='Apply' onPress={saveOptions} />
+        <MyButton iconName='cancel' width='42%' title='Cancel' onPress={router.back} />
       </View>
       </SafeAreaView>
     </Page>
@@ -142,20 +142,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: '3%',
-    marginTop:"3%"
+    gap: 10,
+    marginTop: 10
   },
   iconRow: {
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',
-    gap: '2%',
-    marginVertical: "1%",
+    gap: 5,
+    marginVertical: 5,
   },
   chipContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 0.01 * height,
-    marginVertical: "2%",
+    marginVertical: 5
   },
 });

@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -102,14 +102,19 @@ const image = () => {
 
   return (
     <Page style={{ alignItems: "flex-start", justifyContent: "flex-start", padding: "5%" }}>
+      <ScrollView contentContainerStyle={{paddingBottom:50, alignItems:"flex-start"}}>
       {previewImage !== null && (
-        <Image resizeMode='contain' style={styles.previewImage} source={{ uri: previewImage }} />
+        <Image 
+            resizeMode='cover' 
+            style={styles.previewImage} 
+            source={{ uri: previewImage }}
+          />
       )}
 
       {loading ? (
         <View style={styles.loadingText}>
-          <MyText bold fontSize='large'>Please be patient...</MyText>
-          <ActivityIndicator size={'large'} color={colors.primary} />
+          <MyText textAlign='center' bold>Please be patient</MyText>
+          <ActivityIndicator color={colors.primary} />
         </View>
       ) : (
         <>
@@ -152,8 +157,9 @@ const image = () => {
               width="49%"
             />
           </View>
-        </>
-      )}
+          </>
+        )}
+      </ScrollView>
     </Page>
   );
 };
@@ -161,26 +167,24 @@ const image = () => {
 export default image;
 
 const styles = StyleSheet.create({
-  buttonRow: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: '3%',
-    gap: '2%',
-  },
+    buttonRow: {
+      alignSelf: 'center',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginTop: 10,
+      width: "100%",
+    },
   previewImage: {
     width: "100%",
-    alignSelf: "center",
     height: undefined,
-    aspectRatio: 1,
+    aspectRatio: 4/3,
+    borderRadius: 12,
   },
   loadingText: {
-    flexDirection: "row",
-    justifyContent: 'space-evenly',
     alignItems: 'center',
     alignSelf: 'center',
-    gap: '5%',
-    marginTop: "3%",
+    marginTop: 15,
+    gap: 10,
   },
 });

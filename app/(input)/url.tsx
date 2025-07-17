@@ -109,7 +109,7 @@ const url = () => {
             <MyText
               fontSize="small"
               style={{
-                margin: '2%',
+                margin: 10,
                 color: urlError ? 'red' : urlSuccess ? colors.primary : colors.text,
               }}
             >
@@ -133,12 +133,12 @@ const url = () => {
 export default url
 
 const styles = StyleSheet.create({
-    buttonRow: {
-      alignSelf: 'center',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
-      marginTop: '3%',
-      gap: '2%',
-    },
+  buttonRow: {
+    alignSelf: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 10,
+    width: "100%",
+  },
 })

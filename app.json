@@ -12,10 +12,6 @@
       "supportsTablet": true,
       "requireFullScreen": true,
       "infoPlist": {
-        "UISupportedInterfaceOrientations~ipad": [
-          "UIInterfaceOrientationPortrait",
-          "UIInterfaceOrientationPortraitUpsideDown"
-        ],
         "NSUserTrackingUsageDescription": "We use your data to provide a better and more personalized ad experience."
       },
       "entitlements": {

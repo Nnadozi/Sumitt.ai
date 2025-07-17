@@ -8,6 +8,7 @@ import { useTheme } from "@react-navigation/native";
 import ResponsiveIcon from "@/components/ResponsiveIcon";
 import appConfig from "../../app.json";
 import ColorPickerModal from "@/components/ColorPickerModal";
+import FeedbackModal from "@/components/FeedbackModal";
 
 const Settings = () => {  
   const { theme, setTheme, customPrimaryColor, setCustomPrimaryColor } = useSettings();
@@ -15,6 +16,7 @@ const Settings = () => {
     theme === "light" ? 0 : theme === "dark" ? 1 : 2
   );
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const { colors } = useTheme();
 
   const handleThemeChange = () => {
@@ -45,7 +47,7 @@ const Settings = () => {
   };
 
   return (
-    <Page style={styles.page}>
+    <Page  style={styles.page}>
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={handleThemeChange}>
         <View style = {styles.iconRow}>
           <ResponsiveIcon name="sun" type="feather" size={20} />
@@ -53,7 +55,7 @@ const Settings = () => {
         </View>
         <MyText opacity={0.5}>{theme === "light" ? "Light" : theme === "dark" ? "Dark" : "System"}</MyText>
       </TouchableOpacity>
-      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <Divider style={{width:"100%",borderColor:colors.border}} width={1} />
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() => setShowColorPicker(true)}>
         <View style = {styles.iconRow}>
           <ResponsiveIcon name="color-lens" size={20} />
@@ -61,21 +63,21 @@ const Settings = () => {
         </View>
         <View style={[styles.colorPreview, { backgroundColor: customPrimaryColor || '#6ad478' }]} />
       </TouchableOpacity>
-      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <Divider style={{width:"100%",borderColor:colors.border}} width={1} />
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={handleRateApp}>
         <View style = {styles.iconRow}>
           <ResponsiveIcon name="star" size={22} />
           <MyText bold >Rate</MyText>
         </View>
       </TouchableOpacity>
-      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
-      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={handleRateApp}>
+      <Divider style={{width:"100%",borderColor:colors.border}} width={1} />
+      <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() => setShowFeedbackModal(true)}>
         <View style = {styles.iconRow}>
           <ResponsiveIcon name="email" size={22} />
           <MyText bold >Feedback</MyText>
         </View>
       </TouchableOpacity>
-      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <Divider style={{width:"100%",borderColor:colors.border}} width={1} />
       <TouchableOpacity activeOpacity={0.25} style={styles.row} onPress={() =>
         Linking.openURL("https://www.termsfeed.com/live/cd0fe929-9586-4ec3-a520-92eb05b678be")}>
         <View style = {styles.iconRow}>
@@ -83,7 +85,7 @@ const Settings = () => {
           <MyText bold >Privacy Policy</MyText>
         </View>
       </TouchableOpacity>
-      <Divider style={{width:"100%",borderColor:colors.border}} width={0.75} />
+      <Divider style={{width:"100%",borderColor:colors.border}} width={1} />
       <View style = {styles.row}>
         <View style = {styles.iconRow}>
           <ResponsiveIcon name="info" size={20} />
@@ -99,6 +101,11 @@ const Settings = () => {
         onReset={handleColorReset}
         initialColor={customPrimaryColor || '#6ad478'}
       />
+      
+      <FeedbackModal
+        visible={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+      />
     </Page>
   );
 };
@@ -110,6 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
     gap: 20,
+    paddingTop:30
   },
   row: {
     flexDirection: "row",
@@ -131,3 +139,6 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
 });
+
+
+// Feedback functionality implemented with Supabase edge function

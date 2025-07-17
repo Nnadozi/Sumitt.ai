@@ -24,17 +24,6 @@ const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title, inpu
   const handleDelete = () => {
     onDelete(id);
   };
-
-  const handleCopy = () => {
-    Clipboard.setStringAsync(summary);
-    if(Platform.OS === "ios"){
-      Snackbar.show({
-        text: 'Copied to clipboard',
-        duration: 500
-      });
-    }
-  };
-
   const handleExpand = () => {
     router.navigate({
       pathname:"/(saved)/[id]",
@@ -47,31 +36,19 @@ const SavedSummary = ({ id, timeStamp, summary, userInput, onDelete, title, inpu
     })
   };
 
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: summary,
-      });
-    } catch (error: any) {
-      Alert.alert(error.message);
-    }
-  };
 
   return (
-    <View style={[styles.con, { borderColor: colors.border, backgroundColor: colors.card }]}>
-      <MyText numberOfLines={1} fontSize='large' bold>{title}</MyText>
+    <TouchableOpacity activeOpacity={0.5} style={[styles.con, { borderColor: colors.border, backgroundColor: colors.card }]} onPress={handleExpand}>
+      <MyText numberOfLines={1} bold>{title}</MyText>
       <View style = {styles.topRow}>
         <Icon color={colors.primary}  name='calendar' type='feather' size={14} />
-        <MyText bold fontSize='small' opacity={0.5} style={{marginVertical:"2%" }}>{timeStamp}</MyText>
+        <MyText fontSize='small' gray style={{marginVertical:7.5}}>{timeStamp}</MyText>
       </View>
-      <MyText numberOfLines={3}>{summary}</MyText>
-      <View style={styles.bottomRow}>
-          <ResponsiveIcon primary size={24} name='delete' onPress={handleDelete} />
-          <ResponsiveIcon primary size={23} name="copy" type="ionicon" onPress={handleCopy} />
-          <ResponsiveIcon primary size={23} name="share" type='ionicon' onPress={handleShare} />
+      <View style={{flexDirection:"row",gap:5}}>
+          <ResponsiveIcon primary size={23} name='delete' onPress={handleDelete} />
           <ResponsiveIcon primary size={23} name="expand" type='ionicon' onPress={handleExpand} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -81,21 +58,15 @@ export default SavedSummary;
 const styles = StyleSheet.create({
   con: {
     borderWidth: 1,
-    marginVertical: '2%',
+    marginVertical:5,
     alignSelf: 'center',
-    width: '92%',
-    padding: '4%',
-    paddingBottom: '5%',
-    borderRadius:20
+    width: '100%',
+    borderRadius:20,
+    padding:20
   },
   topRow:{
     flexDirection:"row",
     alignItems: 'center',
-    gap:'2%'
-  },
-  bottomRow: {
-    flexDirection: 'row',
-    marginTop:"3%",
-    gap:"1%",
+    gap:7.5
   },
 });

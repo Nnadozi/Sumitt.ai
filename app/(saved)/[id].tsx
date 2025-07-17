@@ -1,4 +1,5 @@
 import { Alert, Button, Linking, Platform, SafeAreaView, ScrollView, Share, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import MyText from '@/components/MyText';
@@ -10,7 +11,7 @@ import Snackbar from 'react-native-snackbar';
 import ResponsiveIcon from '@/components/ResponsiveIcon';
 
 const SavedSummaryScreen = () => {
-  const { summary, originalInput, inputType } = useLocalSearchParams();
+  const { summary, originalInput, inputType, id } = useLocalSearchParams();
   const { colors } = useTheme();
   const [showOriginal, setShowOriginal] = useState(false);
 
@@ -34,8 +35,29 @@ const SavedSummaryScreen = () => {
     }
   };
 
+  const handleDelete = () => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this summary?",
+      [
+        { text: "Cancel" },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              await AsyncStorage.removeItem(id.toString());
+              router.back();
+            } catch (error) {
+              console.error("Error deleting summary:", error);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
-    <Page style={{ justifyContent: 'flex-start', padding: '4%' }}>
+    <Page style={{ justifyContent: 'flex-start' }}>
       <ScrollView persistentScrollbar style={styles.scrollContainer}>
         <MyText markdown>{summary}</MyText>
         <TouchableOpacity style={styles.viewPrompt} onPress={() => setShowOriginal(!showOriginal)}>
@@ -55,19 +77,20 @@ const SavedSummaryScreen = () => {
             </TouchableOpacity>
           ) : (
             inputType === 'Text' ? (
-              <MyText fontSize='small'>{originalInput}</MyText>
+                <MyText fontSize='small'>{originalInput}</MyText>
             ) : (
-              <ScrollView contentContainerStyle={styles.imageContainer}>
-                <Image source={{ uri: originalInput }} resizeMode='contain' style={styles.previewImage} />
+              <ScrollView>
+                <Image source={{ uri: originalInput.toString() }} resizeMode='contain' style={styles.previewImage} />
               </ScrollView>
             )
           )
         )}
       </ScrollView>
       <SafeAreaView style={styles.bottomRow}>
-        <View style={styles.iconRow}>
-          <ResponsiveIcon primary size={30} name="copy" type="ionicon" onPress={handleCopy} />
-          <ResponsiveIcon primary size={30} name="share" type="ionicon" onPress={handleShare} />
+        <View style={[styles.iconRow,{backgroundColor:colors.card,borderRadius:20,borderWidth:1,borderColor:colors.border}]}>
+          <ResponsiveIcon primary size={30} name="delete" onPress={handleDelete} />
+          <ResponsiveIcon primary size={27} name="copy" type="ionicon" onPress={handleCopy} />
+          <ResponsiveIcon primary size={27} name="share" type="ionicon" onPress={handleShare} />
         </View>
         {Platform.OS === 'ios' && <Button title="Back" onPress={router.back} color={colors.primary} />}
       </SafeAreaView>
@@ -86,7 +109,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
-    marginVertical: '1%',
     alignSelf: 'center',
   },
   iconRow: {
@@ -94,26 +116,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     gap: '2%',
+    padding:10,
   },
   viewPrompt: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    gap: '1%',
-    marginTop: "3%",
+    gap: 5,
   },
   previewImage: {
-    width: '100%',
+    width: "100%",
     height: undefined,
-    aspectRatio: 1, 
-    alignSelf: 'center',
-    marginTop: "2%",
-  },
-  imageContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    aspectRatio: 4/3,
+    borderRadius: 12,
+    marginTop: 10,
+    alignSelf: 'flex-start',
   },
 });

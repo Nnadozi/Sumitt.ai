@@ -7,6 +7,7 @@ import SavedSummary from "@/components/SavedSummary";
 import MyInput from "@/components/MyInput";
 import React from "react";
 import Toast from "react-native-toast-message";
+import { useFocusEffect } from 'expo-router';
 
 const Index = () => {
   const [summaries, setSummaries] = useState<Array<{
@@ -15,38 +16,40 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSummaries, setFilteredSummaries] = useState(summaries);
 
-  useEffect(() => {
-    const loadSummaries = async () => {
-      try {
-        const allKeys = await AsyncStorage.getAllKeys()
-        const filteredKeys = allKeys.filter((key) => key !== "theme" && key !== "summaryOptions");
-        const summariesData = await Promise.all(
-          filteredKeys.map(async (key) => {
-            try {
-              const summaryData = await AsyncStorage.getItem(key);
-              if (summaryData) {
-                const parsedData = JSON.parse(summaryData);
-                return { id: key, ...parsedData };
-              }
-              return null;
-            } catch (error) {
-              console.error(`Error parsing data for key ${key}:`, error);
-              return null;
+  const loadSummaries = async () => {
+    try {
+      const allKeys = await AsyncStorage.getAllKeys()
+      const filteredKeys = allKeys.filter((key) => key !== "theme" && key !== "summaryOptions" && key !== "customPrimaryColor");
+      const summariesData = await Promise.all(
+        filteredKeys.map(async (key) => {
+          try {
+            const summaryData = await AsyncStorage.getItem(key);
+            if (summaryData) {
+              const parsedData = JSON.parse(summaryData);
+              return { id: key, ...parsedData };
             }
-          })
-        );
+            return null;
+          } catch (error) {
+            console.error(`Error parsing data for key ${key}:`, error);
+            return null;
+          }
+        })
+      );
 
-        const validSummaries = summariesData.filter(Boolean);
-        setSummaries(validSummaries);
-        setFilteredSummaries(validSummaries);
+      const validSummaries = summariesData.filter(Boolean);
+      setSummaries(validSummaries);
+      setFilteredSummaries(validSummaries);
 
-      } catch (error) {
-        console.error("Error loading summaries:", error);
-      }
-    };
+    } catch (error) {
+      console.error("Error loading summaries:", error);
+    }
+  };
 
-    loadSummaries();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadSummaries();
+    }, [])
+  );
 
   useEffect(() => {
     setFilteredSummaries(
@@ -78,15 +81,14 @@ const Index = () => {
   };
 
   return (
-    <Page style={{ justifyContent: "flex-start" }}>
-      {summaries.length > 0 && (
+    <Page style={{ justifyContent: "flex-start" }} applyInsets={false}>
+      {summaries.length > 4 && (
         <MyInput
-          style={{ marginTop: "0%", width: "100%" ,borderRadius:0, borderBottomWidth:1,borderTopWidth:0}}
-          placeholder="🔍 Search..."
+          placeholder="🔎 Search..."
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
           textAlignVertical="center"
-          maxLength={50}
+          maxLength={30}
           dontShowClear
         />
       )}
@@ -100,7 +102,7 @@ const Index = () => {
           </MyText>
         </View>
       ) : (
-        <ScrollView style={{width:"100%"}} contentContainerStyle={{ marginTop: "3%", paddingBottom: "15%" }}>
+        <ScrollView style={{width:"100%"}} contentContainerStyle={{ marginTop: 7.5, paddingBottom: "10%" }}>
           {filteredSummaries.map((summary) => (
             <SavedSummary
               title={summary.id}

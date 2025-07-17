@@ -7,11 +7,13 @@ import { useSafeAreaInsets ,SafeAreaView} from 'react-native-safe-area-context'
 interface PageProps {
     style?: ViewStyle,
     children?:React.ReactNode
+    applyInsets?:boolean
 }
 
 const Page = (props:PageProps) => {
   const insets = useSafeAreaInsets();
   return (
+    props.applyInsets ? (
     <SafeAreaView style = {[styles.con, 
     {
       backgroundColor:useTheme().colors.background, 
@@ -23,6 +25,15 @@ const Page = (props:PageProps) => {
     props.style]}>
         {props.children}
     </SafeAreaView>
+    ) : (
+        <View style = {[styles.con, 
+            {
+                backgroundColor:useTheme().colors.background, 
+            }, 
+            props.style]}>
+            {props.children}
+        </View>
+    )
   )
 }
 
@@ -33,5 +44,8 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:"center",
         alignItems:"center",
+        paddingHorizontal:12,
+        paddingVertical:15
     }
 })
+

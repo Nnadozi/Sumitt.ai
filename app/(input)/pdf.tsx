@@ -88,14 +88,14 @@ const pdf = () => {
 }
 
 export default pdf
-
 const styles = StyleSheet.create({
-    buttonRow: {
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        marginTop: '3%',
-        gap: '2%',
-      },
+  buttonRow: {
+      alignSelf: 'center',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
+      marginTop: 10,
+      gap: 10,
+      width: "100%",
+  },
 })

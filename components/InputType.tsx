@@ -40,8 +40,8 @@ const InputType = (props: InputTypeProps) => {
     >
         <ResponsiveIcon  type={props.name === "PDF" ? "antdesign" : "material"} color={colors.primary} size={30} name={iconName()} />
         <View style={styles.textCon}>
-            <MyText style={{ color:  colors.text }} bold>{props.name}</MyText>
-            <MyText style={{ color: colors.text }} opacity={0.75} fontSize="small">{props.subtitle}</MyText>
+            <MyText bold>{props.name}</MyText>
+            <MyText fontSize="small" gray>{props.subtitle}</MyText>
         </View>
     </TouchableOpacity>
   );
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
   con: {
     borderWidth: 1,
     width: "100%",
-    marginBottom: '3%',
-    padding: "3.5%",
+    marginBottom: 10,
+    padding: 12.5,
     flexDirection: "row",
     alignItems: "center",
     borderRadius:20
   },
   textCon: {
-    marginLeft: '5%'
+    marginLeft:10
   }
 });

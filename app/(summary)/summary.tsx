@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView, Image, Alert } from 'react-native';
+import { Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView, Image, Alert, ActivityIndicator } from 'react-native';
 import { useGlobalSearchParams, router } from 'expo-router';
 import { useTheme } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
@@ -146,19 +146,19 @@ const Summary = () => {
   };
 
   return (
-    <Page style={{ backgroundColor: colors.card, padding: '5%' }}>
+    <Page applyInsets style={{ backgroundColor: colors.card, }}>
       {loading ? (
       <>
-        <Image source={loadingGif} key={loadingGif.uri} />
-        <MyText bold fontSize="XL">Summarizing...</MyText>
+        <ActivityIndicator size="large" color={colors.primary} style={{ marginBottom: 20,transform:[{scale:1.5}] }} />
+        <MyText bold fontSize="large">Summarizing...</MyText>
         {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
       </>
     ) : error ? (
       <>
-        <Icon name="error" size={100} color={colors.primary} />
-        <MyText style={{ marginTop: '3%' }} textAlign="center">{error}</MyText>
+        <ResponsiveIcon name="error" size={100} color={colors.primary} />
+        <MyText style={{ marginTop: 0 }} textAlign="center">{error}</MyText>
         {inputType === 'URL' && (
-          <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
+          <MyText style={{ marginTop: 8, marginBottom: 16 }} textAlign="center" >
             Please try a different URL. This may have occurred because:
             {'\n'}• The website requires a subscription to access content
             {'\n'}• The page is blocked by a login or authentication prompt.
@@ -166,12 +166,12 @@ const Summary = () => {
           </MyText>
         )}
         {inputType === 'Text' && (
-          <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
+          <MyText style={{ marginTop: 8, marginBottom: 16 }} textAlign="center" >
             There was an issue processing the text input. Please reduce the length or try again later.
           </MyText>
         )}
         {inputType === 'Image' && (
-          <MyText style={{ marginTop: "1%", marginBottom: "2%" }} textAlign="center" fontSize='small'>
+          <MyText style={{ marginTop: 0, marginBottom: 16 }} textAlign="center" >
             Image processing failed. The image might be corrupted or unsupported.
           </MyText>
         )}
@@ -182,19 +182,19 @@ const Summary = () => {
           <SafeAreaView style={{ backgroundColor: colors.background }} />
           <Animated.View style={[{ opacity: fadeAnim, flex:1 }, styles.container]}>
             <View style={styles.headerContainer}>
-              <MyText bold fontSize="XL">Summary</MyText>
-              <View style={styles.iconRow}>
-                <ResponsiveIcon name="copy" type='ionicon' size={25} primary={true} onPress={handleCopy} />
-                <ResponsiveIcon name="share" size={25} primary={true} onPress={handleShare} />
+              <MyText bold fontSize="large">Summary</MyText>
+              <View style={[styles.iconRow,{backgroundColor:colors.background,borderRadius:20,borderWidth:1,borderColor:colors.border}]}>
+                <ResponsiveIcon name="copy" type='ionicon' size={20} primary={true} onPress={handleCopy} />
+                <ResponsiveIcon name="share" size={20} primary={true} onPress={handleShare} />
               </View>
             </View>
             <ScrollView persistentScrollbar style={{width:'100%'}} contentContainerStyle={styles.scrollViewContent}>
               <MyText style={{width:"100%"}} markdown>{summary}</MyText>
             </ScrollView>
-            <SafeAreaView style={styles.buttonRow}>
+            <View style={styles.buttonRow}>
               <MyButton iconName='save' width="45%" title="Save" onPress={() => setModuleVisible(true)} />
               <MyButton iconName='check' width="45%" title="Ok" onPress={handleGoBack} />
-            </SafeAreaView>
+            </View>
             <NameModule visible={moduleVisible} onPress={handleSave} onCancel={() => setModuleVisible(false)} />
           </Animated.View>
         </>
@@ -205,10 +205,16 @@ const Summary = () => {
 
 const styles = StyleSheet.create({
   container: { justifyContent: 'center', alignItems: 'center' },
-  headerContainer: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: '7.5%', marginBottom: '3%' },
-  iconRow: { flexDirection: 'row', gap: '2%', justifyContent: 'space-around' },
+  headerContainer: { flexDirection: 'row', justifyContent: 'space-between', width: '100%' },
+  iconRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    gap: 5,
+    paddingHorizontal:10,
+  },
   scrollViewContent: { paddingBottom: '20%', width: "100%", flexGrow:1 },
-  buttonRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '3%', marginVertical: '3%' },
+  buttonRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, marginVertical: 10 },
 });
 
 export default Summary;

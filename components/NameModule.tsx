@@ -38,10 +38,8 @@ const NameModule = ({ visible, onPress, onCancel }: NameModuleProps) => {
     <Modal animationType="fade" transparent={true} visible={visible}>
       <View style={styles.overlay}>
         <View style={[styles.con, { backgroundColor: useTheme().colors.card }]}>
-          <MyText bold>Enter Summary Name</MyText>
           <MyInput
-            style={{ marginTop: '3%' }}
-            placeholder="Enter name"
+            placeholder="Enter summary name"
             value={name}
             onChangeText={(text) => setName(text)}
             maxLength={30}
@@ -69,12 +67,12 @@ const styles = StyleSheet.create({
   con: {
     backgroundColor: 'white',
     width: '80%',
-    padding: '5%',
+    padding: 15,
     borderRadius:15
   },
   buttonRow: {
     flexDirection: 'row',
-    gap: '3%',
-    marginTop: '5%',
+    gap: 10,
+    marginTop: 10,
   },
 });

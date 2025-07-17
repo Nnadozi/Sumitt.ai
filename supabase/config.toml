@@ -1,0 +1,474 @@
+# A string used to distinguish different Supabase projects on the same host. Defaults to the
+# working directory name when running `supabase init`.
+project_id = "sumitt"
+
+[api]
+# Port to use for the API URL.
+port = 54321
+# Schemas to expose in your API. Tables, views and stored procedures in this schema will get API endpoints.
+# public and storage are always included.
+schemas = ["public", "storage", "graphql_public"]
+# Extra schemas to add to the search_path of every request. public is always included.
+extra_search_path = ["public", "extensions"]
+# The maximum number of rows returned from a table or view. Limits payload size for accidental or malicious requests.
+max_rows = 1000
+
+[db]
+# Port to use for the local database URL.
+port = 54322
+# Port used by db diff command to initialize the shadow database.
+shadow_port = 54320
+# The database major version to use. This has to be the same as your remote database's. Run `SHOW server_version;` on the remote database to check.
+major_version = 15
+
+[db.pooler]
+# Port to use for the local connection pooler.
+port = 54329
+
+[realtime]
+# Bind realtime via either IPv4 or IPv6. (default: IPv4)
+# ip_version = "IPv4"
+
+[studio]
+# Port to use for Supabase Studio.
+port = 54323
+# External URL of the API server that frontend connects to.
+api_url = "http://127.0.0.1:54321"
+
+# Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
+# are monitored, and you can view the emails that would have been sent from the web interface.
+[inbucket]
+# Port to use for the email testing server web interface.
+port = 54324
+# Uncomment to expose additional ports for testing user applications that send emails.
+# smtp_port = 2500
+# pop3_port = 1100
+
+[storage]
+# The maximum file size allowed (e.g. "5MB", "500KB").
+file_size_limit = "50MiB"
+
+[auth]
+# The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
+# in emails.
+site_url = "http://localhost:3000"
+# A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
+additional_redirect_urls = ["https://localhost:3000"]
+# How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604800 (1 week).
+jwt_expiry = 3600
+# If disabled, the refresh token will never expire.
+enable_refresh_token_rotation = true
+# Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.
+# Requires enable_refresh_token_rotation = true.
+refresh_token_reuse_interval = 10
+# Allow/disallow new user signups to your project.
+enable_signup = true
+
+[auth.email]
+# Allow/disallow new user signups via email to your project.
+enable_signup = true
+# If enabled, a user will be required to confirm any email change on both the old, and new email addresses. If disabled, only the new email is required to confirm.
+double_confirm_changes = true
+# If enabled, users need to confirm their email address before signing in.
+enable_confirmations = false
+
+# Uncomment to customize email template
+# [auth.email.template.invite]
+# subject = "You have been invited"
+# content_path = "./supabase/templates/invite.html"
+
+[auth.sms]
+# Allow/disallow new user signups via SMS to your project.
+enable_signup = true
+# If enabled, users need to confirm their phone number before signing in.
+enable_confirmations = false
+# Template for sending a confirmation message when a user signs up with a phone number.
+template = "Your code is {{ .Code }}"
+
+[auth.external.apple]
+# Apple OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Apple.
+client_id = ""
+# OAuth client secret from Apple.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+
+[auth.external.azure]
+# Azure AD OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Azure AD.
+client_id = ""
+# OAuth client secret from Azure AD.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+
+[auth.external.bitbucket]
+# Bitbucket OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Bitbucket.
+client_id = ""
+# OAuth client secret from Bitbucket.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.discord]
+# Discord OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Discord.
+client_id = ""
+# OAuth client secret from Discord.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.facebook]
+# Facebook OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Facebook.
+client_id = ""
+# OAuth client secret from Facebook.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.github]
+# GitHub OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from GitHub.
+client_id = ""
+# OAuth client secret from GitHub.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.gitlab]
+# GitLab OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from GitLab.
+client_id = ""
+# OAuth client secret from GitLab.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.google]
+# Google OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Google.
+client_id = ""
+# OAuth client secret from Google.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.keycloak]
+# Keycloak OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Keycloak.
+client_id = ""
+# OAuth client secret from Keycloak.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+
+[auth.external.linkedin]
+# LinkedIn OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from LinkedIn.
+client_id = ""
+# OAuth client secret from LinkedIn.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.notion]
+# Notion OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Notion.
+client_id = ""
+# OAuth client secret from Notion.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.slack]
+# Slack OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Slack.
+client_id = ""
+# OAuth client secret from Slack.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.spotify]
+# Spotify OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Spotify.
+client_id = ""
+# OAuth client secret from Spotify.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.twitch]
+# Twitch OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Twitch.
+client_id = ""
+# OAuth client secret from Twitch.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.twitter]
+# Twitter OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Twitter.
+client_id = ""
+# OAuth client secret from Twitter.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.workos]
+# WorkOS OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from WorkOS.
+client_id = ""
+# OAuth client secret from WorkOS.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+[auth.external.zoom]
+# Zoom OAuth provider is disabled by default.
+enabled = false
+# OAuth client ID from Zoom.
+client_id = ""
+# OAuth client secret from Zoom.
+secret = ""
+# Overrides the default auth redirectUrl.
+redirect_uri = ""
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.apple.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.azure.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.bitbucket.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.discord.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.facebook.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.github.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.gitlab.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.google.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.keycloak.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.linkedin.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.notion.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.slack.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.spotify.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.twitch.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.twitter.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.workos.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+# Use pre-defined map of claims that are mapped to user_metadata. Claims can be mapped to a string (direct mapping) or to a nested object (path mapping).
+# [auth.external.zoom.claims]
+# email_verified = "email_verified"
+# email = "email"
+# phone_verified = "phone_verified"
+# phone = "phone_number"
+# name = "name"
+# given_name = "given_name"
+# family_name = "family_name"
+# picture = "picture"
+# provider_id = "sub"
+
+[edge_functions]
+# Configure one or more edge functions. Each function can be configured independently.
+# [edge_functions.send-feedback]
+# verify_jwt = false 

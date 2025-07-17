@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useCallback, useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -59,21 +59,17 @@ const text = () => {
 
 
   return (
-    <Page style={{ alignItems: "flex-start", justifyContent: "flex-start", padding: "5%",}}>
+    <Page style={{ alignItems: "flex-start", justifyContent: "flex-start",}}>
+        <ScrollView contentContainerStyle={{paddingBottom:50, alignItems:"flex-start"}}>
             <MyInput
-              height="65%"
+              height="50%"
               value={inputText}
               onChangeText={handleInputChange}
               placeholder="Enter text"
               multiline
-              maxLength={300000}
+              maxLength={200000}
+              showLength
             />
-            {manualInputWarning && (
-              <MyText fontSize="small" style={{ color: 'red', margin: '2%', marginBottom: "0%" }}>
-                {manualInputWarning}
-              </MyText>
-            )}
-            <View style={styles.buttonRow}>
               <MyButton
                 disabled={!inputText}
                 title="Summarize"
@@ -81,7 +77,7 @@ const text = () => {
                 width="100%"
                 iconName="summarize"
               />
-            </View>
+        
             <View style={styles.buttonRow}>
               <MyButton
                 title="Options" iconName="options" iconType="ionicon"
@@ -90,6 +86,12 @@ const text = () => {
               />
               <MyButton iconName="cancel" title="Cancel" onPress={handleCancel} width="49%" />
             </View>
+            {manualInputWarning && (
+              <MyText textAlign="center" fontSize="small" style={{ color: 'red', margin: 10, }}>
+                {manualInputWarning}
+              </MyText>
+            )}
+      </ScrollView>
     </Page>
   )
 }
@@ -99,10 +101,11 @@ export default text
 const styles = StyleSheet.create({
     buttonRow: {
       alignSelf: 'center',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
       alignItems: 'center',
       flexDirection: 'row',
-      marginTop: '3%',
-      gap: '2%',
+      marginTop: 10,
+ 
+      width: "100%",
     },
 })

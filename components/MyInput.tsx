@@ -25,6 +25,7 @@ interface MyInputProps {
   style?: TextStyle;
   placeholder: string;
   dontShowClear?: boolean;
+  showLength?: boolean;
 }
 
 const MyInput = (props: MyInputProps) => {
@@ -80,7 +81,7 @@ const MyInput = (props: MyInputProps) => {
             if (props.onChangeText) props.onChangeText(newText);
           }}
           placeholder={props.placeholder}
-          placeholderTextColor={colors.text}
+          placeholderTextColor={"darkgray"}
           multiline={props.multiline}
           keyboardType={props.keyboardType}
           textAlignVertical={props.textAlignVertical || "top"}
@@ -88,6 +89,9 @@ const MyInput = (props: MyInputProps) => {
           {...(Platform.OS === 'ios' ? { submitBehavior: 'blurAndSubmit' } : {})}
         />    
       </View>
+      {props.showLength && (
+        <MyText style={{marginTop:5,marginBottom:15,marginLeft:5,alignSelf:"flex-start"}} fontSize="small" gray>{text.length}/{props.maxLength}</MyText>
+      )}
     </>
   );
 };
@@ -103,19 +107,21 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: '100%',
-    padding: '3%',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
     borderWidth: 1,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: "2%"
+    marginVertical: 10,
+    gap: 7.5,
   },
   iconButton: {
     flexDirection: 'row',
     justifyContent: "center",
     alignItems: 'center',
-    gap: '3%',
+    gap: 3,
   },
 });

@@ -8,7 +8,7 @@ import MyText from '@/components/MyText';
 
 const Upload = () => {
   return (
-    <Page style={{ justifyContent: 'flex-start', alignItems: 'flex-start', margin: '5%' }}>
+    <Page applyInsets={false} style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
       <InputType
         name="Text"
         subtitle="Input text manually"
@@ -42,12 +42,10 @@ const Upload = () => {
           }
         })}
       />
-      <View style = {{width:"100%"}}>
-        <MyButton iconName="cancel" title="Cancel" onPress={ () => router.back()} width="100%" marginVertical="2%" />
-        <MyText style={{ marginTop: '2%', opacity: 0.5 }} fontSize="small">
-          *Note: AI output may not always be correct*
-        </MyText>
-      </View>
+      <MyButton iconName="cancel" title="Cancel" onPress={ () => router.back()} width="100%" marginVertical={5} />
+      <MyText style={{ margin:10}} gray fontSize="small">
+        Note: AI output may not always be correct
+      </MyText>
     </Page>
   );
 };
