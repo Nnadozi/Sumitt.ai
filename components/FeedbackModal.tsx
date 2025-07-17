@@ -13,6 +13,8 @@ import MyButton from './MyButton';
 import ResponsiveIcon from './ResponsiveIcon';
 import { useTheme } from '@react-navigation/native';
 import MyInput from './MyInput';
+import Constants from 'expo-constants';
+import { Platform } from 'react-native';
 
 interface FeedbackModalProps {
   visible: boolean;
@@ -24,6 +26,9 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ visible, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { colors } = useTheme();
 
+  const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL; // Update if needed
+  const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY; // Replace with your actual anon key
+
   const handleSubmit = async () => {
     if (!message.trim()) {
       Alert.alert('Error', 'Please enter a message');
@@ -32,14 +37,18 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ visible, onClose }) => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch('YOUR_SUPABASE_EDGE_FUNCTION_URL', {
+      const response = await fetch(`${supabaseUrl}/functions/v1/send-feedback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`
         },
         body: JSON.stringify({
-          message: message.trim(),
-        }),
+          feedback: message.trim(),
+          platform: Platform.OS,
+          appVersion: Constants.expoConfig?.version || '1.0.0',
+          userAgent: Platform.OS === 'ios' ? 'iOS' : 'Android'
+        })
       });
 
       if (response.ok) {

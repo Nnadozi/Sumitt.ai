@@ -101,7 +101,7 @@ const image = () => {
   };
 
   return (
-    <Page style={{ alignItems: "flex-start", justifyContent: "flex-start", padding: "5%" }}>
+    <Page>
       <ScrollView contentContainerStyle={{paddingBottom:50, alignItems:"flex-start"}}>
       {previewImage !== null && (
         <Image 

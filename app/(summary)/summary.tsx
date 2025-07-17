@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView, Image, Alert, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Animated, ScrollView, Share, StyleSheet, View, Platform, StatusBar, SafeAreaView, Alert, ActivityIndicator } from 'react-native';
 import { useGlobalSearchParams, router } from 'expo-router';
 import { useTheme } from '@react-navigation/native';
-import { Icon } from '@rneui/base';
 import * as Clipboard from 'expo-clipboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as NetInfo from '@react-native-community/netinfo';
@@ -15,7 +14,7 @@ import NameModule from '@/components/NameModule';
 import Page from '@/components/Page';
 
 const interstitialAd = InterstitialAd.createForAdRequest(
-  __DEV__ ? TestIds.INTERSTITIAL : Platform.OS === "android" ? "ca-app-pub-8501095031703685/3736822220" : "ca-app-pub-8501095031703685/9379234986"
+  __DEV__ ? TestIds.INTERSTITIAL : Platform.OS === "android" ? (process.env.EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL_ID || TestIds.INTERSTITIAL) : (process.env.EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL_ID || TestIds.INTERSTITIAL)
 );
 
 const Summary = () => {
@@ -28,14 +27,6 @@ const Summary = () => {
   const [showLoadingMessage, setShowLoadingMessage] = useState(false);
   const fadeAnim = useState(new Animated.Value(0))[0];
   const [summaryCount, setSummaryCount] = useState(0);
-
-  const loadingGifs = [
-    require('../../assets/images/ball.gif'), 
-    require('../../assets/images/infinity.gif'), 
-    require('../../assets/images/dual.gif'), 
-    require('../../assets/images/pacman.gif')
-  ];
-  const [loadingGif, setLoadingGif] = useState(loadingGifs[0]); 
 
 
   useEffect(() => {
@@ -67,35 +58,105 @@ const Summary = () => {
 
   const generateSummary = async () => {
     try {
+      // Check internet connectivity first
       const netInfo = await NetInfo.fetch();
-      if (!netInfo.isConnected) {
+      
+      // iOS-specific network detection fix
+      const isConnected = netInfo.isConnected;
+      const hasConnectionType = netInfo.type !== 'none' && netInfo.type !== 'unknown';
+      const isInternetReachable = netInfo.isInternetReachable !== false; // Allow undefined/null
+      
+      if (!isConnected || !hasConnectionType) {
         setError('No internet connection');
         return;
       }
 
-      const randomGif = loadingGifs[Math.floor(Math.random() * loadingGifs.length)];
-      setLoadingGif(randomGif);
-
-      setLoading(true);
-      fadeAnim.setValue(0);
-      const res = await fetch('https://sumitt-wpst.onrender.com/api/summarize', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userInput, options }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || 'Failed to fetch summary from server');
+      // Only check isInternetReachable if it's explicitly false (iOS can be undefined)
+      if (netInfo.isInternetReachable === false) {
+        setError('No internet connection');
         return;
       }
 
+      // Log network info for debugging (remove in production)
+      console.log('Network Info:', {
+        isConnected: netInfo.isConnected,
+        type: netInfo.type,
+        isInternetReachable: netInfo.isInternetReachable,
+        isWifi: netInfo.type === 'wifi',
+        isCellular: netInfo.type === 'cellular'
+      });
+
+      setLoading(true);
+      setError(null); // Clear any previous errors
+      fadeAnim.setValue(0);
+      
+      const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+      
+      // Add timeout to the fetch request
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+      
+      const res = await fetch(`${supabaseUrl}/functions/v1/summarize`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`
+        },
+        body: JSON.stringify({ userInput, options }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        let errorMessage = 'Failed to generate summary';
+        
+        if (res.status === 401) {
+          errorMessage = 'Authentication failed. Please try again.';
+        } else if (res.status === 403) {
+          errorMessage = errorData.error || 'Access denied. Please check your input.';
+        } else if (res.status === 429) {
+          errorMessage = 'Too many requests. Please wait a moment and try again.';
+        } else if (res.status >= 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else if (errorData.error) {
+          errorMessage = errorData.error;
+        }
+        
+        setError(errorMessage);
+        return;
+      }
+
+      const data = await res.json();
       const summaryContent = data.choices?.[0]?.message?.content;
-      setSummary(summaryContent || 'Failed to generate a summary');
+      
+      if (!summaryContent) {
+        setError('Failed to generate a summary. Please try again.');
+        return;
+      }
+      
+      setSummary(summaryContent);
       Animated.timing(fadeAnim, { toValue: 1, duration: 1000, useNativeDriver: true }).start();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating summary:', error);
-      setError('Something went wrong.');
+      
+      let errorMessage = 'Something went wrong. Please try again.';
+      
+      if (error.name === 'AbortError') {
+        errorMessage = 'Request timed out. Please check your connection and try again.';
+      } else if (error.message?.includes('Network request failed')) {
+        errorMessage = Platform.OS === 'ios' 
+          ? 'Network error on iOS. Please try again or check your connection.'
+          : 'Network error. Please check your internet connection.';
+      } else if (error.message?.includes('fetch')) {
+        errorMessage = 'Connection failed. Please try again.';
+      } else if (Platform.OS === 'ios' && error.message?.includes('cancelled')) {
+        errorMessage = 'Request was cancelled. Please try again.';
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -109,7 +170,7 @@ const Summary = () => {
   const handleShare = async () => {
     try {
       await Share.share({ message: summary });
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert(error.message);
     }
   };
@@ -145,39 +206,65 @@ const Summary = () => {
     if (interstitialAd.loaded) interstitialAd.show();
   };
 
+  const getErrorIcon = () => {
+    if (error?.includes('internet') || error?.includes('connection') || error?.includes('network')) {
+      return "wifi-off";
+    }
+    return "error";
+  };
+
+  const getErrorDetails = () => {
+    if (error?.includes('internet') || error?.includes('connection') || error?.includes('network')) {
+      return "Please check your internet connection and try again.\n• Make sure you're connected to WiFi or mobile data\n• Try turning airplane mode on and off\n• Check if your connection is stable";
+    } else if (error?.includes('timeout')) {
+      return "The request took too long to complete.\n• Check your internet connection\n• Try again in a few moments\n• The content might be too large to process";
+    } else if (error?.includes('Too many requests')) {
+      return "You've made too many requests recently.\n• Please wait a few minutes before trying again\n• This helps us provide better service to everyone";
+    } else if (inputType === 'URL') {
+      return "Please try a different URL. This may have occurred because:\n• The website requires a subscription to access content\n• The page is blocked by a login or authentication prompt\n• The website has blocked web scraping activities\n• The URL might be invalid or inaccessible";
+    } else if (inputType === 'Text') {
+      return "There was an issue processing the text input.\n• Please reduce the length of your text\n• Make sure the text is not empty\n• Try again in a few moments";
+    } else if (inputType === 'Image') {
+      return "Image processing failed.\n• The image might be corrupted or unsupported\n• Try using a different image format (JPEG, PNG)\n• Make sure the image is not too large";
+    } else {
+      return "An unexpected error occurred.\n• Please try again in a few moments\n• If the problem persists, restart the app";
+    }
+  };
+
   return (
     <Page applyInsets style={{ backgroundColor: colors.card, }}>
       {loading ? (
-      <>
-        <ActivityIndicator size="large" color={colors.primary} style={{ marginBottom: 20,transform:[{scale:1.5}] }} />
-        <MyText bold fontSize="large">Summarizing...</MyText>
-        {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
-      </>
-    ) : error ? (
-      <>
-        <ResponsiveIcon name="error" size={100} color={colors.primary} />
-        <MyText style={{ marginTop: 0 }} textAlign="center">{error}</MyText>
-        {inputType === 'URL' && (
-          <MyText style={{ marginTop: 8, marginBottom: 16 }} textAlign="center" >
-            Please try a different URL. This may have occurred because:
-            {'\n'}• The website requires a subscription to access content
-            {'\n'}• The page is blocked by a login or authentication prompt.
-            {'\n'}• The website has blocked web scraping activities
+        <>
+          <ActivityIndicator size="large" color={colors.primary} style={{ marginBottom: 20,transform:[{scale:1.5}] }} />
+          <MyText bold fontSize="large">Summarizing...</MyText>
+          {showLoadingMessage && <MyText fontSize="small">Please be patient</MyText>}
+        </>
+      ) : error ? (
+        <>
+          <ResponsiveIcon 
+            type='material'
+            name={getErrorIcon()} 
+            size={100} 
+            color={colors.primary} 
+          />
+          <MyText style={{ marginTop: 0 }} textAlign="center" bold>{error}</MyText>
+          <MyText style={{ marginTop: 8, marginBottom: 16 }} textAlign="center" fontSize="small">
+            {getErrorDetails()}
           </MyText>
-        )}
-        {inputType === 'Text' && (
-          <MyText style={{ marginTop: 8, marginBottom: 16 }} textAlign="center" >
-            There was an issue processing the text input. Please reduce the length or try again later.
-          </MyText>
-        )}
-        {inputType === 'Image' && (
-          <MyText style={{ marginTop: 0, marginBottom: 16 }} textAlign="center" >
-            Image processing failed. The image might be corrupted or unsupported.
-          </MyText>
-        )}
-        <MyButton width="30%" title="Back" onPress={handleGoBack} />
-      </>
-    ) : (
+          <View style={styles.errorButtonRow}>
+            <MyButton 
+              iconName="refresh" 
+              width="45%" 
+              title="Retry" 
+              onPress={() => {
+                setError(null);
+                generateSummary();
+              }} 
+            />
+            <MyButton width="45%" title="Back" onPress={handleGoBack} />
+          </View>
+        </>
+      ) : (
         <>
           <SafeAreaView style={{ backgroundColor: colors.background }} />
           <Animated.View style={[{ opacity: fadeAnim, flex:1 }, styles.container]}>
@@ -215,6 +302,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: { paddingBottom: '20%', width: "100%", flexGrow:1 },
   buttonRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, marginVertical: 10 },
+  errorButtonRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, marginVertical: 10 },
 });
 
 export default Summary;

@@ -1,10 +1,16 @@
-- fix styling
-- improve UI
-- make edge function for ai generation
-- add feedback form + edge function
-- error handling + UI
-
-- new featires?
+- Native capabilities?
 - premium?
 - lanuages?
 - tutorial / onboarding?
+- better icon / preview banner?
+- new store name?
+- delete render project
+- PBP center?
+
+
+
+LOCAL ENVIRONMENT VARIABLES
+- EXPO_PUBLIC_SUPABASE_URL
+- EXPO_PUBLIC_SUPABASE_ANON_KEY
+- EXPO_PUBLIC_ADMOB_ANDROID_INTERSTITIAL_ID
+- EXPO_PUBLIC_ADMOB_IOS_INTERSTITIAL_ID

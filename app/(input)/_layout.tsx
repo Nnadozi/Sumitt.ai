@@ -8,6 +8,7 @@ export default function InputNavigator() {
         <Stack.Screen name="text" options={{title:"Text Input"}}/>
         <Stack.Screen name="url" options={{title:"Website URL Input"}}/>
         <Stack.Screen name="image" options={{title:"Image Input"}}/>
+        <Stack.Screen name="pdf" options={{title:"PDF Input"}}/>
     </Stack>
   );
 }

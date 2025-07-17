@@ -86,14 +86,12 @@ const SavedSummaryScreen = () => {
           )
         )}
       </ScrollView>
-      <SafeAreaView style={styles.bottomRow}>
-        <View style={[styles.iconRow,{backgroundColor:colors.card,borderRadius:20,borderWidth:1,borderColor:colors.border}]}>
-          <ResponsiveIcon primary size={30} name="delete" onPress={handleDelete} />
-          <ResponsiveIcon primary size={27} name="copy" type="ionicon" onPress={handleCopy} />
-          <ResponsiveIcon primary size={27} name="share" type="ionicon" onPress={handleShare} />
-        </View>
-        {Platform.OS === 'ios' && <Button title="Back" onPress={router.back} color={colors.primary} />}
-      </SafeAreaView>
+      <View style={[styles.iconRow,{backgroundColor:colors.card,borderRadius:20,borderWidth:1,borderColor:colors.border}]}>
+        <ResponsiveIcon primary size={27} name="arrowleft" type='antdesign' onPress={router.back} />
+        <ResponsiveIcon primary size={30} name="delete" onPress={handleDelete} />
+        <ResponsiveIcon primary size={27} name="copy" type="ionicon" onPress={handleCopy} />
+        <ResponsiveIcon primary size={27} name="share" type="ionicon" onPress={handleShare} />
+      </View>
     </Page>
   );
 };
@@ -104,19 +102,22 @@ const styles = StyleSheet.create({
   scrollContainer: {
     marginBottom: '2%',
   },
-  bottomRow: {
-    width: '100%',
-    alignItems: 'center',
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-    alignSelf: 'center',
-  },
   iconRow: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    gap: '2%',
-    padding:10,
+    gap: 5,
+    padding: 10,
+    zIndex: 1000,
+  },
+  backButtonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    zIndex: 1000,
   },
   viewPrompt: {
     flexDirection: 'row',

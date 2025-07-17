@@ -59,7 +59,7 @@ const text = () => {
 
 
   return (
-    <Page style={{ alignItems: "flex-start", justifyContent: "flex-start",}}>
+    <Page>
         <ScrollView contentContainerStyle={{paddingBottom:50, alignItems:"flex-start"}}>
             <MyInput
               height="50%"

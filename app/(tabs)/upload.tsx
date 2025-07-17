@@ -42,6 +42,17 @@ const Upload = () => {
           }
         })}
       />
+      <InputType
+        name="PDF"
+        subtitle="Upload and summarize PDF documents"
+        inputType='PDF'
+        onPress={() => router.navigate({
+          pathname:'/(input)/pdf',
+          params:{
+            inputType:'PDF'
+          }
+        })}
+      />
       <MyButton iconName="cancel" title="Cancel" onPress={ () => router.back()} width="100%" marginVertical={5} />
       <MyText style={{ margin:10}} gray fontSize="small">
         Note: AI output may not always be correct
