@@ -2,9 +2,9 @@
 
 Sumitt is your ultimate tool for quick, accurate media summaries. Designed for students, professionals, and avid readers, Sumitt simplifies information overload by condensing lengthy content into concise, easy-to-understand summaries. Powered by GPT-4, it ensures precision and saves you time.
 
-Download for Android: https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt
-
 Download for iOS: https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741008785?platform=iphone
+
+Download for Android: https://play.google.com/store/apps/details?id=com.nnadozi.Sumitt
 
 ## Features
 - Text summarization
@@ -18,9 +18,9 @@ Download for iOS: https://apps.apple.com/us/app/sumitt-ai-text-summarizer/id6741
 React Native, Expo, TypeScript, NodeJS, Express.js 
 
  ## Pictures
-<img src="https://github.com/user-attachments/assets/37f0faee-b9a2-4e79-b626-f59409d0362a" alt="1" width="200"/>
-<img src="https://github.com/user-attachments/assets/d0886113-0cc0-454e-85dd-5c75ce0ad3b1" alt="2" width="200"/>
-<img src="https://github.com/user-attachments/assets/f726e724-1e3a-44ac-8bbe-567c47173428" alt="3" width="200"/>
-<img src="https://github.com/user-attachments/assets/6d0fcd94-d3ad-4a9b-b752-45f53bbf7c99" alt="4" width="200"/>
-<img src="https://github.com/user-attachments/assets/122faa1b-9dbf-40ab-80e8-175de0ef120f" alt="5" width="200"/>
+<img width="150"  alt="Apple iPhone 16 Pro Max Screenshot 1" src="https://github.com/user-attachments/assets/cf4d4a71-84d0-4341-9a9e-52d1ae20e233" />
+<img width="150"  alt="Apple iPhone 16 Pro Max Screenshot 2" src="https://github.com/user-attachments/assets/7f6b4d51-ab69-4c44-a81e-7af35bccfb96" />
+<img width="150" alt="Apple iPhone 16 Pro Max Screenshot 3" src="https://github.com/user-attachments/assets/7ce3cc26-4e4e-4363-ab0e-c20c42394f61" />
+<img width="150" alt="Apple iPhone 16 Pro Max Screenshot 4" src="https://github.com/user-attachments/assets/a7b7635c-1eaa-4875-ae28-95774a347bde" />
+<img width="150"  alt="Apple iPhone 16 Pro Max Screenshot 5" src="https://github.com/user-attachments/assets/0555749c-face-4eb5-990e-75608b0d3c94" />
 
